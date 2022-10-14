@@ -1,0 +1,110 @@
+.footer {
+  padding: rem(40) 0;
+  @media(max-width:$tablet){
+    padding: rem(20) 0;
+  }
+  border-top: 1px solid #94A073;
+
+  &__hf-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  &__side {
+    display: flex;
+    gap: rem(100);
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    @include adaptiveValue("gap", 100, 0);
+  }
+
+  &__logo {
+    flex: 0 0 percent(171, 751);
+    @media(max-width:$tablet){
+      margin-right: auto;
+      flex: 1 1 auto;
+    }
+  }
+
+  &__logo-link {
+  }
+
+  &__contacts {
+    flex: 1 1 auto;
+    @media(max-width:$tablet){
+      display: none;
+    }
+  }
+
+  &__contact-item {
+    display: flex;
+    gap: rem(10);
+    align-items: center;
+    &._icon-tel a{
+      font-weight: 600;
+      @include adaptiveValue("font-size", 30, 18);
+      line-height: math.div(37,30);
+      color: #41492C;
+      margin-left: rem(10);
+    }
+    &._icon-tel{
+      margin-bottom: rem(30);
+    }
+    &._icon-tel:before{
+      font-size: rem(24);
+      color: #94A073;
+    }
+    font-weight: 400;
+    @include adaptiveValue("font-size", 16, 12);
+    line-height: math.div(19,16);
+    color: #7C7C7C;
+    &:not(:last-child){
+      margin-bottom: rem(20);
+    }
+    span, a{
+      font-weight: 500;
+      color: #404A23;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    @include adaptiveValue("gap", 100, 0);
+    @media(max-width:$tablet){
+      display: none;
+    }
+  }
+
+  &__list {
+
+  }
+
+  &__list-item {
+    font-weight: 500;
+    @include adaptiveValue("font-size", 16, 12);
+    line-height: math.div(19,16);
+    color: #41492C;
+    &:not(:last-child){
+      margin-bottom: rem(15);
+    }
+  }
+
+  &__list-link {
+  }
+
+  &__social {
+    display: flex;
+    gap: rem(10);
+    font-size: rem(40);
+    color: #94A073;
+  }
+
+  &__social-link {
+    @media(any-hover: hover){
+      &:hover{
+            text-decoration: none;
+      }
+    }
+  }
+}

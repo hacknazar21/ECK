@@ -1,0 +1,26 @@
+.page {
+  &__filter{
+    margin-top: rem(30);
+  }
+}
+
+.filter {
+  &__items {
+    display: flex;
+    @media(max-width:$tablet){
+        flex-direction: column;
+        gap: rem(10);
+    }
+    gap: rem(20);
+  }
+  &__select{
+
+  }
+  &__cancel{
+    align-self: flex-start;
+    padding-top: rem(15);
+  }
+}
+
+
+

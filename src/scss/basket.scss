@@ -1,0 +1,153 @@
+.basket {
+  font-family: 'Lovelace';
+  font-weight: 400;
+  background: #F1F0ED;
+  border: 1px solid #94A073;
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: rem(15);
+    padding-bottom: rem(15);
+    border-bottom: 1px solid #94A073;
+  }
+
+  &__logo {
+    svg path{
+      stroke: #41492C;
+    }
+  }
+
+  &__title {
+    font-size: rem(20);
+    line-height: math.div(25,20);
+    letter-spacing: 0.03em;
+    color: #363B48;
+  }
+  &__items {
+    padding-bottom: rem(15);
+    border-bottom: 1px solid #94A073;
+    .search-results & {
+      max-height: rem(450);
+      overflow: scroll;
+    }
+  }
+
+  &__item {
+    display: flex;
+    padding-top: rem(20);
+  }
+  &__sum{
+    font-size: rem(22);
+    line-height: math.div(30,22);
+    letter-spacing: 0.02em;
+    color: #363B48;
+    padding: rem(15) 0;
+    span{
+      font-size: rem(16);
+    }
+  }
+  &__checkout{
+    display: block;
+    text-align: center;
+    background: #94A073;
+    border-radius: 5px;
+
+    padding: rem(5) 0;
+    font-size: rem(16);
+    line-height: math.div(30,16);
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+  }
+  &__empty{
+    font-size: rem(16);
+    @include adaptiveValue("font-size", 16, 14);
+    line-height: math.div(30,16);
+    letter-spacing: 0.02em;
+    color: #363B48;
+    word-wrap: normal;
+    padding-top: rem(15);
+  }
+  &__min{
+    @include adaptiveValue("font-size", 14, 13);
+    line-height: math.div(30,12);
+    letter-spacing: 0.02em;
+    color: #94A073;
+    word-wrap: normal;
+    padding-top: rem(15);
+  }
+}
+.basket-window{
+  position: absolute;
+  padding: rem(15);
+  background: #F1F0ED;
+  border: 1px solid #94A073;
+  top: 100%;
+  right: 0%;
+  z-index: 1000;
+  @media(max-width:$tablet){
+      right: -100%;
+  }
+  &.search-results{
+    max-width: rem(395);
+    right: initial;
+    left: 0;
+    @media(max-width:$tablet){
+        left: initial;
+      right: 0;
+      margin: 0 rem(10);
+      max-width: none;
+    }
+  }
+  @include adaptiveValue("min-width", 393, 320);
+}
+.basket-item {
+  &__image{
+    position: relative;
+    padding-bottom: rem(100);
+    flex: 0 0 rem(100);
+    margin-right: rem(10);
+    background-color: #fff;
+    height: 0;
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+  }
+  &__text {
+    flex: 1 1 auto;
+  }
+
+  &__id {
+  }
+
+  &__title {
+    @include adaptiveValue("font-size", 16, 14);
+    line-height: math.div(30,16);
+    letter-spacing: 0.02em;
+    color: #363B48;
+    word-wrap: normal;
+  }
+
+  &__remove {
+    display: flex;
+    svg{
+      pointer-events: none;
+    }
+  }
+}
+.basket__close-wrapper{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  @media(max-width:$tablet){
+    z-index: 20002;
+  }
+  z-index: 10;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+}

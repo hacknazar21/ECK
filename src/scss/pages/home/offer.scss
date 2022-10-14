@@ -1,0 +1,52 @@
+.offer {
+  &__container {
+    margin-top: rem(20);
+    margin-bottom: rem(20);
+  }
+
+  &__box {
+    background: url("../../../img/home/offer-bg.png") center/cover no-repeat;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: rem(20);
+    @media(max-width:$tablet){
+        flex-direction: column-reverse;
+    }
+  }
+
+  &__text {
+    flex: 0 0 percent(600, 1100)
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: rem(35);
+    line-height: math.div(45,35);
+    color: #FFFFFF;
+    margin-bottom: rem(15);
+  }
+
+  &__subtitle {
+    font-weight: 500;
+    font-size: rem(14);
+    line-height: math.div(16,14);
+    
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  &__image {
+    position: relative;
+
+    flex: 0 0 percent(181, 1100); //rem(181)
+    padding-bottom: percent(181, 1100);
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+  }
+}

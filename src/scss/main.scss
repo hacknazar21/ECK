@@ -1,0 +1,48 @@
+.page {
+  &__main {
+    .catalog &{
+      margin-top: rem(24);
+    }
+  }
+}
+
+.main {
+  @include adaptiveValue("padding-bottom", 18, 10);
+
+  &__container {
+    position: relative;
+  }
+  &__back{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: calc(50% - 12px);
+    left: rem(30);
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 600;
+    font-size: rem(18);
+    line-height: 1;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.8);
+    span{
+      width: rem(24);
+      height: rem(24);
+    }
+  }
+  &__button {
+    font-family: 'Gilroy';
+    font-weight: 600;
+    @include adaptiveValue("font-size", 30, 15);
+    line-height: math.div(37, 30);
+    text-align: center;
+    color: #FFFFFF;
+    background: linear-gradient(94.88deg, #0834A6 0.42%, #245DE0 100%), #EDF0F6;
+    border-radius: 10px;
+    display: block;
+    padding: rem(20) 0;
+    @media(max-width: $tablet) {
+      padding: rem(15) 0;
+    }
+  }
+}

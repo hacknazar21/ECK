@@ -1,0 +1,39 @@
+.search-box {
+  position: absolute;
+  top: -16px;
+  right: -20px;
+  width: rem(460);
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px 8px 0px 0px;
+  &__input-box {
+    padding: rem(20);
+  }
+
+  &__input {
+    width: 90%;
+    outline: none;
+  }
+
+  &__results {
+  }
+}
+
+.search-results {
+  &__item {
+    padding: 0 rem(20) ;
+    
+    a{
+      display: block;
+    }
+    a:last-child{
+      padding:  rem(20) 0;
+    }
+    &:not(:last-child){
+      a {
+        padding:  rem(20) 0;
+        border-bottom: 1px solid #E5E7EB;
+      }
+    }
+  }
+}

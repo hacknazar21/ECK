@@ -1,0 +1,182 @@
+.auth {
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: rem(20);
+    margin-bottom: rem(100);
+  }
+  &__box{
+    padding: rem(25) rem(23);
+    max-width: rem(605);
+    background-color: #fff;
+    border-radius: 5px;
+  }
+  &__header {
+  }
+
+  &__back {
+    font-weight: 700;
+    font-size: rem(12);
+    line-height: math.div(16,12);
+
+    text-align: center;
+    color: #828080;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: rem(22);
+    line-height: math.div(35,22);
+
+    color: #141414;
+  }
+
+  &__form {
+    margin: rem(30) 0;
+  }
+
+  &__inputs {
+  }
+
+  &__input-box {
+    &:not(:last-child){
+      margin-bottom: rem(30);
+    }
+    position: relative;
+  }
+
+  &__input-label {
+    width: 100%;
+  }
+  &__password-eye{
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+  }
+  &__input {
+    &::placeholder{
+
+    }
+    outline: none;
+    padding-bottom: rem(15);
+    border-bottom: 1px solid #CFDCE4;
+    transition: border-bottom-color 0.3s ease;
+    transform-origin: center;
+    width: 100%;
+
+    &[required] + label{
+      position: absolute;
+      left: 0;
+
+      &:after {
+        content: "*";
+        margin-left: rem(5);
+        font-weight: 500;
+        font-size: rem(16);
+        line-height: math.div(16,16);
+        
+        color: #FF0000;
+      }
+      font-weight: 500;
+      font-size: rem(14);
+      line-height: math.div(16,14);
+      color: #959595;
+    }
+    &:focus{
+      & + label{
+        display: none;
+      }
+      border-bottom-color:  #4D97C1;
+    }
+    &:not(:placeholder-shown) + label{
+      display: none;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    margin-bottom: rem(15);
+    position: relative;
+  }
+
+  &__submit-button {
+    color: #FFFFFF;
+    background-color: #30A1E1;
+    border-radius: 5px;
+    padding: rem(15) rem(25);
+    margin-right: rem(20);
+    position: relative;
+  }
+
+  &__link {
+    font-weight: 600;
+    font-size: rem(14);
+    line-height: math.div(16,14);
+    color: #1664AC;
+  }
+
+  &__info {
+    font-weight: 500;
+    font-size: rem(12);
+    line-height: math.div(14,12);
+    color: #999999;
+  }
+
+  &__input-checkboxes {
+    display: flex;
+  }
+
+  &__input-checkbox-box {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    &:not(:last-child){
+      margin-right: rem(20);
+    }
+  }
+
+  &__input-checkbox {
+    position: absolute;
+    height: 0;
+    width: 0;
+    opacity: 0;
+    pointer-events: none;
+    &:checked + label{
+      background: rgba(77, 151, 193, 0.2);
+      border: 1px solid #4D97C1;
+      color: #30A1E1;
+      &:before{
+        background-color: #4D97C1;
+      }
+    }
+  }
+
+  &__label-checkbox {
+    background: rgba(207, 220, 228, 0.2);
+    border: 1px solid #CFDCE4;
+    border-radius: 5px;
+    padding: rem(15);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    @media(any-hover: hover){
+      &:hover{
+        cursor: pointer;
+      }
+    }
+    &:before{
+      content: "";
+      width: rem(14);
+      height: rem(14);
+      border-radius: 50%;
+      background-color: #999999;
+      border: 3px solid #FFFFFF;
+      margin-right: rem(10);
+    }
+
+  }
+}

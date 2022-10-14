@@ -1,0 +1,251 @@
+.popup-add-review {
+	.rating-item-fill, .rating-item:before, .rating-item-fill:before{
+		font-size: rem(24);
+	}
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: calc(100vh);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(10, 10, 10, 0.5);
+	z-index: 20000;
+	padding: rem(10);
+	overflow: scroll;
+	&__wrapper {
+		@media(max-width:$tablet){
+			max-height: 60%;
+		}
+		max-height: 100%;
+		overflow: scroll;
+		max-width: rem(700);
+	}
+
+	&__content {
+		@include adaptiveValue("padding", 30, 10);
+		background-color: #F1F0ED;
+		position: relative;
+	}
+	&__close{
+		position: absolute;
+		right: rem(20);
+		top: rem(20);
+		@media(any-hover: hover){
+		  &:hover{
+			  cursor: pointer;
+		  }
+		}
+	}
+	&__header {
+		font-family: 'Lovelace';
+		color: #363636;
+		margin-bottom: rem(20);
+	}
+
+	&__header-title {
+		font-weight: 400;
+		font-size: rem(30);
+		@include adaptiveValue("font-size", 30, 20);
+		line-height: math.div(42,30);
+		margin-bottom: rem(8);
+	}
+
+	&__header-subtitle {
+		font-weight: 400;
+		font-size: rem(22);
+		@include adaptiveValue("font-size", 22, 16);
+		line-height: math.div(31,22);
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: rem(20);
+	}
+}
+
+.add-review-form {
+	textarea{
+		width: 100%;
+	}
+	&__input-box {
+		display: flex;
+		flex-direction: column;
+		gap: rem(8);
+	}
+
+	&__label {
+		font-family: 'Lovelace';
+		font-style: normal;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 24px;
+		color: #1B1B1E;
+	}
+
+	&__input {
+		background-color: #FFFFFF;
+		border: 1px solid #E5E7EB;
+		border-radius: 8px;
+		padding: rem(12) rem(16);
+		font-size: rem(16);
+	}
+
+	&__input-file-box {
+		display: flex;
+		gap: rem(10);
+	}
+
+	&__input-file-label {
+		background-color: rgba(148, 160, 115, 0.2);
+		border: 1px solid #94A073;
+		border-radius: 8px;
+		display: inline-flex;
+		align-items: center;
+		flex-direction: column;
+		padding: rem(45) rem(30);
+		align-self: flex-start;
+		text-align: center;
+		@media(max-width:$tablet){
+			padding: rem(15) rem(10);
+		}
+		@media(any-hover: hover){
+		  &:hover{
+			  cursor: pointer;
+		  }
+		}
+	}
+	&__input-file-input {
+		position: absolute;
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+}
+.add-review-form {
+	&__input-uploaded-photos {
+		display: flex;
+		gap: rem(10);
+		width: fit-content;
+		flex-wrap: wrap;
+	}
+
+	&__input-uploaded-photo {
+		position: relative;
+		padding-bottom: rem(140);
+		flex: 0 0 rem(140);
+		width: 140px;
+		span{
+			position: absolute;
+			z-index: 10;
+			right: 0px;
+			svg{
+				pointer-events: none;
+			}
+			path{
+				fill: #fff;
+			}
+			@media(any-hover: hover){
+			  &:hover{
+			        cursor: pointer;
+			  }
+			}
+		}
+		&:before{
+		    content: "";
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(10, 10, 10, 0.5);
+			z-index: 2;
+		}
+		img {
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		}
+	}
+}
+.popup-mark{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: calc(100vh);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(10, 10, 10, 0.5);
+	z-index: 20000;
+	@media(min-width:$tablet) {
+		padding: rem(10);
+	}
+	overflow-y: auto;
+	&__wrapper {
+		max-height: 100%;
+		overflow-y: auto;
+		width: 100%;
+		@media(min-width:$tablet){
+			max-width: rem(1200);
+			min-height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+
+	&__content {
+		width: 100%;
+		background-color: #F1F0ED;
+		position: relative;
+	}
+	&__close{
+		position: absolute;
+		right: rem(20);
+		top: rem(20);
+		@media(any-hover: hover){
+			&:hover{
+				cursor: pointer;
+			}
+		}
+	}
+	&__header {
+		font-family: 'Lovelace';
+		color: #363636;
+		padding: rem(20) 0;
+		background-color: #E8EBE2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+	}
+	&__image{
+		position: relative;
+		padding-bottom: rem(160);
+		flex: 0 0 rem(244);
+		img {
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    object-fit: contain;
+		}
+	}
+	&__text{
+		padding: rem(40) rem(50);
+		p{
+			font-family: 'Gilroy';
+			font-style: normal;
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 25px;
+			color: #5C5C5C;
+		}
+	}
+}

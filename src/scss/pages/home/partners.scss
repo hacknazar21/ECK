@@ -1,0 +1,40 @@
+.partners {
+  &__container {
+    position: relative;
+  }
+
+  &__header {
+  }
+
+  &__title {
+    margin-bottom: rem(15);
+  }
+
+  &__box {
+    padding: rem(20) 0;
+    background-color: #FFFFFF;
+  }
+
+  &__slider {
+  }
+
+  &__wrapper {
+  }
+
+  &__slide {
+  }
+}
+.partners-slide {
+  &__image {
+    position: relative;
+    padding-bottom: rem(50);
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+  }
+}

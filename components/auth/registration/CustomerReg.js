@@ -1,0 +1,197 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Select from "../../common/Select/Select";
+import Loading from "../../common/Loading";
+import Link from "next/link";
+
+export default function CustomerReg() {
+  const router = useRouter();
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const [form, setForm] = useState({
+    person: "customer",
+    email: "",
+    password: "",
+    password_check: "",
+    face: "",
+  });
+
+  function formChangeHandler(event) {
+    setForm((prevState) => {
+      prevState[event.target.name] = event.target.value;
+      return { ...prevState };
+    });
+  }
+  useEffect(() => {
+    console.log(form);
+  }, [JSON.stringify(form)]);
+  return (
+    <section className="auth">
+      <div className="auth__container">
+        <div className="auth__box">
+          <div className="auth__header">
+            <button
+              onClick={() => {
+                router.back();
+              }}
+              className="auth__back"
+            >
+              Вернуться назад
+            </button>
+            <h1 className="auth__title">Данные заказчика</h1>
+          </div>
+          <div className="auth__form">
+            <div className="auth__inputs">
+              <div className="auth__input-box">
+                <input
+                  type="text"
+                  id={"company_name"}
+                  required={true}
+                  onInput={formChangeHandler}
+                  name={"company_name"}
+                  placeholder=" "
+                  className="auth__input"
+                />
+                <label htmlFor="company_name" className="auth__input-label">
+                  Наименование вашей компании
+                </label>
+              </div>
+              <div className="auth__input-box">
+                <input
+                  id={"BIN"}
+                  required={true}
+                  onInput={formChangeHandler}
+                  placeholder=" "
+                  name={"BIN"}
+                  className="auth__input"
+                />
+                <label htmlFor="BIN" className="auth__input-label">
+                  БИН
+                </label>
+              </div>
+              <div className="auth__input-box">
+                <Select
+                  name={"field_of_activity"}
+                  onSelect={formChangeHandler}
+                  title={"Сфера деятельности"}
+                  multiply={true}
+                  items={[
+                    { name: "Рисование", value: "draw" },
+                    { name: "Программирование", value: "programming" },
+                  ]}
+                />
+              </div>
+              <div className="auth__input-box">
+                <input
+                  id={"licences_certs"}
+                  required={true}
+                  onInput={formChangeHandler}
+                  placeholder=" "
+                  name={"licences_certs"}
+                  className="auth__input"
+                />
+                <label htmlFor="licences_certs" className="auth__input-label">
+                  Лицензии/Сертификаты
+                </label>
+              </div>
+              <div className="auth__input-box">
+                <input
+                  id={"position_held"}
+                  required={true}
+                  onInput={formChangeHandler}
+                  placeholder=" "
+                  name={"position_held"}
+                  className="auth__input"
+                />
+                <label htmlFor="position_held" className="auth__input-label">
+                  Занимаемая должность
+                </label>
+              </div>
+              <div className="auth__input-box">
+                <input
+                  id={"supervisor"}
+                  required={true}
+                  onInput={formChangeHandler}
+                  placeholder=" "
+                  name={"supervisor"}
+                  className="auth__input"
+                />
+                <label htmlFor="supervisor" className="auth__input-label">
+                  Руководитель
+                </label>
+              </div>
+              <div className="auth__input-box">
+                <input
+                  id={"name_of_responsible_person"}
+                  required={true}
+                  onInput={formChangeHandler}
+                  placeholder=" "
+                  name={"name_of_responsible_person"}
+                  className="auth__input"
+                />
+                <label
+                  htmlFor="name_of_responsible_person"
+                  className="auth__input-label"
+                >
+                  ФИО ответственного лица
+                </label>
+              </div>
+              <div className="auth__input-box">
+                <input
+                  id={"contacts"}
+                  required={true}
+                  onInput={formChangeHandler}
+                  placeholder=" "
+                  name={"contacts"}
+                  className="auth__input"
+                />
+                <label htmlFor="contacts" className="auth__input-label">
+                  Контактные данные
+                </label>
+              </div>
+              <div className="auth__input-box">
+                <input
+                  id={"address_company"}
+                  required={true}
+                  onInput={formChangeHandler}
+                  placeholder=" "
+                  name={"address_company"}
+                  className="auth__input"
+                />
+                <label htmlFor="address_company" className="auth__input-label">
+                  Адрес компании
+                </label>
+              </div>
+              <div className="auth__input-box">
+                <input
+                  id={"email"}
+                  required={true}
+                  onInput={formChangeHandler}
+                  placeholder=" "
+                  name={"email"}
+                  className="auth__input"
+                />
+                <label htmlFor="email" className="auth__input-label">
+                  Эл. почта
+                </label>
+              </div>
+            </div>
+          </div>
+          <div className="auth__actions">
+            <button className="auth__submit-button">Зарегистрироваться</button>
+            <Link href="/auth/login">
+              <a className="auth__link">Войти</a>
+            </Link>
+            <Loading />
+          </div>
+          <div className="auth__info">
+            <p>
+              Нажимая кнопку «Зарегистрироваться», я соглашаюсь с Публичной
+              офертой и правилами сайта, даю согласие на обработку персональных
+              данных.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
