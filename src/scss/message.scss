@@ -1,0 +1,35 @@
+.message {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items:  center;
+  gap: rem(15);
+
+  &__icon {
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: rem(22);
+    line-height: math.div(30,22);
+    color: #141414;
+    padding: 0 rem(23);
+    @media(max-width:$mobile){
+      padding: 0;
+    }
+  }
+
+  &__button {
+
+  }
+}
+
+.unActive-button {
+  padding: rem(10) rem(22);
+  font-weight: 600;
+  font-size: rem(14);
+  line-height: math.div(20,14);
+  color: #C2C2C2;
+  background-color: #F5F5F5;
+  border-radius: 5px;
+}

@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
     padding: rem(20);
-    @media(max-width:$tablet){
+    @media(max-width:$mobile){
         flex-direction: column-reverse;
     }
   }

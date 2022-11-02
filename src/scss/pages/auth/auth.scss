@@ -5,12 +5,17 @@
     justify-content: center;
     margin-top: rem(20);
     margin-bottom: rem(100);
+
   }
   &__box{
     padding: rem(25) rem(23);
     max-width: rem(605);
     background-color: #fff;
     border-radius: 5px;
+    &_message{
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
+      border-radius: 5px;
+    }
   }
   &__header {
   }
@@ -58,6 +63,7 @@
     &::placeholder{
 
     }
+    max-width: 100%;
     outline: none;
     padding-bottom: rem(15);
     border-bottom: 1px solid #CFDCE4;
@@ -90,6 +96,9 @@
       border-bottom-color:  #4D97C1;
     }
     &:not(:placeholder-shown) + label{
+      display: none;
+    }
+    &:not(:-ms-placeholder-shown) + label{
       display: none;
     }
   }

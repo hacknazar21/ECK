@@ -19,7 +19,7 @@ export default function Footer() {
                 fill="white"
               />
             </svg>
-            <a href="/tech-chat/" className="hf-layout__link">
+            <a href="/technical-support/" className="hf-layout__link">
               Чат техподдержки
             </a>
           </div>

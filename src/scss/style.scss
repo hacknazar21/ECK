@@ -86,8 +86,21 @@ body {
     overflow: hidden;
     & > .pages-layout{
       flex: 1 1 auto;
+      position: relative;
+      &:before{
+        content: "";
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background: url("../img/bg.png") center/cover no-repeat;
+        filter: blur(5px);
+      }
     }
-    background: url("../img/bg.png") center/cover no-repeat;
+
+
   }
 
   // Фикс для слайдеров
@@ -163,6 +176,9 @@ body {
 @import "src/scss/basket";
 @import "src/scss/loading";
 @import "src/scss/search";
+@import "src/scss/menu";
+@import "src/scss/aside";
+@import "src/scss/notifications-window";
 
 // Подключение стилей отдельных блоков
 @import "src/scss/header";
@@ -171,6 +187,7 @@ body {
 // Подключение стилей отдельных страниц
 @import "pages/home";
 @import "pages/auth";
+@import "pages/profile";
 
 @import "src/scss/base/swiper";
 

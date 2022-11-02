@@ -1,0 +1,51 @@
+.notification-item {
+  &__header {
+  }
+
+  &__time {
+    display: flex;
+    align-items: center;
+    column-gap: rem(8);
+
+    font-weight: 500;
+    font-size: rem(14);
+    line-height: math.div(20,14);
+    color: #AAAAAA;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: rem(14);
+    line-height: math.div(20,14);
+    
+    color: #1B1B1E;
+  }
+
+  &__content {
+  }
+
+  &__logo {
+  }
+
+  &__logo-image {
+  }
+
+  &__logo-name {
+  }
+
+  &__content-title {
+  }
+
+  &__content-text {
+  }
+
+  &__content-members {
+  }
+}
+.notification-item-members {
+  &__icons {
+  }
+
+  &__icon {
+  }
+}

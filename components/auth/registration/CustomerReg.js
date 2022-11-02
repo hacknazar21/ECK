@@ -3,7 +3,18 @@ import { useEffect, useState } from "react";
 import Select from "../../common/Select/Select";
 import Loading from "../../common/Loading";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
+const animationAuth = {
+  hidden: {
+    x: -200,
+    opacity: 0,
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+  },
+};
 export default function CustomerReg() {
   const router = useRouter();
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -25,8 +36,13 @@ export default function CustomerReg() {
     console.log(form);
   }, [JSON.stringify(form)]);
   return (
-    <section className="auth">
-      <div className="auth__container">
+    <motion.section
+      initial={"hidden"}
+      whileInView={"visible"}
+      viewport={{ once: true }}
+      className="auth"
+    >
+      <motion.div variants={animationAuth} className="auth__container">
         <div className="auth__box">
           <div className="auth__header">
             <button
@@ -191,7 +207,7 @@ export default function CustomerReg() {
             </p>
           </div>
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }

@@ -23,7 +23,7 @@
   height: 100%;
 }
 .pages-layout{
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 205px);
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -33,3 +33,41 @@
   line-height: math.div(37,30);
   color: #424141;
 }
+.profile-page-box{
+  display: flex;
+  @include adaptiveValue("column-gap", 24, 10);
+  @media(max-width:$tablet){
+      flex-direction: column;
+      row-gap: rem(10);
+  }
+}
+.more-link{
+  font-weight: 500;
+  font-size: rem(14);
+  line-height: math.div(20,14);
+  color: #30A1E1;
+}
+.notifications-count{
+  position: absolute;
+  right: -4.5px;
+  top: rem(-0.5);
+  background: #E22D38;
+  border-radius: 50%;
+  color: #FFFFFF;
+  width: rem(16);
+  height: rem(16);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-title {
+  font-weight: 700;
+  font-size: rem(22);
+  line-height: math.div(35,22);
+  color: #141414;
+  margin-bottom: rem(15);
+}
+@import "message";

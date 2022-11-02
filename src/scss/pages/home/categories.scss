@@ -9,21 +9,33 @@
   }
 
   &__item {
-    background: #FFFFFF;
+    display: block;
+    background-color: #FFFFFF;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     transition: box-shadow 0.3s ease;
     border-radius: 10px;
     padding: rem(15);
+    backface-visibility: hidden;
+
     @media(any-hover: hover){
       &:hover{
         cursor: pointer;
         box-shadow: 0px 0px 12px #278BE8;
+        text-decoration: none;
+        .category__link{
+          color: #FFFFFF;
+          background-color: #278BE8;
+        }
       }
     }
   }
 }
 
 .category {
+  &__wrapper{
+    position: relative;
+    z-index: 1;
+  }
   &__icon {
     position: relative;
     padding-bottom: rem(100);
@@ -44,12 +56,7 @@
     background: rgba(39, 139, 232, 0.2);
     border-radius: 5px;
     color: #30A1E1;
-    @media(any-hover: hover){
-      &:hover{
-        cursor: pointer;
-        color: #FFFFFF;
-        background-color: #278BE8;
-      }
-    }
+    transition: color 0.3s ease, background-color 0.3s ease;
   }
+
 }

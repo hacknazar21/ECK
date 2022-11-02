@@ -1,0 +1,135 @@
+@import "notification/notification";
+.page {
+  &__my-profile {
+  }
+  &__notifications-content {
+  }
+}
+
+.notifications {
+  &__container {
+  }
+}
+
+.notifications-content {
+  &__block {
+    padding: rem(25) rem(23);
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    &:not(:last-child){
+      margin-bottom: rem(20);
+    }
+  }
+}
+
+.notifications-block {
+  &__title {
+  }
+
+  &__actions {
+  }
+
+  &__notification {
+    &_important {
+      .notification-item{
+        &__time {
+          &:before{
+            content: "";
+            width: rem(8);
+            height: rem(8);
+            background: #EA3829;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+.notifications-actions {
+  &__tabs {
+    display: flex;
+    margin-bottom: rem(15);
+  }
+
+  &__filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.notifications-tabs {
+  &__tab {
+  }
+
+  &__tab-button {
+    padding: rem(12) rem(25);
+    border-bottom: 2px solid #DBEAF3;
+    &.active{
+      border-bottom: 2px solid #30A1E1;
+    }
+  }
+}
+.notifications-filter {
+  &__side {
+    display: flex;
+    align-items: center;
+
+    column-gap: rem(15);
+  }
+
+  &__input-box {
+    border: 1px solid rgba(77, 151, 193, 0.2);
+    border-radius: 5px;
+    flex: 0 0 rem(300);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__input {
+    padding-left: rem(15);
+    outline: none;
+  }
+
+  &__submit {
+    padding: rem(11) rem(15);
+    border-left: 1px solid rgba(77, 151, 193, 0.2);
+    width: 18px;
+    height: 18px;
+    box-sizing: content-box;
+  }
+
+  &__item {
+    display: block;
+    padding: rem(11) rem(15);
+    border: 1px solid rgba(77, 151, 193, 0.2);
+    border-radius: 5px;
+    width: 18px;
+    height: 18px;
+    box-sizing: content-box;
+  }
+
+  &__days {
+    display: flex;
+    column-gap: rem(2);
+    padding: rem(2);
+    border: 1px solid rgba(77, 151, 193, 0.2);
+    border-radius: 5px;
+  }
+
+  &__day {
+    padding: rem(10) rem(25);
+    border-radius: 3px;
+    color: #80A4B8;
+    transition: background-color 0.3s ease,color 0.3s ease;
+    &.active, &:hover {
+      color: #FFFFFF;
+      background-color: #30A1E1;
+    }
+  }
+}
+

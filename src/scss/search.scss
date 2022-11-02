@@ -6,6 +6,12 @@
   background: #FFFFFF;
   border: 1px solid #E5E7EB;
   border-radius: 8px 8px 0px 0px;
+  transform-origin: right top;
+  transform: scale(0);
+  transition: transform 0.4s ease-in-out;
+  &.open-enter-active, &.open-enter-done{
+    transform: scale(1);
+  }
   &__input-box {
     padding: rem(20);
   }

@@ -1,0 +1,71 @@
+.page {
+  &__my-profile {
+    margin-top: rem(10);
+  }
+}
+
+.my-profile {
+  &__container {
+
+  }
+  &__content {
+    flex: 1 1 auto;
+  }
+}
+.my-profile-content {
+  &__box {
+    @media(max-width:$tablet){
+        max-width: none;
+    }
+  }
+
+  &__title {
+
+  }
+
+  &__form {
+  }
+}
+
+.my-profile-form {
+  &__upload-box {
+    padding: rem(10);
+    margin-bottom: rem(15);
+  }
+
+  &__image-preview {
+    position: relative;
+    padding-bottom: rem(100);
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    margin-bottom: rem(10);
+  }
+
+  &__upload-input-box {
+  }
+
+  &__upload-input {
+    position: absolute;
+    left: -2000px;
+    top: -2000px;
+  }
+
+  &__upload-label {
+    text-align: center;
+    display: block;
+    @media(any-hover: hover){
+      &:hover{
+            cursor: pointer;
+      }
+    }
+  }
+}

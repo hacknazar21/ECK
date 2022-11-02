@@ -1,11 +1,24 @@
 import "../src/scss/style.scss";
 import NextNProgress from "nextjs-progressbar";
-
-function MyApp({ Component, pageProps }) {
+import { AnimatePresence, motion } from "framer-motion";
+import Head from "next/head";
+import { useEffect } from "react";
+function MyApp({ Component, pageProps, router }) {
   return (
     <>
+      <Head>
+        <meta
+          name="description"
+          content="Многоуровневая интеллектуальная система автоматического обмена
+                решениями, новыми технологиями, информационными ресурсами"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <NextNProgress />
-      <Component {...pageProps} />
+      <AnimatePresence>
+        <Component {...pageProps} />
+      </AnimatePresence>
     </>
   );
 }
