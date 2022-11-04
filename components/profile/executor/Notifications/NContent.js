@@ -4,24 +4,24 @@ import Notification from "../../../common/Notifications/Notification/Notificatio
 
 function NContent(props) {
   return (
-    <section className="page__notifications-content notifications-content">
-      <div className="notifications-content__block notifications-block">
+    <section className="page__notifications-content notifications-content profile-content">
+      <div className="notifications-content__block profile-block notifications-block">
         <h1 className="notifications-block__title profile-title">
           Мои уведомления
         </h1>
-        <div className="notifications-block__actions notifications-actions">
-          <div className="notifications-actions__tabs notifications-tabs">
-            <div className="notifications-tabs__tab">
+        <div className="notifications-block__actions  notifications-actions">
+          <div className="notifications-actions__tabs notifications-tabs profile-tabs">
+            <div className="notifications-tabs__tab profile-tabs__tab">
               <button
-                className="notifications-tabs__tab-button active"
+                className="notifications-tabs__tab-button profile-tabs__tab-button active"
                 data-tab={"all"}
               >
                 Все
               </button>
             </div>
-            <div className="notifications-tabs__tab">
+            <div className="notifications-tabs__tab profile-tabs__tab">
               <button
-                className="notifications-tabs__tab-button"
+                className="notifications-tabs__tab-button profile-tabs__tab-button"
                 data-tab={"unread"}
               >
                 Непрочитанные
@@ -76,8 +76,14 @@ function NContent(props) {
           </div>
         </div>
       </div>
-      <div className="notifications-content__block notifications-block">
+      <div className="notifications-content__block profile-block notifications-block">
         <div className="notifications-block__notification notification notifications-block__notification_important">
+          <Notification />
+        </div>
+        <div className="notifications-block__notification notification notifications-block__notification_important">
+          <Notification />
+        </div>
+        <div className="notifications-block__notification notification">
           <Notification />
         </div>
       </div>

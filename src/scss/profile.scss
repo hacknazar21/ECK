@@ -1,0 +1,32 @@
+.profile-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.profile-card {
+  &__logo {
+  }
+
+  &__image {
+  }
+
+  &__name {
+  }
+
+  &__title {
+  }
+
+  &__text {
+  }
+}
+
+.profile-members {
+  &__icons {
+  }
+
+  &__icon {
+  }
+
+  &__number {
+  }
+}

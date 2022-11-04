@@ -14,12 +14,17 @@ function MyProfile(props) {
               <div className="aside-menu__link">Мой профиль</div>
             </li>
             <li className={"aside-menu__item"}>
-              <Link href={"/profile/customer/notifications"}>
+              <Link href={"/profile/executor/notifications"}>
                 <a className="aside-menu__link">Уведомления</a>
               </Link>
             </li>
             <li className={"aside-menu__item"}>
-              <Link href={"/profile/customer/notifications"}>
+              <Link href={"/profile/executor/team"}>
+                <a className="aside-menu__link">Команды</a>
+              </Link>
+            </li>
+            <li className={"aside-menu__item"}>
+              <Link href={"/profile/executor/projects"}>
                 <a className="aside-menu__link">Мои проекты</a>
               </Link>
             </li>
