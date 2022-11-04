@@ -137,9 +137,11 @@
   }
 
   &__button{
+    text-align: center;
     padding: rem(10) rem(40);
     font-size: rem(14);
     line-height: math.div(16,14);
+    flex: 1 1 auto;
     &_active{
       border: 1px solid #30A1E1;
       border-radius: 5px;

@@ -5,6 +5,7 @@ function Notification(props) {
   return (
     <article className="notification__item notification-item">
       <Spoiler
+        titleClass={"notification-item__open-spoiler"}
         spoilerClass={"notification-item__spoiler"}
         isLoaded={true}
         content={
@@ -26,21 +27,29 @@ function Notification(props) {
               </p>
             </div>
             <div className="notification-item__content-members notification-item-members">
-              <div className="notification-item-members__icons">
-                <div className="notification-item-members__icon">
-                  <img src={Avatar.src} alt="" />
+              <div className="notification-item-members__title profile-members__title">
+                Всего участников
+              </div>
+              <div className="notification-item-members__box profile-members__box">
+                <div className="notification-item-members__icons profile-members__icons">
+                  <div className="notification-item-members__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="notification-item-members__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="notification-item-members__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="notification-item-members__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="notification-item-members__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
                 </div>
-                <div className="notification-item-members__icon">
-                  <img src={Avatar.src} alt="" />
-                </div>
-                <div className="notification-item-members__icon">
-                  <img src={Avatar.src} alt="" />
-                </div>
-                <div className="notification-item-members__icon">
-                  <img src={Avatar.src} alt="" />
-                </div>
-                <div className="notification-item-members__icon">
-                  <img src={Avatar.src} alt="" />
+                <div className="notification-item-members__number profile-members__number">
+                  <span>10 участников</span>
                 </div>
               </div>
             </div>

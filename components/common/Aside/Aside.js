@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import AsideLayout from "../../../layouts/AsideLayout";
 
-function Aside({ children }) {
+function Aside({ children, modificationMenu = "" }) {
   const menu = useRef();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [menuHeight, setMenuHeight] = useState(null);
@@ -33,6 +33,9 @@ function Aside({ children }) {
     else {
       window.removeEventListener("resize", menuAction);
     }
+    return () => {
+      window.removeEventListener("resize", menuAction);
+    };
   }, []);
   useEffect(() => {
     if (menuHeight && height)
@@ -44,7 +47,7 @@ function Aside({ children }) {
   return (
     <AsideLayout>
       <menu className="aside__menu aside-menu">
-        <ul ref={menu} className="aside-menu__list">
+        <ul ref={menu} className={"aside-menu__list" + " " + modificationMenu}>
           {children}
         </ul>
       </menu>

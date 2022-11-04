@@ -4,10 +4,9 @@ import Header from "../../../components/common/Header";
 import Footer from "../../../components/common/Footer";
 import PageLayout from "../../../layouts/PageLayout";
 import PagesLayout from "../../../layouts/PagesLayout";
-import Team from "../../../components/team/Team";
-import SingleTeam from "../../../components/team/SingleTeam";
+import SingleTeamMembers from "../../../components/team/SingleTeamMembers";
 
-export default function TeamLinkPage() {
+export default function SingleTeamMembersPage() {
   return (
     <>
       <Head>
@@ -17,7 +16,7 @@ export default function TeamLinkPage() {
         <Header />
         <PagesLayout>
           <PageLayout>
-            <SingleTeam />
+            <SingleTeamMembers />
           </PageLayout>
         </PagesLayout>
         <Footer />

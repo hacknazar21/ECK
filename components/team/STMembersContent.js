@@ -44,7 +44,7 @@ function STContent(props) {
         <div className="single-team-page-block__actions  team-page-actions">
           <div className="single-team-page-actions__tabs single-team-page-tabs profile-tabs">
             <div className="single-team-page__tab profile-tabs__tab">
-              <Link href={"/team"}>
+              <Link href="/team/[link]/" as={"/team/" + link + "/"}>
                 <a className="single-team-page-tabs__tab-button profile-tabs__tab-button">
                   Информация
                 </a>
@@ -56,7 +56,10 @@ function STContent(props) {
               </button>
             </div>
             <div className="single-team-page-tabs__tab profile-tabs__tab">
-              <Link href={"/team/projects"}>
+              <Link
+                href="/team/[link]/projects"
+                as={"/team/" + link + "/projects"}
+              >
                 <a className="single-team-page-tabs__tab-button profile-tabs__tab-button">
                   Проекты (10)
                 </a>
@@ -64,65 +67,45 @@ function STContent(props) {
             </div>
           </div>
         </div>
-        <div className="single-team-page-content__info single-team-page-info">
-          <div className="single-team-page-info__block">
-            <h2 className="single-team-page-info__title">О компании:</h2>
-            <div className="single-team-page-info__text">
-              <p>
-                Разрабатываем мобильную игру для детей на Unity Хотим внедрить
-                вместо или параллельно с внутриигровой валютой (золото и
-                кристаллы) – свою криптовалюту или токен. Дабы
-                игроки...Разрабатываем мобильную игру для детей на Unity Хотим
-                внедрить вместо или параллельно с внутриигровой валютой (золото
-                и кристаллы) – свою криптовалюту или токен. Дабы
-                игроки...Разрабатываем мобильную игру для детей на Unity Хотим
-                внедрить вместо или параллельно с внутриигровой валютой (золото
-                и кристаллы) – свою криптовалюту или токен. Дабы игроки...
-                Разрабатываем мобильную игру для детей на Unity Хотим внедрить
-                вместо или параллельно с внутриигровой валютой (золото и
-                кристаллы) – свою криптовалюту или токен. Дабы
-                игроки...Разрабатываем мобильную игру для детей на Unity Хотим
-                внедрить вместо или параллельно с внутриигровой валютой (золото
-                и кристаллы) – свою криптовалюту или токен. Дабы
-                игроки...Разрабатываем мобильную игру для детей на Unity Хотим
-                внедрить вместо или параллельно с внутриигровой валютой (золото
-                и кристаллы) – свою криптовалюту или токен. Дабы игроки...
-              </p>
+        <div className="single-team-content-block__members single-team-members">
+          <article className="single-team-members__member single-team-member">
+            <div className="single-team-member__info">
+              <div className="single-team-member__icon">
+                <img src={Avatar.src} alt="" />
+              </div>
+              <div className="single-team-member__name-box">
+                <div className="single-team-member__name">Kiril Bledniy</div>
+                <a
+                  href="mailto:test@gmail.com"
+                  className="single-team-member__email"
+                >
+                  test@gmail.com
+                </a>
+              </div>
+              <div className="single-team-member__role">Администратор</div>
             </div>
-          </div>
-          <div className="single-team-page-info__block">
-            <h2 className="single-team-page-info__title">Документы команды:</h2>
-            <div className="single-team-page-info__docs">
-              <a
-                href={
-                  "https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3132&q=80"
-                }
-                target={"_blank"}
-                className="single-team-page-info__doc"
-              >
-                <img
-                  src={
-                    "https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3132&q=80"
-                  }
-                  alt=""
-                />
-              </a>
-              <a
-                href={
-                  "https://images.unsplash.com/photo-1532153975070-2e9ab71f1b14?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80"
-                }
-                target={"_blank"}
-                className="single-team-page-info__doc"
-              >
-                <img
-                  src={
-                    "https://images.unsplash.com/photo-1532153975070-2e9ab71f1b14?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80"
-                  }
-                  alt=""
-                />
-              </a>
+          </article>
+          <article className="single-team-members__member single-team-member">
+            <div className="single-team-member__info">
+              <div className="single-team-member__icon">
+                <img src={Avatar.src} alt="" />
+              </div>
+              <div className="single-team-member__name-box">
+                <div className="single-team-member__name">Albert Flores</div>
+                <a
+                  href="mailto:jackson.graham@example.com"
+                  className="single-team-member__email"
+                >
+                  jackson.graham@example.com
+                </a>
+              </div>
             </div>
-          </div>
+            <div className="single-team-member__actions">
+              <button className="window-notification__button window-notification__button_active">
+                Смотреть профиль
+              </button>
+            </div>
+          </article>
         </div>
       </div>
     </div>

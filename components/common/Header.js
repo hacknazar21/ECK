@@ -31,9 +31,9 @@ export default function Header() {
             <menu className="header__menu menu">
               <ul className="menu__list">
                 <li className="menu__item">
-                  <a href="" className="menu__link">
-                    Главная
-                  </a>
+                  <Link href="/">
+                    <a className="menu__link">Главная</a>
+                  </Link>
                 </li>
                 <li className="menu__item">
                   <a href="" className="menu__link">

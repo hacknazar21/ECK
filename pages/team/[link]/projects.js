@@ -4,11 +4,9 @@ import Header from "../../../components/common/Header";
 import Footer from "../../../components/common/Footer";
 import PageLayout from "../../../layouts/PageLayout";
 import PagesLayout from "../../../layouts/PagesLayout";
-import Team from "../../../components/team/Team";
-import SingleTeam from "../../../components/team/SingleTeam";
-import SingleTeamMembers from "../../../components/team/SingleTeamMembers";
+import SingleTeamProjects from "../../../components/team/SingleTeamProjects";
 
-export default function SingleTeamMembersPage() {
+export default function SingleTeamProjectsPage() {
   return (
     <>
       <Head>
@@ -18,7 +16,7 @@ export default function SingleTeamMembersPage() {
         <Header />
         <PagesLayout>
           <PageLayout>
-            <SingleTeamMembers />
+            <SingleTeamProjects />
           </PageLayout>
         </PagesLayout>
         <Footer />

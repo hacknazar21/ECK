@@ -1,5 +1,6 @@
 import React from "react";
 import Avatar from "../../../../src/img/avatars/01.png";
+import Link from "next/link";
 
 function TContent(props) {
   return (
@@ -25,13 +26,15 @@ function TContent(props) {
               </button>
             </div>
           </div>
-          <button className="team-actions__add-btn add-btn">
-            <span>
-              <span></span>
-              <span></span>
-            </span>
-            Создать новую команду
-          </button>
+          <Link href="/profile/executor/create-team">
+            <a className="team-actions__add-btn add-btn">
+              <span>
+                <span></span>
+                <span></span>
+              </span>
+              Создать новую команду
+            </a>
+          </Link>
         </div>
       </div>
       <div className="team-content__cards profile-cards">
@@ -78,9 +81,14 @@ function TContent(props) {
             </div>
           </div>
           <div className="window-notification__actions">
-            <button className="window-notification__button window-notification__button_active">
-              Принять
-            </button>
+            <Link
+              href="/profile/executor/team/[link]"
+              as="/profile/executor/team/ibm-team-123"
+            >
+              <a className="window-notification__button window-notification__button_active">
+                Смотреть
+              </a>
+            </Link>
           </div>
         </article>
         <article className="team-content__card profile-cards__card profile-card team-card">
@@ -127,7 +135,7 @@ function TContent(props) {
           </div>
           <div className="window-notification__actions">
             <button className="window-notification__button window-notification__button_active">
-              Принять
+              Смотреть
             </button>
           </div>
         </article>
@@ -175,7 +183,7 @@ function TContent(props) {
           </div>
           <div className="window-notification__actions">
             <button className="window-notification__button window-notification__button_active">
-              Принять
+              Смотреть проект
             </button>
           </div>
         </article>
@@ -223,7 +231,7 @@ function TContent(props) {
           </div>
           <div className="window-notification__actions">
             <button className="window-notification__button window-notification__button_active">
-              Принять
+              Смотреть
             </button>
           </div>
         </article>
@@ -271,7 +279,7 @@ function TContent(props) {
           </div>
           <div className="window-notification__actions">
             <button className="window-notification__button window-notification__button_active">
-              Принять
+              Смотреть
             </button>
           </div>
         </article>

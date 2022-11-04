@@ -1,5 +1,6 @@
 import Logo from "../../src/img/logo.svg";
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -19,9 +20,9 @@ export default function Footer() {
                 fill="white"
               />
             </svg>
-            <a href="/technical-support/" className="hf-layout__link">
-              Чат техподдержки
-            </a>
+            <Link href="/technical-support/">
+              <a className="hf-layout__link">Чат техподдержки</a>
+            </Link>
           </div>
         </div>
       </footer>

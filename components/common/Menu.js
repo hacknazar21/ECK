@@ -7,6 +7,7 @@ import Cat2 from "../../src/img/home/categories/2.png";
 import Cat3 from "../../src/img/home/categories/3.png";
 import Cat4 from "../../src/img/home/categories/4.png";
 import Cat7 from "../../src/img/home/categories/7.png";
+import Link from "next/link";
 
 function Menu(props) {
   return (
@@ -21,12 +22,14 @@ function Menu(props) {
           </a>
         </li>
         <li className="under-header-menu__item">
-          <a href="" className="under-header-menu__link">
-            Команда
-            <span>
-              <img src={Cat2.src} alt="" />
-            </span>
-          </a>
+          <Link href="/team">
+            <a className="under-header-menu__link">
+              Команда
+              <span>
+                <img src={Cat2.src} alt="" />
+              </span>
+            </a>
+          </Link>
         </li>
         <li className="under-header-menu__item">
           <a href="" className="under-header-menu__link">

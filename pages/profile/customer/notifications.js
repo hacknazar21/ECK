@@ -4,9 +4,9 @@ import Header from "../../../components/common/Header";
 import PageLayout from "../../../layouts/PageLayout";
 import PagesLayout from "../../../layouts/PagesLayout";
 import Footer from "../../../components/common/Footer";
-import Notifications from "../../../components/profile/customer/Notifications";
+import Notifications from "../../../components/profile/executor/Notifications";
 
-export default function MyProfilePage() {
+export default function NotificationsPage() {
   return (
     <>
       <Head>

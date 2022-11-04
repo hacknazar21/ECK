@@ -13,8 +13,9 @@ import Img8 from "../../src/img/aside/08.png";
 import Img9 from "../../src/img/aside/09.png";
 import Img10 from "../../src/img/aside/10.png";
 import STMembersContent from "./STMembersContent";
+import STProjectsContent from "./STProjectsContent";
 
-function SingleTeamMembers(props) {
+function SingleTeamProjects(props) {
   return (
     <section className="page__my-profile team-page">
       <div className="team-page__container">
@@ -71,11 +72,11 @@ function SingleTeamMembers(props) {
               </button>
             </li>
           </Aside>
-          <STMembersContent />
+          <STProjectsContent />
         </ProfilePageLayout>
       </div>
     </section>
   );
 }
 
-export default SingleTeamMembers;
+export default SingleTeamProjects;
