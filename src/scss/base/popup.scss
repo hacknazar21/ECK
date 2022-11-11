@@ -12,11 +12,14 @@
 	padding: rem(10);
 	&__content{
 		padding: rem(25) rem(23);
+		@media(max-width:$tablet){
+			padding: rem(15);
+		}
 		background-color: #FFFFFF;
 		border-radius: 5px;
 		width: 100%;
+		max-width: fit-content;
 		flex: 1 1 auto;
-		max-width: rem(605);
 		position: relative;
 		max-height: 100%;
 		overflow: scroll;
@@ -27,11 +30,16 @@
 		position: absolute;
 		top: rem(25);
 		right: rem(23);
+		@media(max-width:$tablet){
+			top: rem(15);
+			right: rem(15);
+		}
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
 		z-index: 1;
+		transform: translateY(25%);
 		span{
 			display: block;
 			width: rem(18);

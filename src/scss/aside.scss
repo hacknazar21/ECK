@@ -29,13 +29,20 @@
     &_columns{
       display: grid;
       grid-template-columns: 1fr 1fr;
+      @media(max-width:$tablet){
+        grid-template-columns: 1fr;
+        row-gap: rem(0);
+        box-shadow: 0px 4px 20px 2px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+
+      }
       column-gap: rem(40);
       row-gap: rem(10);
     }
   }
   &__item{
     &.active, &:hover{
-      background: rgba(77, 151, 193, 0.2);
+      background: rgba(77, 151, 193, 0.06);
       border-left: 2px solid #30A1E1;
       border-radius: 5px;
       div{
@@ -43,12 +50,13 @@
       }
     }
     border-left: 2px solid rgba(0,0,0,0);
+    cursor: pointer;
     @media(max-width:$tablet){
         &:not(.active){
           background-color: #FFFFFF;
         }
         &.active{
-          background: rgba(77, 151, 193, 0.2);
+          background-color: rgba(77, 151, 193, 0.06);
           border: 1px solid #30A1E1;
           border-radius: 10px;
           text-align: center;
@@ -85,6 +93,12 @@
     .aside-menu__list_columns &{
       position: relative;
       padding-bottom: rem(75);
+      @media(max-width:$tablet){
+        padding-bottom: rem(25);
+        width: auto;
+        margin-left: rem(15);
+        background: none;
+      }
       width: 100%;
       img {
         position: absolute;

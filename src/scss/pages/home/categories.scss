@@ -5,6 +5,12 @@
   &__items {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    @media(max-width:$tablet){
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    @media(max-width:$mobile){
+      grid-template-columns: 1fr 1fr;
+    }
     gap: rem(10);
   }
 
@@ -57,6 +63,8 @@
     border-radius: 5px;
     color: #30A1E1;
     transition: color 0.3s ease, background-color 0.3s ease;
+    font-weight: 600;
+    @include adaptiveValue("font-size", 16, 12);
+    line-height: math.div(20,16);
   }
-
 }

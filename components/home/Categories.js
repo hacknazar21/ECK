@@ -32,7 +32,7 @@ export default function Categories() {
     >
       <div className="categories__container">
         <div className="categories__items">
-          <Link href={""}>
+          <Link href={"/projects"}>
             <motion.a
               custom={1}
               variants={animationCategory}
@@ -44,7 +44,7 @@ export default function Categories() {
               <div className="category__link">Проекты</div>
             </motion.a>
           </Link>
-          <Link href={""}>
+          <Link href={"/team"}>
             <motion.a
               custom={2}
               variants={animationCategory}
@@ -53,10 +53,10 @@ export default function Categories() {
               <div className="category__icon">
                 <img src={Cat2.src} alt="" />
               </div>
-              <div className="category__link">Команда</div>
+              <div className="category__link">Команды</div>
             </motion.a>
           </Link>
-          <Link href={""}>
+          <Link href="/announcements">
             <motion.a
               custom={3}
               variants={animationCategory}

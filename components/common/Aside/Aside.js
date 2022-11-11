@@ -6,36 +6,32 @@ function Aside({ children, modificationMenu = "" }) {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [menuHeight, setMenuHeight] = useState(null);
   const [height, setHeight] = useState(null);
-  let isDefineded = false;
+  const [isMobile, setIsMobile] = useState(false);
+  let isDefined = false;
+  const toggleMenu = () => {
+    setIsOpenMenu((prevState) => {
+      return !prevState;
+    });
+  };
   const menuAction = () => {
-    if (window.innerWidth < 991.98 && !isDefineded) {
-      const active = menu.current.querySelector("li.active");
-      const menuHeightCurrent = menu.current.clientHeight;
-      const heightCurrent = active.clientHeight + 2;
+    if (window.innerWidth < 991.98 && !isDefined) {
+      const active = menu.current?.querySelector("li.active");
+      const menuHeightCurrent = menu.current?.clientHeight;
+      const heightCurrent = active?.clientHeight + 2;
       setMenuHeight(menuHeightCurrent);
       setHeight(heightCurrent);
-
       menu.current.style.maxHeight = `${heightCurrent}px`;
-      console.log(heightCurrent, menuHeightCurrent);
-      active.addEventListener("click", (event) => {
-        setIsOpenMenu((prevState) => !prevState);
-      });
-      isDefineded = true;
+      isDefined = true;
+      setIsMobile(true);
     } else if (window.innerWidth >= 991.98) {
-      isDefineded = false;
+      isDefined = false;
+      setIsMobile(false);
       menu.current.removeAttribute("style");
     }
   };
 
   useEffect(() => {
     menuAction();
-    if (!isDefineded) window.addEventListener("resize", menuAction);
-    else {
-      window.removeEventListener("resize", menuAction);
-    }
-    return () => {
-      window.removeEventListener("resize", menuAction);
-    };
   }, []);
   useEffect(() => {
     if (menuHeight && height)
@@ -48,7 +44,20 @@ function Aside({ children, modificationMenu = "" }) {
     <AsideLayout>
       <menu className="aside__menu aside-menu">
         <ul ref={menu} className={"aside-menu__list" + " " + modificationMenu}>
-          {children}
+          {isMobile
+            ? React.Children.map(children, (child) => {
+                if (child.props.className.indexOf("active") !== -1) {
+                  return React.cloneElement(child, { onClick: toggleMenu });
+                }
+              })
+            : ""}
+          {isMobile
+            ? React.Children.map(children, (child) => {
+                if (child.props.className.indexOf("active") === -1)
+                  return child;
+              })
+            : ""}
+          {!isMobile ? children : ""}
         </ul>
       </menu>
     </AsideLayout>

@@ -1,0 +1,16 @@
+.report {
+  &__title {
+    font-weight: 600;
+    font-size: rem(22);
+    line-height: math.div(16,22);
+    color: #141414;
+    margin-bottom: rem(30);
+    @media(max-width:$tablet){
+      line-height: math.div(25,22);
+    }
+  }
+  &__file{
+    margin-bottom: rem(30);
+  }
+}
+

@@ -2,31 +2,17 @@ import React from "react";
 import Notification from "../common/Notifications/Notification/Notification";
 import Avatar from "../../src/img/avatars/01.png";
 import Link from "next/link";
+import TabBarItem from "../common/TabBar/TabBarItem";
+import TabBar from "../common/TabBar/TabBar";
 
 function TContent(props) {
   return (
     <section className="page__team-page-content team-page-content profile-content">
-      <div className="team-page-content__block profile-block team-page-block">
-        <h1 className="team-page-content__title profile-title">Команды</h1>
-        <div className="team-page-block__actions  team-page-actions">
-          <div className="notifications-actions__tabs team-page-tabs profile-tabs">
-            <div className="team-page-tabs__tab profile-tabs__tab">
-              <button
-                className="team-page-tabs__tab-button profile-tabs__tab-button active"
-                data-tab={"all"}
-              >
-                Все команды
-              </button>
-            </div>
-            <div className="team-page-tabs__tab profile-tabs__tab">
-              <button
-                className="team-page-tabs__tab-button profile-tabs__tab-button"
-                data-tab={"unread"}
-              >
-                Мои команды
-              </button>
-            </div>
-          </div>
+      <TabBar
+        header={
+          <h1 className="team-page-content__title profile-title">Команды</h1>
+        }
+        component={
           <div className="notifications-actions__filter notifications-filter">
             <div className="notifications-filter__side">
               <div className="notifications-filter__input-box">
@@ -73,57 +59,166 @@ function TContent(props) {
               </button>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="projects-cards profile-cards">
-        <article className="projects-cards__card projects-card profile-cards__card profile-card">
-          <Link href="/team/[link]/" as="/team/ibm-team-214">
-            <a className="projects-card__logo profile-card__logo">
-              <div className="projects-card__image profile-card__image">
-                <img src={Avatar.src} alt="" />
-              </div>
-              <div className="projects-card__name profile-card__name">IBM</div>
-            </a>
-          </Link>
-          <h2 className="projects-card__title profile-card__title">
-            Доработать проект для информации и связи в университете
-          </h2>
-          <div className="projects-card__text profile-card__text">
-            <p>
-              Разрабатываем мобильную игру для детей на Unity Хотим внедрить
-              вместо или параллельно с внутриигровой валютой (золото и
-              кристаллы) – свою криптовалюту или токен. Дабы игроки...
-            </p>
-          </div>
-          <div className="projects-card__members projects-card-members profile-members">
-            <div className="projects-card-members__title profile-members__title">
-              Всего участников
+        }
+      >
+        <TabBarItem
+          className={"projects-cards profile-cards"}
+          label={"Все команды"}
+        >
+          <article className="projects-cards__card projects-card profile-cards__card profile-card">
+            <Link href="/team/[link]/" as="/team/ibm-team-214">
+              <a className="projects-card__logo profile-card__logo">
+                <div className="projects-card__image profile-card__image">
+                  <img src={Avatar.src} alt="" />
+                </div>
+                <div className="projects-card__name profile-card__name">
+                  IBM
+                </div>
+              </a>
+            </Link>
+            <h2 className="projects-card__title profile-card__title">
+              Доработать проект для информации и связи в университете
+            </h2>
+            <div className="projects-card__text profile-card__text">
+              <p>
+                Разрабатываем мобильную игру для детей на Unity Хотим внедрить
+                вместо или параллельно с внутриигровой валютой (золото и
+                кристаллы) – свою криптовалюту или токен. Дабы игроки...
+              </p>
             </div>
-            <div className="projects-card__members-box profile-members__box">
-              <div className="projects-card__icons profile-members__icons">
-                <div className="projects-card__icon profile-members__icon">
-                  <img src={Avatar.src} alt="" />
-                </div>
-                <div className="projects-card__icon profile-members__icon">
-                  <img src={Avatar.src} alt="" />
-                </div>
-                <div className="projects-card__icon profile-members__icon">
-                  <img src={Avatar.src} alt="" />
-                </div>
-                <div className="projects-card__icon profile-members__icon">
-                  <img src={Avatar.src} alt="" />
-                </div>
-                <div className="projects-card__icon profile-members__icon">
-                  <img src={Avatar.src} alt="" />
-                </div>
+            <div className="projects-card__members projects-card-members profile-members">
+              <div className="projects-card-members__title profile-members__title">
+                Всего участников
               </div>
-              <div className="projects-card__number profile-members__number">
-                <span>10 участников</span>
+              <div className="projects-card__members-box profile-members__box">
+                <div className="projects-card__icons profile-members__icons">
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                </div>
+                <div className="projects-card__number profile-members__number">
+                  <span>10 участников</span>
+                </div>
               </div>
             </div>
-          </div>
-        </article>
-      </div>
+          </article>
+          <article className="projects-cards__card projects-card profile-cards__card profile-card">
+            <Link href="/team/[link]/" as="/team/ibm-team-214">
+              <a className="projects-card__logo profile-card__logo">
+                <div className="projects-card__image profile-card__image">
+                  <img src={Avatar.src} alt="" />
+                </div>
+                <div className="projects-card__name profile-card__name">
+                  IBM
+                </div>
+              </a>
+            </Link>
+            <h2 className="projects-card__title profile-card__title">
+              Доработать проект для информации и связи в университете
+            </h2>
+            <div className="projects-card__text profile-card__text">
+              <p>
+                Разрабатываем мобильную игру для детей на Unity Хотим внедрить
+                вместо или параллельно с внутриигровой валютой (золото и
+                кристаллы) – свою криптовалюту или токен. Дабы игроки...
+              </p>
+            </div>
+            <div className="projects-card__members projects-card-members profile-members">
+              <div className="projects-card-members__title profile-members__title">
+                Всего участников
+              </div>
+              <div className="projects-card__members-box profile-members__box">
+                <div className="projects-card__icons profile-members__icons">
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                </div>
+                <div className="projects-card__number profile-members__number">
+                  <span>10 участников</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </TabBarItem>
+        <TabBarItem
+          className={"projects-cards profile-cards"}
+          label={"Мои команды"}
+        >
+          <article className="projects-cards__card projects-card profile-cards__card profile-card">
+            <Link href="/team/[link]/" as="/team/ibm-team-214">
+              <a className="projects-card__logo profile-card__logo">
+                <div className="projects-card__image profile-card__image">
+                  <img src={Avatar.src} alt="" />
+                </div>
+                <div className="projects-card__name profile-card__name">
+                  IBM
+                </div>
+              </a>
+            </Link>
+            <h2 className="projects-card__title profile-card__title">
+              Доработать проект для информации и связи в университете
+            </h2>
+            <div className="projects-card__text profile-card__text">
+              <p>
+                Разрабатываем мобильную игру для детей на Unity Хотим внедрить
+                вместо или параллельно с внутриигровой валютой (золото и
+                кристаллы) – свою криптовалюту или токен. Дабы игроки...
+              </p>
+            </div>
+            <div className="projects-card__members projects-card-members profile-members">
+              <div className="projects-card-members__title profile-members__title">
+                Всего участников
+              </div>
+              <div className="projects-card__members-box profile-members__box">
+                <div className="projects-card__icons profile-members__icons">
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                  <div className="projects-card__icon profile-members__icon">
+                    <img src={Avatar.src} alt="" />
+                  </div>
+                </div>
+                <div className="projects-card__number profile-members__number">
+                  <span>10 участников</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </TabBarItem>
+      </TabBar>
     </section>
   );
 }

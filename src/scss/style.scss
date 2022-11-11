@@ -179,6 +179,8 @@ body {
 @import "src/scss/menu";
 @import "src/scss/aside";
 @import "src/scss/notifications-window";
+@import "src/scss/chat";
+@import "src/scss/file";
 
 // Подключение стилей отдельных блоков
 @import "src/scss/header";
@@ -189,7 +191,7 @@ body {
 @import "pages/auth";
 @import "pages/profile";
 @import "pages/team";
-
+@import "pages/projects";
 @import "src/scss/base/swiper";
 
  #root{
@@ -197,4 +199,26 @@ body {
  }
 *{
   scroll-behavior: smooth;
+}
+.react-datepicker__input-container {
+  position: relative;
+  &:before{
+    content: "";
+    position: absolute;
+    width: rem(16);
+    height: rem(16);
+    background: url("../img/calendar.png") center/contain no-repeat;
+    z-index: 1;
+    right: 0;
+  }
+  input{
+    width: 100%;
+    padding-bottom: rem(15);
+    border-bottom: 1px solid #CFDCE4;
+    outline: none;
+    transition: border-color 0.3s ease;
+    &:focus{
+      border-color: #4D97C1;
+    }
+  }
 }

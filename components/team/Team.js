@@ -18,7 +18,7 @@ function Team(props) {
       <div className="team-page__container">
         <ProfilePageLayout>
           <Aside modificationMenu={"aside-menu__list_columns"}>
-            <li className={"aside-menu__item"}>
+            <li className={"aside-menu__item active"}>
               <button className="aside-menu__link">
                 <img src={Img1.src} alt="" />
               </button>

@@ -3,6 +3,8 @@ import Link from "next/link";
 import Avatar from "../../../../src/img/avatars/01.png";
 import { useRouter } from "next/router";
 import Popup from "../../../common/Popup";
+import TabBarItem from "../../../common/TabBar/TabBarItem";
+import TabBar from "../../../common/TabBar/TabBar";
 function STContent(props) {
   const router = useRouter();
   const [active, setActive] = useState(false);
@@ -31,8 +33,8 @@ function STContent(props) {
 
   return (
     <section className="single-team__content single-team-content profile-content">
-      <div className="single-team-content-block profile-block">
-        <header className="single-team-content-block__header">
+      <TabBar
+        header={
           <h1
             onClick={() => {
               router.back();
@@ -45,20 +47,9 @@ function STContent(props) {
             </button>
             IBM
           </h1>
-          <div className="single-team-content__actions single-team-content-actions profile-actions">
-            <div className="single-team-content-actions__tabs single-team-actions-tabs profile-tabs">
-              <div className="single-team-actions-tabs__tab profile-tabs__tab">
-                <button className="single-team-actions-tabs__tab-button profile-tabs__tab-button active">
-                  Участники
-                </button>
-                <button className="single-team-actions-tabs__tab-button profile-tabs__tab-button">
-                  Заявки
-                </button>
-              </div>
-            </div>
-          </div>
-        </header>
-        <div className="single-team-content-block__members single-team-members">
+        }
+      >
+        <TabBarItem className={"profile-block"} label={"Участники"}>
           <article className="single-team-members__member single-team-member">
             <div className="single-team-member__info">
               <div className="single-team-member__icon">
@@ -176,24 +167,122 @@ function STContent(props) {
               </button>
             </div>
           </article>
-        </div>
-        <div className="window-notification__actions single-team-content__main-actions">
-          <button
-            onClick={() => {
-              setActive(true);
-            }}
-            className="window-notification__button window-notification__button_active"
-          >
-            Пригласить в команду
-          </button>
-          <button className="window-notification__button window-notification__button_no-active">
-            Распустить команду
-          </button>
-          <button className="window-notification__button window-notification__button_no-active">
-            Покинуть команду
-          </button>
-        </div>
-      </div>
+          <div className="window-notification__actions single-team-content__main-actions">
+            <button
+              onClick={() => {
+                setActive(true);
+              }}
+              className="window-notification__button window-notification__button_active"
+            >
+              Пригласить в команду
+            </button>
+            <button className="window-notification__button window-notification__button_no-active">
+              Распустить команду
+            </button>
+            <button className="window-notification__button window-notification__button_no-active">
+              Покинуть команду
+            </button>
+          </div>
+        </TabBarItem>
+        <TabBarItem className={"profile-block"} label={"Заявки"}>
+          <article className="single-team-members__member single-team-member">
+            <div className="single-team-member__info">
+              <div className="single-team-member__icon">
+                <img src={Avatar.src} alt="" />
+              </div>
+              <div className="single-team-member__name-box">
+                <div className="single-team-member__name">Albert Flores</div>
+                <a
+                  href="mailto:jackson.graham@example.com"
+                  className="single-team-member__email"
+                >
+                  jackson.graham@example.com
+                </a>
+              </div>
+            </div>
+            <div className="single-team-member__actions">
+              <button className="window-notification__button window-notification__button_active">
+                Принять запрос
+              </button>
+              <button className="window-notification__button window-notification__button_no-active">
+                Отклонить
+              </button>
+            </div>
+          </article>
+          <article className="single-team-members__member single-team-member">
+            <div className="single-team-member__info">
+              <div className="single-team-member__icon">
+                <img src={Avatar.src} alt="" />
+              </div>
+              <div className="single-team-member__name-box">
+                <div className="single-team-member__name">Albert Flores</div>
+                <a
+                  href="mailto:jackson.graham@example.com"
+                  className="single-team-member__email"
+                >
+                  jackson.graham@example.com
+                </a>
+              </div>
+            </div>
+            <div className="single-team-member__actions">
+              <button className="window-notification__button window-notification__button_active">
+                Принять запрос
+              </button>
+              <button className="window-notification__button window-notification__button_no-active">
+                Отклонить
+              </button>
+            </div>
+          </article>
+          <article className="single-team-members__member single-team-member">
+            <div className="single-team-member__info">
+              <div className="single-team-member__icon">
+                <img src={Avatar.src} alt="" />
+              </div>
+              <div className="single-team-member__name-box">
+                <div className="single-team-member__name">Albert Flores</div>
+                <a
+                  href="mailto:jackson.graham@example.com"
+                  className="single-team-member__email"
+                >
+                  jackson.graham@example.com
+                </a>
+              </div>
+            </div>
+            <div className="single-team-member__actions">
+              <button className="window-notification__button window-notification__button_active">
+                Принять запрос
+              </button>
+              <button className="window-notification__button window-notification__button_no-active">
+                Отклонить
+              </button>
+            </div>
+          </article>
+          <article className="single-team-members__member single-team-member">
+            <div className="single-team-member__info">
+              <div className="single-team-member__icon">
+                <img src={Avatar.src} alt="" />
+              </div>
+              <div className="single-team-member__name-box">
+                <div className="single-team-member__name">Albert Flores</div>
+                <a
+                  href="mailto:jackson.graham@example.com"
+                  className="single-team-member__email"
+                >
+                  jackson.graham@example.com
+                </a>
+              </div>
+            </div>
+            <div className="single-team-member__actions">
+              <button className="window-notification__button window-notification__button_active">
+                Принять запрос
+              </button>
+              <button className="window-notification__button window-notification__button_no-active">
+                Отклонить
+              </button>
+            </div>
+          </article>
+        </TabBarItem>
+      </TabBar>
       <Popup setActive={setActive} active={active}>
         <header className="single-team-content-block__header">
           <h1 className="single-team-content__title profile-title">

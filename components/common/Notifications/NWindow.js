@@ -89,7 +89,7 @@ function NWindow(props) {
               </div>
             </section>
             <footer className="notifications-window__footer">
-              <Link href="/profile/customer/notifications">
+              <Link href="/profile/executor/notifications">
                 <a className="notifications-window__more-link more-link">
                   Все уведомления
                 </a>

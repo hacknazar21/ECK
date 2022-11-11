@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Spoiler from "../../Spoiler";
 import Avatar from "../../../../src/img/avatars/01.png";
 function Notification(props) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    setIsLoaded(true);
+  });
   return (
     <article className="notification__item notification-item">
       <Spoiler
         titleClass={"notification-item__open-spoiler"}
         spoilerClass={"notification-item__spoiler"}
-        isLoaded={true}
+        isLoaded={isLoaded}
         content={
           <div className="notification-item__content">
             <div className="notification-item__logo">

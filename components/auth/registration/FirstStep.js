@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Select from "../../common/Select/Select";
 import Loading from "../../common/Loading";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import useHttp from "../../../hooks/hooks.http";
+import { Validation } from "../../../helpers/validation";
 
 const animationAuth = {
   hidden: {
@@ -19,19 +21,105 @@ export default function FirstStep() {
   const router = useRouter();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [form, setForm] = useState({
-    person: "customer",
+    user_type: "CUSTOMER",
+    entity_type: "INDIVIDUAL",
     email: "",
     password: "",
     password_check: "",
-    face: "",
   });
-
+  const formRef = useRef();
+  const [isCode, setIsCode] = useState(false);
+  const [errorForm, setErrorForm] = useState(false);
+  const { loading, respCode, request } = useHttp();
+  const validation = new Validation();
   function formChangeHandler(event) {
+    if (event.target.name === "email") {
+      if (!validation.isEmail(event.target.value)) {
+        event.target.classList.add("error");
+        setErrorForm(true);
+        const isLabelExist = event.target
+          .closest(".auth__input-box")
+          .querySelector(".auth__input-error-label");
+        if (!isLabelExist)
+          event.target
+            .closest(".auth__input-box")
+            .insertAdjacentHTML(
+              "beforeend",
+              '<p class="auth__input-error-label">неправильно введенные данные</p>'
+            );
+      } else {
+        setErrorForm(false);
+        const isLabelExist = event.target
+          .closest(".auth__input-box")
+          .querySelector(".auth__input-error-label");
+        if (isLabelExist) isLabelExist.remove();
+        event.target.classList.remove("error");
+      }
+    } else if (event.target.name === "password_check") {
+      if (!validation.isPasswordsMatch(form["password"], event.target.value)) {
+        event.target.classList.add("error");
+        const isLabelExist = event.target
+          .closest(".auth__input-box")
+          .querySelector(".auth__input-error-label");
+        if (!isLabelExist)
+          event.target
+            .closest(".auth__input-box")
+            .insertAdjacentHTML(
+              "beforeend",
+              '<p class="auth__input-error-label">пароли не совпадают</p>'
+            );
+        setErrorForm(true);
+      } else {
+        setErrorForm(false);
+        const isLabelExist = event.target
+          .closest(".auth__input-box")
+          .querySelector(".auth__input-error-label");
+        if (isLabelExist) isLabelExist.remove();
+        event.target.classList.remove("error");
+      }
+    }
     setForm((prevState) => {
       prevState[event.target.name] = event.target.value;
       return { ...prevState };
     });
   }
+
+  async function sendCodeClickHandler(e) {
+    if (errorForm) return;
+    for (const formKey in form) {
+      if (form[formKey] === "" && formKey !== "entity_type") return;
+    }
+    try {
+      const data = await request("/api/auth/register/", "POST", form, {
+        "Content-Type": "application/json",
+      });
+
+      setIsCode(true);
+    } catch (e) {
+      for (const dataKey in JSON.parse(e.message)) {
+        const errorInput = formRef.current.querySelector(
+          `input[name="${dataKey}"]`
+        );
+        if (errorInput) {
+          errorInput.classList.add("error");
+          setErrorForm(true);
+          const isLabelExist = errorInput
+            .closest(".auth__input-box")
+            .querySelector(".auth__input-error-label");
+          if (!isLabelExist)
+            errorInput
+              .closest(".auth__input-box")
+              .insertAdjacentHTML(
+                "beforeend",
+                `<p class="auth__input-error-label">${
+                  JSON.parse(e.message)[dataKey]
+                }</p>`
+              );
+        }
+      }
+    }
+  }
+
   return (
     <motion.section
       initial={"hidden"}
@@ -52,48 +140,48 @@ export default function FirstStep() {
             </button>
             <h1 className="auth__title">Регистрация</h1>
           </div>
-          <div className="auth__form">
+          <div ref={formRef} className="auth__form">
             <div className="auth__inputs">
               <div className="auth__input-box">
                 <div className="auth__input-checkboxes">
                   <div className="auth__input-checkbox-box">
                     <input
                       type="radio"
-                      id="customer"
+                      id="CUSTOMER"
                       onChange={formChangeHandler}
-                      defaultValue={"customer"}
-                      defaultChecked={form.person === "customer"}
-                      name="person"
+                      defaultValue={"CUSTOMER"}
+                      defaultChecked={form.user_type === "CUSTOMER"}
+                      name="user_type"
                       className="auth__input-checkbox"
                     />
-                    <label htmlFor="customer" className="auth__label-checkbox">
+                    <label htmlFor="CUSTOMER" className="auth__label-checkbox">
                       Заказчик
                     </label>
                   </div>
                   <div className="auth__input-checkbox-box">
                     <input
                       type="radio"
-                      id="executor"
-                      defaultValue={"executor"}
+                      id="EXECUTOR"
+                      defaultValue={"EXECUTOR"}
                       onChange={formChangeHandler}
-                      name="person"
+                      name="user_type"
                       className="auth__input-checkbox"
                     />
-                    <label htmlFor="executor" className="auth__label-checkbox">
+                    <label htmlFor="EXECUTOR" className="auth__label-checkbox">
                       Исполнитель
                     </label>
                   </div>
                 </div>
               </div>
-              {form.person !== "customer" ? (
+              {form.user_type !== "CUSTOMER" ? (
                 <div className="auth__input-box">
                   <Select
-                    name={"face"}
+                    name={"entity_type"}
                     onSelect={formChangeHandler}
                     title={"Физ. лицо / Юр. лицо "}
                     items={[
-                      { name: "Физ. лицо", value: "fiz" },
-                      { name: "Юр. лицо", value: "ur" },
+                      { name: "Физ. лицо", value: "INDIVIDUAL" },
+                      { name: "Юр. лицо", value: "LEGAL" },
                     ]}
                   />
                 </div>
@@ -104,6 +192,7 @@ export default function FirstStep() {
                 <input
                   type="text"
                   id={"email"}
+                  name={"email"}
                   required={true}
                   onInput={formChangeHandler}
                   placeholder=" "
@@ -117,6 +206,7 @@ export default function FirstStep() {
                 <input
                   type={isShowPassword ? "text" : "password"}
                   id={"password"}
+                  name={"password"}
                   required={true}
                   onInput={formChangeHandler}
                   placeholder=" "
@@ -171,6 +261,7 @@ export default function FirstStep() {
                 <input
                   type={isShowPassword ? "text" : "password"}
                   id={"password_check"}
+                  name={"password_check"}
                   required={true}
                   placeholder=" "
                   onInput={formChangeHandler}
@@ -224,21 +315,31 @@ export default function FirstStep() {
             </div>
           </div>
           <div className="auth__actions">
-            <Link
-              href={
-                form.person === "customer"
-                  ? "/auth/registration/customer-reg"
-                  : form.face === "fiz"
-                  ? "/auth/registration/executor-reg-fiz"
-                  : "/auth/registration/executor-reg-ur"
-              }
-            >
-              <a className="auth__submit-button">Зарегистрироваться</a>
-            </Link>
+            {isCode && (
+              <Link
+                href={
+                  form.person === "customer"
+                    ? "/auth/registration/customer-reg"
+                    : form.face === "fiz"
+                    ? "/auth/registration/executor-reg-fiz"
+                    : "/auth/registration/executor-reg-ur"
+                }
+              >
+                <a className="auth__submit-button">Далее</a>
+              </Link>
+            )}
+            {!isCode && (
+              <button
+                onClick={sendCodeClickHandler}
+                className="auth__submit-button"
+              >
+                Отправить код подтверждения
+              </button>
+            )}
             <Link href="/auth/login">
               <a className="auth__link">Войти</a>
             </Link>
-            <Loading />
+            {loading && <Loading />}
           </div>
           <div className="auth__info">
             <p>

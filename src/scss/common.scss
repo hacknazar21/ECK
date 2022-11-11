@@ -23,9 +23,12 @@
   height: 100%;
 }
 .pages-layout{
+  &.home  {
+    max-height: calc(100vh - 120px);
+  }
   max-height: calc(100vh - 205px);
   @media(max-width:$tablet){
-    max-height: calc(100vh - 105px);
+    max-height: calc(100vh - 120px);
   }
   overflow-y: scroll;
   overflow-x: hidden;
@@ -72,8 +75,11 @@
   background-color: #278BE8;
   border-radius: 5px;
   color: #EEEEEE;
-  display: flex;
+  display: inline-flex;
   column-gap: rem(10);
+  &.team-actions__add-btn{
+    margin-left: auto;
+  }
   & > span{
     flex: 0 0 rem(16);
     width: rem(16);

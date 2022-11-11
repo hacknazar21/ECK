@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image3 from "../../src/img/menu/3.png";
 import Image5 from "../../src/img/menu/5.png";
 import Image7 from "../../src/img/menu/7.png";
@@ -8,21 +8,37 @@ import Cat3 from "../../src/img/home/categories/3.png";
 import Cat4 from "../../src/img/home/categories/4.png";
 import Cat7 from "../../src/img/home/categories/7.png";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 function Menu(props) {
+  const router = useRouter();
   return (
     <menu className="under-header__menu under-header-menu">
       <ul className="under-header-menu__list">
-        <li className="under-header-menu__item">
-          <a href="" className="under-header-menu__link">
-            Объявления
-            <span>
-              <img src={Cat3.src} alt="" />
-            </span>
-          </a>
+        <li
+          className={
+            "under-header-menu__item" +
+            " " +
+            (router.route.indexOf("/announcements") !== -1 ? "active" : "")
+          }
+        >
+          <Link href="/announcements/">
+            <a className="under-header-menu__link">
+              Объявления
+              <span>
+                <img src={Cat3.src} alt="" />
+              </span>
+            </a>
+          </Link>
         </li>
-        <li className="under-header-menu__item">
-          <Link href="/team">
+        <li
+          className={
+            "under-header-menu__item" +
+            " " +
+            (router.route.indexOf("/team") !== -1 ? "active" : "")
+          }
+        >
+          <Link href="/team/">
             <a className="under-header-menu__link">
               Команда
               <span>
@@ -31,13 +47,21 @@ function Menu(props) {
             </a>
           </Link>
         </li>
-        <li className="under-header-menu__item">
-          <a href="" className="under-header-menu__link">
-            Проекты
-            <span>
-              <img src={Image3.src} alt="" />
-            </span>
-          </a>
+        <li
+          className={
+            "under-header-menu__item" +
+            " " +
+            (router.route.indexOf("/projects") !== -1 ? "active" : "")
+          }
+        >
+          <Link href="/projects/">
+            <a href="" className="under-header-menu__link">
+              Проекты
+              <span>
+                <img src={Image3.src} alt="" />
+              </span>
+            </a>
+          </Link>
         </li>
         <li className="under-header-menu__item">
           <a href="" className="under-header-menu__link">

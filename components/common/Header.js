@@ -6,8 +6,15 @@ import { useRef } from "react";
 import Menu from "./Menu";
 import SResult from "./Search/SResult";
 import NWindow from "./Notifications/NWindow";
+import { useRouter } from "next/router";
 
 export default function Header() {
+  const router = useRouter();
+
+  function openMenuClickHandler(e) {
+    document.documentElement.classList.toggle("open-menu");
+  }
+
   return (
     <>
       <header className="header">
@@ -65,10 +72,16 @@ export default function Header() {
                 </Link>
               </div>
             </div>
+            <button onClick={openMenuClickHandler} className="menu__burger">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
           </div>
         </div>
+        {router.pathname !== "/" ? <Menu /> : ""}
       </header>
-      <Menu />
     </>
   );
 }

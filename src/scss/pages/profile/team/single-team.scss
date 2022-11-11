@@ -154,6 +154,11 @@
   }
 
   &__result {
+    @media(any-hover: hover){
+      &:hover{
+        cursor: pointer;
+      }
+    }
     display: flex;
     align-items: center;
     column-gap: rem(20);

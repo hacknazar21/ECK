@@ -1,33 +1,19 @@
 import React from "react";
 import Spoiler from "../../../common/Spoiler";
 import Notification from "../../../common/Notifications/Notification/Notification";
+import TabBarItem from "../../../common/TabBar/TabBarItem";
+import TabBar from "../../../common/TabBar/TabBar";
 
 function NContent(props) {
   return (
     <section className="page__notifications-content notifications-content profile-content">
-      <div className="notifications-content__block profile-block notifications-block">
-        <h1 className="notifications-block__title profile-title">
-          Мои уведомления
-        </h1>
-        <div className="notifications-block__actions  notifications-actions">
-          <div className="notifications-actions__tabs notifications-tabs profile-tabs">
-            <div className="notifications-tabs__tab profile-tabs__tab">
-              <button
-                className="notifications-tabs__tab-button profile-tabs__tab-button active"
-                data-tab={"all"}
-              >
-                Все
-              </button>
-            </div>
-            <div className="notifications-tabs__tab profile-tabs__tab">
-              <button
-                className="notifications-tabs__tab-button profile-tabs__tab-button"
-                data-tab={"unread"}
-              >
-                Непрочитанные
-              </button>
-            </div>
-          </div>
+      <TabBar
+        header={
+          <h1 className="notifications-block__title profile-title">
+            Мои уведомления
+          </h1>
+        }
+        component={
           <div className="notifications-actions__filter notifications-filter">
             <div className="notifications-filter__side">
               <div className="notifications-filter__input-box">
@@ -74,19 +60,29 @@ function NContent(props) {
               </button>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="notifications-content__block profile-block notifications-block">
-        <div className="notifications-block__notification notification notifications-block__notification_important">
-          <Notification />
-        </div>
-        <div className="notifications-block__notification notification notifications-block__notification_important">
-          <Notification />
-        </div>
-        <div className="notifications-block__notification notification">
-          <Notification />
-        </div>
-      </div>
+        }
+        classNames={["profile-block"]}
+      >
+        <TabBarItem className={"profile-block"} label={"Все"}>
+          <div className="notifications-block__notification notification notifications-block__notification_important">
+            <Notification />
+          </div>
+          <div className="notifications-block__notification notification notifications-block__notification_important">
+            <Notification />
+          </div>
+          <div className="notifications-block__notification notification">
+            <Notification />
+          </div>
+        </TabBarItem>
+        <TabBarItem className={"profile-block"} label={"Непрочитанные"}>
+          <div className="notifications-block__notification notification notifications-block__notification_important">
+            <Notification />
+          </div>
+          <div className="notifications-block__notification notification notifications-block__notification_important">
+            <Notification />
+          </div>
+        </TabBarItem>
+      </TabBar>
     </section>
   );
 }

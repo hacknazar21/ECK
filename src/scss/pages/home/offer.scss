@@ -21,7 +21,7 @@
 
   &__title {
     font-weight: 600;
-    font-size: rem(35);
+    @include adaptiveValue("font-size", 35, 22);
     line-height: math.div(45,35);
     color: #FFFFFF;
     margin-bottom: rem(15);
@@ -29,15 +29,16 @@
 
   &__subtitle {
     font-weight: 500;
-    font-size: rem(14);
+    @include adaptiveValue("font-size", 14, 12);
     line-height: math.div(16,14);
-    
     color: rgba(255, 255, 255, 0.8);
   }
 
   &__image {
     position: relative;
-
+    @media(max-width:$tablet){
+      display: none;
+    }
     flex: 0 0 percent(181, 1100); //rem(181)
     padding-bottom: percent(181, 1100);
     img {

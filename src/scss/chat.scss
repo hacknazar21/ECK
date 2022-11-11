@@ -1,0 +1,106 @@
+.chat{
+  display: flex;
+  flex-direction: column;
+  &-window{
+    height: rem(400);
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+  }
+  &-input-box {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    column-gap: rem(24);
+    padding: rem(18) 0;
+    border-top: 1px solid #DBEAF3;
+  }
+  &-input {
+    flex: 1 1 auto;
+    font-weight: 500;
+    font-size: rem(16);
+    line-height: math.div(20,16);
+    color: #9194A4;
+    outline: none;
+    &::placeholder{
+      color: #9194A4;
+    }
+  }
+  &-input-file {
+     label{
+      @media(any-hover: hover){
+        &:hover{
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  &-input-button {
+    &_file {
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: -2000px;
+      top: -2000px;
+      overflow: hidden;
+    }
+
+    &_send {
+    }
+  }
+  &-message{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+}
+.message {
+  text-align: left;
+  &__item{
+    padding: rem(15);
+    background-color: #F4F4F3;
+    border: 1px solid #EEEDEE;
+    border-radius: 5px;
+    width: fit-content;
+    margin-bottom: rem(15);
+    max-width: rem(470);
+
+  }
+  &__icon{
+    position: relative;
+    padding-bottom: rem(40);
+    flex: 0 0 rem(40);
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+  }
+  &__name{
+    font-weight: 600;
+    font-size: rem(12);
+    line-height: math.div(16,12);
+    text-align: left;
+    letter-spacing: 0.02em;
+    color: #141414;
+    margin-bottom: rem(5);
+  }
+  &_me{
+    margin-left: auto;
+    text-align: right;
+  }
+  &__date {
+    width: 100%;
+    font-weight: 500;
+    font-size: rem(10);
+    line-height: math.div(20,10);
+    text-align: right;
+    color: #9194A4;
+    margin-top: rem(5);
+  }
+}

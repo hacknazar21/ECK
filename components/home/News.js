@@ -12,7 +12,7 @@ export default function News() {
 
       observer: true,
       observeParents: true,
-      slidesPerView: 2.9,
+      slidesPerView: 3,
       spaceBetween: 10,
       autoHeight: true,
       speed: 1000,
@@ -33,19 +33,19 @@ export default function News() {
 
       breakpoints: {
         320: {
-          slidesPerView: 1,
+          slidesPerView: 1.2,
           spaceBetween: 20,
         },
         770: {
-          slidesPerView: 2,
+          slidesPerView: 1.5,
           spaceBetween: 20,
         },
         992: {
-          slidesPerView: 2.3,
+          slidesPerView: 3,
           spaceBetween: 20,
         },
         1920: {
-          slidesPerView: 2.9,
+          slidesPerView: 3,
           spaceBetween: 20,
         },
       },

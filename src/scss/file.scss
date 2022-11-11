@@ -1,0 +1,45 @@
+.file {
+  &__box {
+    padding: rem(22) 0;
+    background-color: rgba(39, 139, 232, 0.2);
+    border: 1px dashed #278BE8;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: rem(5);
+    @media(any-hover: hover){
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__label {
+    display: flex;
+    column-gap: rem(10);
+    font-weight: 500;
+    font-size: rem(14);
+    line-height: math.div(16,14);
+    color: #278BE8;
+    @media(any-hover: hover){
+      &:hover{
+        cursor: pointer;
+      }
+    }
+    &:before{
+      content: "";
+      width: rem(16);
+      height: rem(16);
+      background: url("../img/file.png") center/contain no-repeat;
+      transform: translateY(-1px);
+    }
+  }
+
+  &__input {
+    position: absolute;
+    left: -2000px;
+    top: -2000px;
+    opacity: 0;
+  }
+}
