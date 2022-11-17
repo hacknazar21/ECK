@@ -5,8 +5,8 @@ const nextConfig = {
   exportTrailingSlash: true,
   rewrites: () => [
     {
-      source: "/api/:path*",
-      destination: "http://192.168.0.120:8000/api/:path*/",
+      source: "/api/:path*/",
+      destination: "https://eprof.kz/api/:path*/",
     },
   ],
 };

@@ -5,8 +5,11 @@ import Footer from "../../components/common/Footer";
 import PageLayout from "../../layouts/PageLayout";
 import PagesLayout from "../../layouts/PagesLayout";
 import Team from "../../components/team/Team";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useRouter } from "next/router";
 
-export default function Home() {
+export default function TeamPage() {
   return (
     <>
       <Head>

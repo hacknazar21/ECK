@@ -1,22 +1,22 @@
 import { useState, useCallback, useEffect } from "react";
 
-const storageName = "mamaOrganicUserData";
+const storageName = "eckUserData";
 const useAuth = () => {
   const [token, setToken] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
 
-  const login = useCallback(async (jwtToken, id) => {
+  const login = useCallback(async (jwtToken, refresh) => {
     await setToken(jwtToken);
-    await setUserId(id);
+    await setRefreshToken(refresh);
     localStorage.setItem(
       storageName,
-      JSON.stringify({ userId: id, token: jwtToken })
+      JSON.stringify({ refreshToken: refresh, token: jwtToken })
     );
   }, []);
 
   const logout = useCallback(() => {
     setToken(null);
-    setUserId(null);
+    setRefreshToken(null);
     localStorage.removeItem(storageName);
   }, []);
 
@@ -24,18 +24,18 @@ const useAuth = () => {
     const data = JSON.parse(localStorage.getItem(storageName));
     if (data && data.token) {
       setToken(data.token);
-      setUserId(data.userId);
+      setRefreshToken(data.refreshToken);
     }
   }, [login]);
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(storageName));
+
     if (data && data.token) {
       setToken(data.token);
-      setUserId(data.userId);
+      setRefreshToken(data.refreshToken);
     }
-    console.log(data);
   }, []);
 
-  return { login, logout, token, userId };
+  return { login, logout, token, refreshToken };
 };
 export default useAuth;

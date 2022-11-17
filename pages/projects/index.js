@@ -4,10 +4,9 @@ import Header from "../../components/common/Header";
 import Footer from "../../components/common/Footer";
 import PageLayout from "../../layouts/PageLayout";
 import PagesLayout from "../../layouts/PagesLayout";
-import Team from "../../components/team/Team";
 import Projects from "../../components/projects/Projects";
 
-export default function Home() {
+export default function ProjectsPage({ projects }) {
   return (
     <>
       <Head>
@@ -17,11 +16,24 @@ export default function Home() {
         <Header />
         <PagesLayout>
           <PageLayout>
-            <Projects />
+            <Projects projects={projects} />
           </PageLayout>
         </PagesLayout>
         <Footer />
       </HFLayout>
     </>
   );
+}
+export async function getStaticProps() {
+  try {
+    const res = await fetch(process.env.API_HOST + "/api/projects/");
+    const data = await res.json();
+    return {
+      props: { products: data.results }, // will be passed to the page component as props
+    };
+  } catch (e) {
+    return {
+      props: { products: [] }, // will be passed to the page component as props
+    };
+  }
 }

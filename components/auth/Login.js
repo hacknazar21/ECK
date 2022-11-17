@@ -1,8 +1,12 @@
 import { useRouter } from "next/router";
-import { useState, useTransition } from "react";
+import { useContext, useRef, useState } from "react";
 import Loading from "../common/Loading";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import useHttp from "../../hooks/hooks.http";
+import { Validation } from "../../helpers/validation";
+import { AuthContext } from "../../context/AuthContext";
+import useForm from "../../hooks/hooks.form";
 const animationAuth = {
   in: {
     x: -200,
@@ -20,7 +24,13 @@ const animationAuth = {
 export default function Login() {
   const router = useRouter();
   const [isShowPassword, setIsShowPassword] = useState(false);
-
+  const { formChangeHandler, formSubmitHandler, loading } =
+    useForm(onSuccessLogin);
+  const { login } = useContext(AuthContext);
+  async function onSuccessLogin(response) {
+    login(response.access, response.refresh);
+    await router.push("/profile/customer/my-profile");
+  }
   return (
     <AnimatePresence>
       <motion.section
@@ -43,15 +53,26 @@ export default function Login() {
               </button>
               <h1 className="auth__title">Войти в аккаунт</h1>
             </div>
-            <div className="auth__form">
+            <form
+              action={"/api/auth/token/"}
+              data-method={"POST"}
+              method={"POST"}
+              className="auth__form"
+              onSubmit={formSubmitHandler}
+            >
+              <div className="auth__input-box">
+                <input type="hidden" name={"detail"} />
+              </div>
               <div className="auth__inputs">
                 <div className="auth__input-box">
                   <input
-                    type="text"
+                    type="email"
                     id={"email"}
                     required={true}
+                    name={"email"}
                     placeholder=" "
                     className="auth__input"
+                    onChange={formChangeHandler}
                   />
                   <label htmlFor="email" className="auth__input-label">
                     Эл. почта
@@ -62,7 +83,9 @@ export default function Login() {
                     type={isShowPassword ? "text" : "password"}
                     id={"password"}
                     required={true}
+                    name={"password"}
                     placeholder=" "
+                    onChange={formChangeHandler}
                     className="auth__input"
                   />
                   <label htmlFor="password" className="auth__input-label">
@@ -110,22 +133,17 @@ export default function Login() {
                     </span>
                   )}
                 </div>
+                <div className="auth__actions">
+                  <button type={"submit"} className="auth__submit-button">
+                    Войти в аккаунт
+                  </button>
+                  <Link href="/auth/registration/first-step">
+                    <a className="auth__link">Зарегистрироваться</a>
+                  </Link>
+                  {loading && <Loading />}
+                </div>
               </div>
-            </div>
-            <div className="auth__actions">
-              <button className="auth__submit-button">Войти в аккаунт</button>
-              <Link href="/auth/registration/first-step">
-                <a className="auth__link">Зарегистрироваться</a>
-              </Link>
-              <Loading />
-            </div>
-            <div className="auth__info">
-              <p>
-                Нажимая кнопку «Зарегистрироваться», я соглашаюсь с Публичной
-                офертой и правилами сайта, даю согласие на обработку
-                персональных данных.
-              </p>
-            </div>
+            </form>
           </div>
         </motion.div>
       </motion.section>

@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Select from "../../common/Select/Select";
 import Loading from "../../common/Loading";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import useHttp from "../../../hooks/hooks.http";
 import { Validation } from "../../../helpers/validation";
+import { AuthContext } from "../../../context/AuthContext";
+import useForm from "../../../hooks/hooks.form";
 
 const animationAuth = {
   hidden: {
@@ -20,106 +22,31 @@ const animationAuth = {
 export default function FirstStep() {
   const router = useRouter();
   const [isShowPassword, setIsShowPassword] = useState(false);
-  const [form, setForm] = useState({
-    user_type: "CUSTOMER",
-    entity_type: "INDIVIDUAL",
-    email: "",
-    password: "",
-    password_check: "",
-  });
-  const formRef = useRef();
   const [isCode, setIsCode] = useState(false);
-  const [errorForm, setErrorForm] = useState(false);
-  const { loading, respCode, request } = useHttp();
-  const validation = new Validation();
-  function formChangeHandler(event) {
-    if (event.target.name === "email") {
-      if (!validation.isEmail(event.target.value)) {
-        event.target.classList.add("error");
-        setErrorForm(true);
-        const isLabelExist = event.target
-          .closest(".auth__input-box")
-          .querySelector(".auth__input-error-label");
-        if (!isLabelExist)
-          event.target
-            .closest(".auth__input-box")
-            .insertAdjacentHTML(
-              "beforeend",
-              '<p class="auth__input-error-label">неправильно введенные данные</p>'
-            );
-      } else {
-        setErrorForm(false);
-        const isLabelExist = event.target
-          .closest(".auth__input-box")
-          .querySelector(".auth__input-error-label");
-        if (isLabelExist) isLabelExist.remove();
-        event.target.classList.remove("error");
-      }
-    } else if (event.target.name === "password_check") {
-      if (!validation.isPasswordsMatch(form["password"], event.target.value)) {
-        event.target.classList.add("error");
-        const isLabelExist = event.target
-          .closest(".auth__input-box")
-          .querySelector(".auth__input-error-label");
-        if (!isLabelExist)
-          event.target
-            .closest(".auth__input-box")
-            .insertAdjacentHTML(
-              "beforeend",
-              '<p class="auth__input-error-label">пароли не совпадают</p>'
-            );
-        setErrorForm(true);
-      } else {
-        setErrorForm(false);
-        const isLabelExist = event.target
-          .closest(".auth__input-box")
-          .querySelector(".auth__input-error-label");
-        if (isLabelExist) isLabelExist.remove();
-        event.target.classList.remove("error");
-      }
+  const { login } = useContext(AuthContext);
+  const { formChangeHandler, formSubmitHandler, form, loading } = useForm(
+    !isCode ? onSuccessRegister : sendCodeHandler,
+    {
+      radio: {
+        user_type: "CUSTOMER",
+      },
     }
-    setForm((prevState) => {
-      prevState[event.target.name] = event.target.value;
-      return { ...prevState };
-    });
+  );
+  const [type, setType] = useState("CUSTOMER");
+  const [code, setCode] = useState(null);
+  async function onSuccessRegister(response) {
+    login(response.access, response.refresh);
+    setIsCode(true);
   }
-
-  async function sendCodeClickHandler(e) {
-    if (errorForm) return;
-    for (const formKey in form) {
-      if (form[formKey] === "" && formKey !== "entity_type") return;
-    }
-    try {
-      const data = await request("/api/auth/register/", "POST", form, {
-        "Content-Type": "application/json",
-      });
-
-      setIsCode(true);
-    } catch (e) {
-      for (const dataKey in JSON.parse(e.message)) {
-        const errorInput = formRef.current.querySelector(
-          `input[name="${dataKey}"]`
-        );
-        if (errorInput) {
-          errorInput.classList.add("error");
-          setErrorForm(true);
-          const isLabelExist = errorInput
-            .closest(".auth__input-box")
-            .querySelector(".auth__input-error-label");
-          if (!isLabelExist)
-            errorInput
-              .closest(".auth__input-box")
-              .insertAdjacentHTML(
-                "beforeend",
-                `<p class="auth__input-error-label">${
-                  JSON.parse(e.message)[dataKey]
-                }</p>`
-              );
-        }
-      }
-    }
+  function sendCodeHandler() {
+    router.push(
+      form.user_type === "CUSTOMER"
+        ? "/auth/registration/customer-reg"
+        : form.user_type !== "CUSTOMER" && form.entity_type === "INDIVIDUAL"
+        ? "/auth/registration/executor-reg-fiz"
+        : "/auth/registration/executor-reg-ur"
+    );
   }
-
   return (
     <motion.section
       initial={"hidden"}
@@ -140,8 +67,20 @@ export default function FirstStep() {
             </button>
             <h1 className="auth__title">Регистрация</h1>
           </div>
-          <div ref={formRef} className="auth__form">
+          <form
+            onSubmit={formSubmitHandler}
+            action={
+              !isCode
+                ? "/api/auth/register/"
+                : "/api/auth/email_confirmation/confirm/"
+            }
+            data-method={"POST"}
+            className="auth__form"
+          >
             <div className="auth__inputs">
+              <div className="auth__input-box">
+                <input type="hidden" name={"detail"} />
+              </div>
               <div className="auth__input-box">
                 <div className="auth__input-checkboxes">
                   <div className="auth__input-checkbox-box">
@@ -150,11 +89,17 @@ export default function FirstStep() {
                       id="CUSTOMER"
                       onChange={formChangeHandler}
                       defaultValue={"CUSTOMER"}
-                      defaultChecked={form.user_type === "CUSTOMER"}
+                      defaultChecked={form.radio.user_type === "CUSTOMER"}
                       name="user_type"
                       className="auth__input-checkbox"
                     />
-                    <label htmlFor="CUSTOMER" className="auth__label-checkbox">
+                    <label
+                      onClick={() => {
+                        setType("CUSTOMER");
+                      }}
+                      htmlFor="CUSTOMER"
+                      className="auth__label-checkbox"
+                    >
                       Заказчик
                     </label>
                   </div>
@@ -167,13 +112,19 @@ export default function FirstStep() {
                       name="user_type"
                       className="auth__input-checkbox"
                     />
-                    <label htmlFor="EXECUTOR" className="auth__label-checkbox">
+                    <label
+                      onClick={() => {
+                        setType("EXECUTOR");
+                      }}
+                      htmlFor="EXECUTOR"
+                      className="auth__label-checkbox"
+                    >
                       Исполнитель
                     </label>
                   </div>
                 </div>
               </div>
-              {form.user_type !== "CUSTOMER" ? (
+              {type !== "CUSTOMER" ? (
                 <div className="auth__input-box">
                   <Select
                     name={"entity_type"}
@@ -190,7 +141,7 @@ export default function FirstStep() {
               )}
               <div className="auth__input-box">
                 <input
-                  type="text"
+                  type="email"
                   id={"email"}
                   name={"email"}
                   required={true}
@@ -312,35 +263,39 @@ export default function FirstStep() {
                   </span>
                 )}
               </div>
+              {isCode && (
+                <div className="auth__input-box">
+                  <input
+                    type={"text"}
+                    id={"code"}
+                    name={"code"}
+                    required={true}
+                    placeholder=" "
+                    onInput={formChangeHandler}
+                    className="auth__input"
+                  />
+                  <label htmlFor="code" className="auth__input-label">
+                    Введите код верификации
+                  </label>
+                </div>
+              )}
+              <div className="auth__actions">
+                {isCode && (
+                  <button className="auth__submit-button">Далее</button>
+                )}
+                {!isCode && (
+                  <button className="auth__submit-button">
+                    Отправить код подтверждения
+                  </button>
+                )}
+                <Link href="/auth/login">
+                  <a className="auth__link">Войти</a>
+                </Link>
+                {loading && <Loading />}
+              </div>
             </div>
-          </div>
-          <div className="auth__actions">
-            {isCode && (
-              <Link
-                href={
-                  form.person === "customer"
-                    ? "/auth/registration/customer-reg"
-                    : form.face === "fiz"
-                    ? "/auth/registration/executor-reg-fiz"
-                    : "/auth/registration/executor-reg-ur"
-                }
-              >
-                <a className="auth__submit-button">Далее</a>
-              </Link>
-            )}
-            {!isCode && (
-              <button
-                onClick={sendCodeClickHandler}
-                className="auth__submit-button"
-              >
-                Отправить код подтверждения
-              </button>
-            )}
-            <Link href="/auth/login">
-              <a className="auth__link">Войти</a>
-            </Link>
-            {loading && <Loading />}
-          </div>
+          </form>
+
           <div className="auth__info">
             <p>
               Нажимая кнопку «Зарегистрироваться», я соглашаюсь с Публичной

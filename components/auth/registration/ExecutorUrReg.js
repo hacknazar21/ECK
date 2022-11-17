@@ -17,7 +17,6 @@ const animationAuth = {
 };
 export default function ExecutorUrReg() {
   const router = useRouter();
-  const [isShowPassword, setIsShowPassword] = useState(false);
   const [form, setForm] = useState({
     person: "customer",
     email: "",
@@ -32,9 +31,6 @@ export default function ExecutorUrReg() {
       return { ...prevState };
     });
   }
-  useEffect(() => {
-    console.log(form);
-  }, [JSON.stringify(form)]);
   return (
     <motion.section
       initial={"hidden"}

@@ -12,7 +12,8 @@ import Img7 from "../../src/img/aside/07.png";
 import Img8 from "../../src/img/aside/08.png";
 import Img9 from "../../src/img/aside/09.png";
 import Img10 from "../../src/img/aside/10.png";
-function Projects(props) {
+import useHttp from "../../hooks/hooks.http";
+function Projects({ projects }) {
   return (
     <section className="page__my-profile team-page">
       <div className="team-page__container">
@@ -69,7 +70,7 @@ function Projects(props) {
               </button>
             </li>
           </Aside>
-          <PContent />
+          <PContent projects={projects} />
         </ProfilePageLayout>
       </div>
     </section>

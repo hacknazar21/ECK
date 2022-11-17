@@ -1,5 +1,5 @@
 import Logo from "../../src/img/logo.svg";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { CSSTransition } from "react-transition-group";
 import { useRef } from "react";
@@ -7,10 +7,11 @@ import Menu from "./Menu";
 import SResult from "./Search/SResult";
 import NWindow from "./Notifications/NWindow";
 import { useRouter } from "next/router";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Header() {
   const router = useRouter();
-
+  const { isAuth } = useContext(AuthContext);
   function openMenuClickHandler(e) {
     document.documentElement.classList.toggle("open-menu");
   }
@@ -63,13 +64,23 @@ export default function Header() {
               <div className="header__search">
                 <SResult />
               </div>
-              <div className={"header__search"}>
-                <NWindow />
-              </div>
+              {isAuth && (
+                <div className={"header__search"}>
+                  <NWindow />
+                </div>
+              )}
+
               <div className="header__account">
-                <Link href="/auth/login">
-                  <a className="header__account-link">Войти в аккаунт</a>
-                </Link>
+                {!isAuth && (
+                  <Link href="/auth/login">
+                    <a className="header__account-link">Войти в аккаунт</a>
+                  </Link>
+                )}
+                {isAuth && (
+                  <Link href="/profile/customer/my-profile">
+                    <a className="header__account-link">Личный кабинет</a>
+                  </Link>
+                )}
               </div>
             </div>
             <button onClick={openMenuClickHandler} className="menu__burger">

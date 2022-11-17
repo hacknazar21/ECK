@@ -7,11 +7,13 @@ export default function Select({
   title,
   items,
   multiply = false,
+  saveHead = false,
+  defaultValue = [],
 }) {
   const [open, setOpen] = useState(false);
   const [height, setHeight] = useState(0);
   const [selectEls, setSelectEls] = useState([]);
-  const [checkedEls, setCheckedEls] = useState([]);
+  const [checkedEls, setCheckedEls] = useState(defaultValue || []);
   const wrapper = useRef();
   const head = useRef();
   useEffect(() => {
@@ -44,37 +46,66 @@ export default function Select({
         setOpen((prevState) => !prevState);
         wrapper.current.setAttribute("style", `max-height:0px;`);
       }
-      head.current.innerText = event.target.innerText;
-      const value = !multiply ? event.target.dataset.value : checkedEls;
+      if (!saveHead) head.current.innerText = event.target.innerText;
+      const value = event.target.dataset.value;
       const ev = {
         target: {
           name: name,
           value,
+          type: "select",
         },
       };
       if (multiply) {
         event.target.classList.toggle("checked");
         if (event.target.classList.contains("checked")) {
           setCheckedEls((prevState) => {
-            if (prevState.indexOf(event.target.innerText) === -1)
+            if (prevState.indexOf(event.target.innerText) === -1 && !saveHead) {
               prevState.push(event.target.innerText); // push checked els
-            head.current.innerText = prevState.join(", ");
+            } else if (
+              prevState.indexOf(event.target.dataset.value) === -1 &&
+              saveHead
+            )
+              prevState.push(event.target.dataset.value); // push checked els
+            if (!saveHead) head.current.innerText = prevState.join(", ");
+            onSelect({
+              target: {
+                name: name,
+                value: [...prevState],
+                type: "select-checkboxes",
+              },
+            });
             return prevState;
           });
         } else {
           setCheckedEls((prevState) => {
-            if (prevState.indexOf(event.target.innerText) !== -1)
-              prevState.splice(prevState.indexOf(event.target.innerText), 1); // push checked els
-            if (prevState.length) head.current.innerText = prevState.join(", ");
+            if (prevState.indexOf(event.target.innerText) !== -1 && !saveHead)
+              prevState.splice(prevState.indexOf(event.target.innerText), 1);
+            // push checked els
+            else if (
+              prevState.indexOf(parseInt(event.target.dataset.value)) !== -1 &&
+              saveHead
+            )
+              prevState.splice(
+                prevState.indexOf(parseInt(event.target.dataset.value)),
+                1
+              ); // push checked els
+            if (prevState.length && !saveHead)
+              head.current.innerText = prevState.join(", ");
             else head.current.innerText = title;
+
+            onSelect({
+              target: {
+                name: name,
+                value: [...prevState],
+                type: "select-checkboxes",
+              },
+            });
             return prevState;
           });
         }
-      }
-      onSelect(ev);
+      } else onSelect(ev);
     }
   }
-
   return (
     <div className={"select" + " " + selectClass} id={"select-" + name}>
       <div ref={head} onClick={clickHandler} className="select__head">
@@ -88,7 +119,13 @@ export default function Select({
               onClick={selectHandler}
               data-name={name}
               data-value={selectEl.value}
-              className="select__option"
+              className={
+                "select__option" +
+                " " +
+                (defaultValue?.indexOf(selectEl.value.toString()) !== -1
+                  ? "checked"
+                  : "")
+              }
             >
               {multiply ? (
                 <div className={"select__checkbox"}>

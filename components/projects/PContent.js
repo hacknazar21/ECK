@@ -4,7 +4,7 @@ import Img1 from "../../src/img/projects/image 13.png";
 import Popup from "../common/Popup";
 import Link from "next/link";
 
-function PContent(props) {
+function PContent({ projects }) {
   const [active, setActive] = useState(false);
 
   function openPopupClickHandler(e) {

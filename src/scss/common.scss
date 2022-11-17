@@ -19,6 +19,25 @@
     color: #FFFFFF;
   }
 }
+.activities{
+  width: rem(370);
+  .select {
+    &__head{
+      color: #80A4B8;
+      border-bottom: none;
+      &:after{
+        background-color: #278BE8;
+      }
+    }
+    &__option:not(:last-child){
+      border-bottom: none;
+    }
+    &__list{
+      border: none;
+      position: relative;
+    }
+  }
+}
 .page-layout{
   height: 100%;
 }

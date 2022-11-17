@@ -42,4 +42,40 @@
     top: -2000px;
     opacity: 0;
   }
+  &__item{
+    display: flex;
+    align-items: center;
+    column-gap: rem(25);
+    button{
+      width: rem(21);
+      height: rem(21);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 1;
+      span{
+        display: block;
+        width: rem(18);
+        flex: 0 0 rem(2);
+        border-radius: rem(1);
+        background-color: #B7C2C9;
+        transform-origin:  center;
+      }
+      span:first-child{
+        transform: rotate(45deg);
+      }
+      span:last-child{
+        transform: rotate(-45deg);
+        margin-top: -2px;
+      }
+    }
+  }
+}
+.files{
+  margin-top: rem(10);
+  &__title{
+    font-size: rem(12);
+    margin-bottom: rem(5);
+  }
 }

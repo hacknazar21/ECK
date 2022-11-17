@@ -36,6 +36,8 @@
   &__image-preview {
     position: relative;
     padding-bottom: rem(100);
+    max-width: rem(100);
+    margin: 0 auto;
     border-radius: 50%;
     overflow: hidden;
     img {
@@ -44,7 +46,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        object-fit: cover;
     }
 
     margin-bottom: rem(10);

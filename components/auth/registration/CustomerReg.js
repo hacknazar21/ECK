@@ -1,9 +1,14 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Select from "../../common/Select/Select";
 import Loading from "../../common/Loading";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import File from "../../common/File";
+import useHttp from "../../../hooks/hooks.http";
+import Popup from "../../common/Popup";
+import { AuthContext } from "../../../context/AuthContext";
+import useForm from "../../../hooks/hooks.form";
 
 const animationAuth = {
   hidden: {
@@ -17,24 +22,22 @@ const animationAuth = {
 };
 export default function CustomerReg() {
   const router = useRouter();
-  const [isShowPassword, setIsShowPassword] = useState(false);
-  const [form, setForm] = useState({
-    person: "customer",
-    email: "",
-    password: "",
-    password_check: "",
-    face: "",
-  });
+  const { request } = useHttp();
+  const { formChangeHandler, formSubmitHandler, form, loading } =
+    useForm(onSuccessRegister);
+  const { login } = useContext(AuthContext);
+  const [activities, setActivities] = useState([]);
+  const [activitiesModal, setActivitiesModal] = useState(false);
 
-  function formChangeHandler(event) {
-    setForm((prevState) => {
-      prevState[event.target.name] = event.target.value;
-      return { ...prevState };
-    });
-  }
   useEffect(() => {
-    console.log(form);
-  }, [JSON.stringify(form)]);
+    (async () => {
+      try {
+        const data = await request("/api/fields_of_activity/", "GET");
+        setActivities(data);
+      } catch (e) {}
+    })();
+  }, []);
+
   return (
     <motion.section
       initial={"hidden"}
@@ -55,7 +58,12 @@ export default function CustomerReg() {
             </button>
             <h1 className="auth__title">Данные заказчика</h1>
           </div>
-          <div className="auth__form">
+          <form
+            onSubmit={formSubmitHandler}
+            action={"/api/profile/"}
+            data-method={"PATCH"}
+            className="auth__form"
+          >
             <div className="auth__inputs">
               <div className="auth__input-box">
                 <input
@@ -73,79 +81,82 @@ export default function CustomerReg() {
               </div>
               <div className="auth__input-box">
                 <input
-                  id={"BIN"}
+                  id={"iin"}
                   required={true}
                   onInput={formChangeHandler}
                   placeholder=" "
-                  name={"BIN"}
+                  name={"iin"}
                   className="auth__input"
                 />
-                <label htmlFor="BIN" className="auth__input-label">
+                <label htmlFor="iin" className="auth__input-label">
                   БИН
                 </label>
               </div>
-              <div className="auth__input-box">
-                <Select
-                  name={"field_of_activity"}
-                  onSelect={formChangeHandler}
-                  title={"Сфера деятельности"}
-                  multiply={true}
-                  items={[
-                    { name: "Рисование", value: "draw" },
-                    { name: "Программирование", value: "programming" },
-                  ]}
-                />
-              </div>
-              <div className="auth__input-box">
+              <div className="auth__input-box button">
                 <input
-                  id={"licences_certs"}
+                  type={"button"}
+                  onClick={() => {
+                    setActivitiesModal(true);
+                  }}
+                  id={"fields_of_activity_list"}
                   required={true}
                   onInput={formChangeHandler}
                   placeholder=" "
-                  name={"licences_certs"}
+                  name={"fields_of_activity_list"}
                   className="auth__input"
                 />
-                <label htmlFor="licences_certs" className="auth__input-label">
-                  Лицензии/Сертификаты
+                <label
+                  htmlFor="fields_of_activity_list"
+                  className="auth__input-label"
+                >
+                  {form.fields_of_activity_list?.length > 0
+                    ? "Выбрано"
+                    : "Сфера деятельности"}
                 </label>
               </div>
+              <File
+                isInput={true}
+                name={"certificates"}
+                label={"Лицензии/Сертификаты"}
+                onChange={formChangeHandler}
+              />
               <div className="auth__input-box">
                 <input
-                  id={"position_held"}
+                  id={"working_at"}
                   required={true}
                   onInput={formChangeHandler}
                   placeholder=" "
-                  name={"position_held"}
+                  name={"working_at"}
                   className="auth__input"
                 />
-                <label htmlFor="position_held" className="auth__input-label">
+                <label htmlFor="working_at" className="auth__input-label">
                   Занимаемая должность
                 </label>
               </div>
               <div className="auth__input-box">
                 <input
-                  id={"supervisor"}
+                  id={"director"}
                   required={true}
                   onInput={formChangeHandler}
                   placeholder=" "
-                  name={"supervisor"}
+                  name={"director"}
                   className="auth__input"
                 />
-                <label htmlFor="supervisor" className="auth__input-label">
+                <label htmlFor="director" className="auth__input-label">
                   Руководитель
                 </label>
               </div>
               <div className="auth__input-box">
                 <input
-                  id={"name_of_responsible_person"}
+                  id={"responsible_person"}
                   required={true}
                   onInput={formChangeHandler}
                   placeholder=" "
-                  name={"name_of_responsible_person"}
+                  name={"responsible_person"}
                   className="auth__input"
                 />
                 <label
-                  htmlFor="name_of_responsible_person"
+                  htmlFor="responsible_person"
                   className="auth__input-label"
                 >
                   ФИО ответственного лица
@@ -166,14 +177,14 @@ export default function CustomerReg() {
               </div>
               <div className="auth__input-box">
                 <input
-                  id={"address_company"}
+                  id={"address"}
                   required={true}
                   onInput={formChangeHandler}
                   placeholder=" "
-                  name={"address_company"}
+                  name={"address"}
                   className="auth__input"
                 />
-                <label htmlFor="address_company" className="auth__input-label">
+                <label htmlFor="address" className="auth__input-label">
                   Адрес компании
                 </label>
               </div>
@@ -190,15 +201,17 @@ export default function CustomerReg() {
                   Эл. почта
                 </label>
               </div>
+              <div className="auth__actions">
+                <button type={"submit"} className="auth__submit-button">
+                  Зарегистрироваться
+                </button>
+                <Link href="/auth/login">
+                  <a className="auth__link">Войти</a>
+                </Link>
+                {loading && <Loading />}
+              </div>
             </div>
-          </div>
-          <div className="auth__actions">
-            <button className="auth__submit-button">Зарегистрироваться</button>
-            <Link href="/auth/login">
-              <a className="auth__link">Войти</a>
-            </Link>
-            <Loading />
-          </div>
+          </form>
           <div className="auth__info">
             <p>
               Нажимая кнопку «Зарегистрироваться», я соглашаюсь с Публичной
@@ -208,6 +221,30 @@ export default function CustomerReg() {
           </div>
         </div>
       </motion.div>
+      <Popup active={activitiesModal} setActive={setActivitiesModal}>
+        <header className="single-team-content-block__header">
+          <h3 className="single-team-content__title profile-title">
+            Сферы деятельности
+          </h3>
+        </header>
+        <div className="activities">
+          {activities.map((activity) => {
+            return (
+              <Select
+                defaultValue={form?.fields_of_activity_list}
+                saveHead={true}
+                name={"fields_of_activity_list"}
+                onSelect={formChangeHandler}
+                title={activity.name}
+                multiply={true}
+                items={activity.child_fields.map((child_field) => {
+                  return { name: child_field.name, value: child_field.id };
+                })}
+              />
+            );
+          })}
+        </div>
+      </Popup>
     </motion.section>
   );
 }
