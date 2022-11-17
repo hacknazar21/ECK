@@ -239,12 +239,13 @@ export default function Create() {
                 </h3>
               </header>
               <div className="activities">
-                {activities.map((activity) => {
+                {activities.map((activity, id) => {
                   return (
                     <Select
                       defaultValue={
                         form["select-checkboxes"]?.fields_of_activity_list
                       }
+                      key={id}
                       saveHead={true}
                       name={"fields_of_activity_list"}
                       onSelect={formChangeHandler}

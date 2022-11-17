@@ -216,9 +216,10 @@ function MyProfileContent(props) {
             </h3>
           </header>
           <div className="activities">
-            {activities.map((activity) => {
+            {activities.map((activity, id) => {
               return (
                 <Select
+                  key={id}
                   defaultValue={userData?.fields_of_activity.map(
                     (field_of_activity) => field_of_activity.id
                   )}

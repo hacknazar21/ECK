@@ -23,8 +23,7 @@ const animationAuth = {
 export default function CustomerReg() {
   const router = useRouter();
   const { request } = useHttp();
-  const { formChangeHandler, formSubmitHandler, form, loading } =
-    useForm(onSuccessRegister);
+  const { formChangeHandler, formSubmitHandler, form, loading } = useForm();
   const { login } = useContext(AuthContext);
   const [activities, setActivities] = useState([]);
   const [activitiesModal, setActivitiesModal] = useState(false);
@@ -228,11 +227,12 @@ export default function CustomerReg() {
           </h3>
         </header>
         <div className="activities">
-          {activities.map((activity) => {
+          {activities.map((activity, id) => {
             return (
               <Select
                 defaultValue={form?.fields_of_activity_list}
                 saveHead={true}
+                key={id}
                 name={"fields_of_activity_list"}
                 onSelect={formChangeHandler}
                 title={activity.name}
