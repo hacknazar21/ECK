@@ -106,6 +106,7 @@ function PContent() {
           ).getDate();
           return (
             <article
+              key={project.id}
               onClick={openPopupClickHandler.bind({ project: project.id })}
               className={
                 "projects-cards__card projects-card profile-cards__card active profile-card"
@@ -276,6 +277,7 @@ function PContent() {
                 {project.documents?.map((document) => {
                   return (
                     <a
+                      key={project.id}
                       href={document.file}
                       target={"_blank"}
                       rel="noreferrer"
@@ -293,7 +295,10 @@ function PContent() {
             {project.participants?.length === 0 && "Участников пока нет"}
             {project.participants?.map((participant) => {
               return (
-                <div className="project-modal-teams__team project-modal-team">
+                <div
+                  key={participant.id}
+                  className="project-modal-teams__team project-modal-team"
+                >
                   <div className="project-modal-team__content">
                     <div className="project-modal-team__logo profile-card__logo">
                       <div className="project-modal-team__image profile-card__image">
