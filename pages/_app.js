@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../hooks/hooks.auth";
 import useHttp from "../hooks/hooks.http";
 import { AuthContext } from "/context/AuthContext";
-import { useRouter } from "next/router";
-import FourOhFour from "./404";
+import { useRouter, Router } from "next/router";
 import FourOhOne from "./401";
 
 function MyApp({ Component, pageProps }) {
@@ -52,7 +51,7 @@ function MyApp({ Component, pageProps }) {
         }
       }
     })();
-  }, [token]);
+  }, [token, router.pathname]);
   return (
     <>
       <Head>
@@ -62,7 +61,7 @@ function MyApp({ Component, pageProps }) {
                 решениями, новыми технологиями, информационными ресурсами"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="../public/favicon.ico" />
       </Head>
       <NextNProgress />
       <AnimatePresence>

@@ -34,7 +34,8 @@ export default function Create() {
   const [projectEndDate, setProjectEndDate] = useState(null);
   const [activitiesModal, setActivitiesModal] = useState(false);
   const [activities, setActivities] = useState([]);
-  const { formChangeHandler, formSubmitHandler, loading, form } = useForm();
+  const { formChangeHandler, formSubmitHandler, loading, form } =
+    useForm(submitAfterHandler);
   const { userData } = useContext(AuthContext);
   const { request } = useHttp();
 
@@ -47,9 +48,9 @@ export default function Create() {
       } catch (e) {}
     })();
   }, []);
-  useEffect(() => {
-    console.log(form);
-  }, [JSON.stringify(form)]);
+  function submitAfterHandler(data) {
+    router.push("/announcements");
+  }
   function pickDateHandler(date) {
     this?.set(date);
     formChangeHandler({
@@ -95,18 +96,6 @@ export default function Create() {
               <div className="auth__inputs">
                 <div className="auth__input-box">
                   <input type={"hidden"} name={"detail"} />
-                </div>
-                <div className="auth__input-box">
-                  <input
-                    type="text"
-                    id={"id"}
-                    defaultValue={"Номер обьявления - №134 560 233"}
-                    className="auth__input"
-                    disabled={true}
-                  />
-                  <label htmlFor="email" className="auth__input-label">
-                    Эл. почта
-                  </label>
                 </div>
                 <div className="auth__input-box">
                   <Select

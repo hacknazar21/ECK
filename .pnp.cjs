@@ -39,6 +39,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["framer-motion", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:7.5.3"],\
             ["next", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:12.3.1"],\
             ["nextjs-progressbar", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:0.0.15"],\
+            ["nprogress", "npm:0.2.0"],\
             ["react", "npm:18.2.0"],\
             ["react-datepicker", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:4.8.0"],\
             ["react-dom", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:18.2.0"],\
@@ -1200,6 +1201,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["framer-motion", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:7.5.3"],\
             ["next", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:12.3.1"],\
             ["nextjs-progressbar", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:0.0.15"],\
+            ["nprogress", "npm:0.2.0"],\
             ["react", "npm:18.2.0"],\
             ["react-datepicker", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:4.8.0"],\
             ["react-dom", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:18.2.0"],\

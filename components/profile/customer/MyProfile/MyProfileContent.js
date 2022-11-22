@@ -141,17 +141,17 @@ function MyProfileContent(props) {
               </div>
               <div className="auth__input-box">
                 <input
-                  id={"working_at"}
-                  defaultValue={userData?.working_at}
+                  id={"job_title"}
+                  defaultValue={userData?.job_title}
                   onChange={formChangeHandler}
                   required={true}
                   disabled={!isChange}
                   onInput={formChangeHandler}
                   placeholder=" "
-                  name={"working_at"}
+                  name={"job_title"}
                   className="auth__input"
                 />
-                <label htmlFor="working_at" className="auth__input-label">
+                <label htmlFor="job_title" className="auth__input-label">
                   Занимаемая должность
                 </label>
               </div>

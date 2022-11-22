@@ -5,6 +5,68 @@
 }
 
 .project-modal {
+  &__buttons {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: rem(1000);
+    z-index: 1000;
+    @media(max-width:$tablet){
+      display: none;
+    }
+  }
+
+  &__button {
+    width: rem(40);
+    height: rem(40);
+    &_disabled{
+
+      span{
+
+      }
+    }
+    background-color: #B7C2C9;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    span{
+      width: rem(15);
+      flex: 0 0 rem(2);
+      height: rem(2);
+      border-radius: 1px;
+      background-color: #B7C2C9;
+      transform-origin: left center;
+    }
+    span:first-child{
+      transform: translateY(0.5px) rotate(45deg);
+    }
+    span:last-child{
+      transform: translateY(-0.5px) rotate(-45deg);
+    }
+    &:before{
+      content: "";
+      position: absolute;
+      width: rem(34);
+      height: rem(34);
+      background-color: #fff;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+    &_prev{
+
+    }
+    &_next{
+      transform: rotate(180deg);
+    }
+  }
   &__type {
     display: flex;
     align-items: center;
@@ -131,6 +193,7 @@
 }
 .project-modal {
   &__teams {
+    @include adaptiveValue("width", 803, 320);
     display: flex;
     flex-direction: column;
     row-gap: rem(20);

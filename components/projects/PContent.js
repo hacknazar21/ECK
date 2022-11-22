@@ -1,14 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "../../src/img/avatars/01.png";
 import Img1 from "../../src/img/projects/image 13.png";
 import Popup from "../common/Popup";
 import Link from "next/link";
+import useHttp from "../../hooks/hooks.http";
+import { AuthContext } from "../../context/AuthContext";
 
-function PContent({ projects }) {
+function PContent() {
   const [active, setActive] = useState(false);
-
+  const { request } = useHttp();
+  const [projects, setProjects] = useState([]);
+  const [project, setProject] = useState({});
+  const [currentIndex, setCurrentIndex] = useState(0);
   function openPopupClickHandler(e) {
+    setProject(projects.filter((project) => project.id === this?.project)[0]);
     setActive(true);
+  }
+  useEffect(() => {
+    const currentIndex = projects.indexOf(project);
+    if (currentIndex !== -1) {
+      setCurrentIndex(currentIndex);
+    }
+  }, [project]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await request("/api/projects/");
+        setProjects([...data.results]);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, []);
+  function changeModalClickHandler(e) {
+    e.stopPropagation();
+    switch (this?.type) {
+      case "prev":
+        const prevIndex = currentIndex - 1;
+        if (prevIndex < 0) {
+          break;
+        }
+        setProject(projects[prevIndex]);
+        break;
+      case "next":
+        const nextIndex = currentIndex + 1;
+        if (nextIndex >= projects?.length) {
+          break;
+        }
+        setProject(projects[nextIndex]);
+        console.log("next");
+        break;
+    }
   }
 
   return (
@@ -22,7 +64,7 @@ function PContent({ projects }) {
                 <input
                   type="text"
                   className="notifications-filter__input"
-                  placeholder={"Поиск обьявлений"}
+                  placeholder={"Поиск"}
                 />
                 <button className="notifications-filter__submit">
                   <svg
@@ -58,116 +100,71 @@ function PContent({ projects }) {
         </div>
       </div>
       <div className="projects-cards profile-cards">
-        <article className="projects-cards__card projects-card profile-cards__card active profile-card">
-          <div className="projects-card__logo profile-card__logo">
-            <div className="projects-card__image profile-card__image">
-              <img src={Avatar.src} alt="" />
-            </div>
-            <div className="projects-card__name profile-card__name">IBM</div>
-          </div>
-          <h2 className="projects-card__title profile-card__title">
-            <span></span>
-            Активный проект
-          </h2>
-          <div className="projects-card__text profile-card__text">
-            <p>
-              Разрабатываем мобильную игру для детей на Unity Хотим внедрить
-              вместо или параллельно с внутриигровой валютой (золото и
-              кристаллы) – свою криптовалюту или токен. Дабы игроки...
-            </p>
-          </div>
-          <div className="projects-card__members projects-card-members profile-members">
-            <div className="projects-card-members__title profile-members__title">
-              Выбор исполнителя
-            </div>
-            <div className="projects-card__text profile-card__text">
-              <p>1 день назад</p>
-            </div>
-          </div>
-          <div className="single-team-member__actions">
-            <button
-              onClick={openPopupClickHandler}
-              className="window-notification__button window-notification__button_active"
+        {projects.map((project) => {
+          const daysCount = new Date(
+            new Date(project.application_end_date) - new Date()
+          ).getDate();
+          return (
+            <article
+              onClick={openPopupClickHandler.bind({ project: project.id })}
+              className={
+                "projects-cards__card projects-card profile-cards__card active profile-card"
+              }
             >
-              Смотреть профиль
-            </button>
-          </div>
-        </article>
-        <article className="projects-cards__card projects-card profile-cards__card active profile-card">
-          <div className="projects-card__logo profile-card__logo">
-            <div className="projects-card__image profile-card__image">
-              <img src={Avatar.src} alt="" />
-            </div>
-            <div className="projects-card__name profile-card__name">IBM</div>
-          </div>
-          <h2 className="projects-card__title profile-card__title">
-            <span></span>
-            Активный проект
-          </h2>
-          <div className="projects-card__text profile-card__text">
-            <p>
-              Разрабатываем мобильную игру для детей на Unity Хотим внедрить
-              вместо или параллельно с внутриигровой валютой (золото и
-              кристаллы) – свою криптовалюту или токен. Дабы игроки...
-            </p>
-          </div>
-          <div className="projects-card__members projects-card-members profile-members">
-            <div className="projects-card-members__title profile-members__title">
-              Выбор исполнителя
-            </div>
-            <div className="projects-card__text profile-card__text">
-              <p>1 день назад</p>
-            </div>
-          </div>
-          <div className="single-team-member__actions">
-            <button
-              onClick={openPopupClickHandler}
-              className="window-notification__button window-notification__button_active"
-            >
-              Смотреть профиль
-            </button>
-          </div>
-        </article>
-        <article className="projects-cards__card projects-card profile-cards__card no-active profile-card">
-          <div className="projects-card__logo profile-card__logo">
-            <div className="projects-card__image profile-card__image">
-              <img src={Avatar.src} alt="" />
-            </div>
-            <div className="projects-card__name profile-card__name">IBM</div>
-          </div>
-          <h2 className="projects-card__title profile-card__title">
-            <span></span>
-            Завершенный проект
-          </h2>
-          <div className="projects-card__text profile-card__text">
-            <p>
-              Разрабатываем мобильную игру для детей на Unity Хотим внедрить
-              вместо или параллельно с внутриигровой валютой (золото и
-              кристаллы) – свою криптовалюту или токен. Дабы игроки...
-            </p>
-          </div>
-          <div className="projects-card__members projects-card-members profile-members">
-            <div className="projects-card-members__title profile-members__title">
-              Выбор исполнителя
-            </div>
-            <div className="projects-card__text profile-card__text">
-              <p>1 день назад</p>
-            </div>
-          </div>
-          <div className="single-team-member__actions">
-            <button
-              onClick={openPopupClickHandler}
-              className="window-notification__button window-notification__button_active"
-            >
-              Смотреть профиль
-            </button>
-          </div>
-        </article>
+              <h2 className="projects-card__title profile-card__title">
+                <span></span>
+                Активный проект
+              </h2>
+              <h2 className="projects-card__title profile-card__title">
+                {project.title}
+              </h2>
+              <div className="projects-card__text profile-card__text">
+                <p>{project.description}</p>
+              </div>
+              <div className="projects-card__members projects-card-members profile-members">
+                <div className="projects-card-members__title profile-members__title">
+                  {project.project_type === "CONTEST"
+                    ? "Конкурс"
+                    : "Выбор исполнителя"}
+                </div>
+              </div>
+              <div className="single-team-member__actions">
+                <button
+                  onClick={openPopupClickHandler}
+                  className="window-notification__button window-notification__button_active"
+                >
+                  Смотреть проект
+                </button>
+              </div>
+            </article>
+          );
+        })}
       </div>
-      <Popup active={active} setActive={setActive}>
+      <Popup
+        active={active}
+        buttons={
+          <div className="project-modal__buttons">
+            <button
+              onClick={changeModalClickHandler.bind({ type: "prev" })}
+              className="project-modal__button project-modal__button_prev"
+            >
+              <span></span>
+              <span></span>
+            </button>
+            <button
+              onClick={changeModalClickHandler.bind({ type: "next" })}
+              className="project-modal__button project-modal__button_next"
+            >
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        }
+        setActive={setActive}
+      >
         <header className="single-team-content-block__header">
           <h3 className="single-team-content__title profile-title">
-            Информация о проекте
+            Обьявление №{project.number}
           </h3>
         </header>
         <div className="projects-content__modal project-modal">
@@ -179,28 +176,10 @@ function PContent({ projects }) {
               Естественные науки, математика и статистика
             </h4>
           </div>
-          <div className="projects-card__logo profile-card__logo">
-            <div className="projects-card__image profile-card__image">
-              <img src={Avatar.src} alt="" />
-            </div>
-            <div className="projects-card__name profile-card__name">IBM</div>
-          </div>
           <div className="project-modal__info">
-            <h2 className="project-modal__info-title">
-              Доработать проект для информации и связи в университете
-            </h2>
+            <h2 className="project-modal__info-title">{project.title}</h2>
             <div className="project-modal__info-text">
-              <p>
-                Разрабатываем мобильную игру для детей на Unity Хотим внедрить
-                вместо или параллельно с внутриигровой валютой (золото и
-                кристаллы) – свою криптовалюту или токен. Дабы
-                игроки...Разрабатываем мобильную игру для детей на Unity Хотим
-                внедрить вместо или параллельно с внутриигровой валютой (золото
-                и кристаллы) – свою криптовалюту или токен. Дабы
-                игроки...Разрабатываем мобильную игру для детей на Unity Хотим
-                внедрить вместо или параллельно с внутриигровой валютой (золото
-                и кристаллы) – свою криптовалюту или токен. Дабы игроки...
-              </p>
+              <p>{project.description}</p>
             </div>
           </div>
           <div className="project-modal__section">
@@ -209,10 +188,10 @@ function PContent({ projects }) {
                 Начало приема заявок
               </div>
               <time
-                dateTime={"20/07/2022"}
+                dateTime={project?.application_start_date?.split("-").join("/")}
                 className="project-modal__section-text"
               >
-                20/07/2022
+                {project?.application_start_date?.split("-").join("/")}
               </time>
             </div>
             <div className="project-modal__section-box">
@@ -220,17 +199,29 @@ function PContent({ projects }) {
                 Конец приема заявок
               </div>
               <time
-                dateTime={"20/07/2022"}
+                dateTime={project?.application_end_date?.split("-").join("/")}
                 className="project-modal__section-text"
               >
-                27/07/2022
+                {project?.application_end_date?.split("-").join("/")}
               </time>
             </div>
           </div>
           <div className="project-modal__section">
             <div className="project-modal__section-box">
               <div className="project-modal__progress-bar">
-                <span></span>
+                <span
+                  style={{
+                    width:
+                      Math.abs(
+                        (new Date(project?.application_start_date) -
+                          new Date()) /
+                          (new Date(project?.application_end_date) -
+                            new Date(project?.application_start_date))
+                      ) *
+                        100 +
+                      "%",
+                  }}
+                ></span>
               </div>
             </div>
           </div>
@@ -238,7 +229,9 @@ function PContent({ projects }) {
             <div className="project-modal__section-box">
               <div className="project-modal__section-title">Метод участия</div>
               <div className="project-modal__section-text">
-                Конкурс / Выбор исполнителя
+                {project.project_type === "CONTEST"
+                  ? "Конкурс"
+                  : "Выбор исполнителя"}
               </div>
             </div>
           </div>
@@ -248,9 +241,7 @@ function PContent({ projects }) {
                 Требования к участнику
               </div>
               <div className="project-modal__section-text">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                amet sint. Velit officia consequat duis enim velit mollit.
-                Exercitation veniam consequat sunt nostrud amet.
+                <p>{project.requirements}</p>
               </div>
             </div>
           </div>
@@ -258,219 +249,129 @@ function PContent({ projects }) {
             <div className="project-modal__section-box">
               <div className="project-modal__section-sub-box">
                 <div className="project-modal__section-title">Заказчик</div>
-                <div className="project-modal__section-text">ТОО “Айболит”</div>
+                <div className="project-modal__section-text">
+                  {project.created_by?.full_name}
+                </div>
               </div>
               <div className="project-modal__section-sub-box">
                 <div className="project-modal__section-title">
                   Электронная почта
                 </div>
                 <div className="project-modal__section-text">
-                  Test@gmail.com
+                  {project.created_by?.email}
                 </div>
               </div>
-              <div className="project-modal__section-sub-box">
-                <div className="project-modal__section-title">Телефон</div>
-                <div className="project-modal__section-text">
-                  + 7 727 277 73 43
+              {project.created_by?.tel && (
+                <div className="project-modal__section-sub-box">
+                  <div className="project-modal__section-title">Телефон</div>
+                  <div className="project-modal__section-text">
+                    {project.created_by?.tel}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             <div className="project-modal__section-box">
               <div className="project-modal__section-title">Документы</div>
               <div className="single-team-page-info__docs">
-                <a
-                  href={
-                    "https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3132&q=80"
-                  }
-                  target={"_blank"}
-                  rel="noreferrer"
-                  className="single-team-page-info__doc"
-                >
-                  <img
-                    src={
-                      "https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3132&q=80"
-                    }
-                    alt=""
-                  />
-                </a>
-                <a
-                  href={
-                    "https://images.unsplash.com/photo-1532153975070-2e9ab71f1b14?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80"
-                  }
-                  target={"_blank"}
-                  rel="noreferrer"
-                  className="single-team-page-info__doc"
-                >
-                  <img
-                    src={
-                      "https://images.unsplash.com/photo-1532153975070-2e9ab71f1b14?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80"
-                    }
-                    alt=""
-                  />
-                </a>
+                {project.documents?.map((document) => {
+                  return (
+                    <a
+                      href={document.file}
+                      target={"_blank"}
+                      rel="noreferrer"
+                      className="single-team-page-info__doc"
+                    >
+                      <img loading="lazy" src={document.file} alt="" />
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
           <div className="project-modal__teams project-modal-teams">
-            <h2 className="project-modal-teams__title">Команды</h2>
-            <div className="project-modal-teams__team project-modal-team">
-              <div className="project-modal-team__content">
-                <div className="project-modal-team__logo profile-card__logo">
-                  <div className="project-modal-team__image profile-card__image">
-                    <img src={Avatar.src} alt="" />
-                  </div>
-                  <div className="project-modal-team__name profile-card__name profile-card__name_team">
-                    IBM
-                  </div>
-                </div>
-                <div className="project-modal-team__logo profile-card__logo">
-                  <div className="project-modal-team__image profile-card__image">
-                    <img src={Avatar.src} alt="" />
-                  </div>
-                  <div className="project-modal-team__name profile-card__name profile-card__name_team">
-                    IBM
-                  </div>
-                </div>
-                <div className="project-modal-team__text">
-                  <p>
-                    Разрабатываем мобильную игру для детей на Unity Хотим
-                    внедрить вместо или параллельно с внутриигровой валютой
-                    (золото и кристаллы) – свою криптовалюту или токен. Дабы
-                    игроки...Разрабатываем мобильную игру для детей на Unity
-                    Хотим внедрить вместо или параллельно с внутриигровой
-                    валютой (золото и кристаллы) – свою криптовалюту или токен.
-                    Дабы игроки...Разрабатываем мобильную игру для детей на
-                    Unity Хотим внедрить вместо или параллельно с внутриигровой
-                    валютой (золото и кристаллы) – свою криптовалюту или токен.
-                    Дабы игроки...
-                  </p>
-                </div>
-                <div className="project-modal-team__button">
-                  <Link href="">
-                    <a className="window-notification__button window-notification__button_active">
-                      Смотреть профиль
-                    </a>
-                  </Link>
-                </div>
-              </div>
-              <div className="project-modal-team__info">
-                <div className="project-modal-team__tag profile-card__tag">
-                  Консорциум
-                </div>
-                <div className="project-modal-team__info-item">
-                  Всего:
-                  <span>350 человек</span>
-                </div>
-              </div>
-            </div>
-            <div className="project-modal-teams__team project-modal-team">
-              <div className="project-modal-team__content">
-                <div className="project-modal-team__logo profile-card__logo">
-                  <div className="project-modal-team__image profile-card__image">
-                    <img src={Avatar.src} alt="" />
-                  </div>
-                  <div className="project-modal-team__name profile-card__name profile-card__name_team">
-                    IBM
-                  </div>
-                </div>
-                <div className="project-modal-team__text">
-                  <p>
-                    Разрабатываем мобильную игру для детей на Unity Хотим
-                    внедрить вместо или параллельно с внутриигровой валютой
-                    (золото и кристаллы) – свою криптовалюту или токен. Дабы
-                    игроки...Разрабатываем мобильную игру для детей на Unity
-                    Хотим внедрить вместо или параллельно с внутриигровой
-                    валютой (золото и кристаллы) – свою криптовалюту или токен.
-                    Дабы игроки...Разрабатываем мобильную игру для детей на
-                    Unity Хотим внедрить вместо или параллельно с внутриигровой
-                    валютой (золото и кристаллы) – свою криптовалюту или токен.
-                    Дабы игроки...
-                  </p>
-                </div>
-                <div className="project-modal-team__button">
-                  <Link href="">
-                    <a className="window-notification__button window-notification__button_active">
-                      Смотреть профиль
-                    </a>
-                  </Link>
-                </div>
-              </div>
-              <div className="project-modal-team__info">
-                <div className="project-modal-team__members-box profile-members__box">
-                  <div className="project-modal-team__icons profile-members__icons">
-                    <div className="project-modal-team__icon profile-members__icon">
-                      <img src={Avatar.src} alt="" />
+            <h2 className="project-modal-teams__title">Участники</h2>
+            {project.participants?.length === 0 && "Участников пока нет"}
+            {project.participants?.map((participant) => {
+              return (
+                <div className="project-modal-teams__team project-modal-team">
+                  <div className="project-modal-team__content">
+                    <div className="project-modal-team__logo profile-card__logo">
+                      <div className="project-modal-team__image profile-card__image">
+                        <img src={Avatar.src} alt="" />
+                      </div>
+                      <div className="project-modal-team__name profile-card__name profile-card__name_team">
+                        IBM
+                      </div>
                     </div>
-                    <div className="project-modal-team__icon profile-members__icon">
-                      <img src={Avatar.src} alt="" />
+                    <div className="project-modal-team__logo profile-card__logo">
+                      <div className="project-modal-team__image profile-card__image">
+                        <img src={Avatar.src} alt="" />
+                      </div>
+                      <div className="project-modal-team__name profile-card__name profile-card__name_team">
+                        IBM
+                      </div>
                     </div>
-                    <div className="project-modal-team__icon profile-members__icon">
-                      <img src={Avatar.src} alt="" />
+                    <div className="project-modal-team__text">
+                      <p>
+                        Разрабатываем мобильную игру для детей на Unity Хотим
+                        внедрить вместо или параллельно с внутриигровой валютой
+                        (золото и кристаллы) – свою криптовалюту или токен. Дабы
+                        игроки...Разрабатываем мобильную игру для детей на Unity
+                        Хотим внедрить вместо или параллельно с внутриигровой
+                        валютой (золото и кристаллы) – свою криптовалюту или
+                        токен. Дабы игроки...Разрабатываем мобильную игру для
+                        детей на Unity Хотим внедрить вместо или параллельно с
+                        внутриигровой валютой (золото и кристаллы) – свою
+                        криптовалюту или токен. Дабы игроки...
+                      </p>
                     </div>
-                    <div className="project-modal-team__icon profile-members__icon">
-                      <img src={Avatar.src} alt="" />
+                    <div className="project-modal-team__button">
+                      <Link href="">
+                        <a className="window-notification__button window-notification__button_active">
+                          Смотреть профиль
+                        </a>
+                      </Link>
                     </div>
                   </div>
-                </div>
-                <div className="project-modal-team__info-item">
-                  + 16 человек
-                </div>
-              </div>
-            </div>
-            <div className="project-modal-teams__team project-modal-team">
-              <div className="project-modal-team__content">
-                <div className="project-modal-team__logo profile-card__logo">
-                  <div className="project-modal-team__image profile-card__image">
-                    <img src={Avatar.src} alt="" />
-                  </div>
-                  <div className="project-modal-team__name profile-card__name profile-card__name_team">
-                    IBM
-                  </div>
-                </div>
-                <div className="project-modal-team__text">
-                  <p>
-                    Разрабатываем мобильную игру для детей на Unity Хотим
-                    внедрить вместо или параллельно с внутриигровой валютой
-                    (золото и кристаллы) – свою криптовалюту или токен. Дабы
-                    игроки...Разрабатываем мобильную игру для детей на Unity
-                    Хотим внедрить вместо или параллельно с внутриигровой
-                    валютой (золото и кристаллы) – свою криптовалюту или токен.
-                    Дабы игроки...Разрабатываем мобильную игру для детей на
-                    Unity Хотим внедрить вместо или параллельно с внутриигровой
-                    валютой (золото и кристаллы) – свою криптовалюту или токен.
-                    Дабы игроки...
-                  </p>
-                </div>
-                <div className="project-modal-team__button">
-                  <Link href="">
-                    <a className="window-notification__button window-notification__button_active">
-                      Смотреть профиль
-                    </a>
-                  </Link>
-                </div>
-              </div>
-              <div className="project-modal-team__info">
-                <div className="project-modal-team__members-box profile-members__box">
-                  <div className="project-modal-team__icons profile-members__icons">
-                    <div className="project-modal-team__icon profile-members__icon">
-                      <img src={Avatar.src} alt="" />
-                    </div>
-                    <div className="project-modal-team__icon profile-members__icon">
-                      <img src={Avatar.src} alt="" />
-                    </div>
-                    <div className="project-modal-team__icon profile-members__icon">
-                      <img src={Avatar.src} alt="" />
-                    </div>
-                    <div className="project-modal-team__icon profile-members__icon">
-                      <img src={Avatar.src} alt="" />
-                    </div>
+                  <div className="project-modal-team__info">
+                    {participant.consortium && (
+                      <>
+                        <div className="project-modal-team__tag profile-card__tag">
+                          Консорциум
+                        </div>
+                        <div className="project-modal-team__info-item">
+                          Всего:
+                          <span>350 человек</span>
+                        </div>
+                      </>
+                    )}
+                    {participant.team && (
+                      <>
+                        <div className="project-modal-team__members-box profile-members__box">
+                          <div className="project-modal-team__icons profile-members__icons">
+                            <div className="project-modal-team__icon profile-members__icon">
+                              <img src={Avatar.src} alt="" />
+                            </div>
+                            <div className="project-modal-team__icon profile-members__icon">
+                              <img src={Avatar.src} alt="" />
+                            </div>
+                            <div className="project-modal-team__icon profile-members__icon">
+                              <img src={Avatar.src} alt="" />
+                            </div>
+                            <div className="project-modal-team__icon profile-members__icon">
+                              <img src={Avatar.src} alt="" />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="project-modal-team__info-item">
+                          + {participant.team.members_count} человек
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
-                <div className="project-modal-team__info-item">
-                  + 16 человек
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </Popup>

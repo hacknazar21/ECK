@@ -125,6 +125,7 @@ const useForm = (onSuccess = (response) => {}, defaultForm = {}) => {
       );
       if (input) {
         input.classList.add("error");
+        input.focus();
         input.parentElement.insertAdjacentHTML(
           "beforeend",
           `<p class="auth__input-error-label">${errorElement["value"]}</p>`

@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
-function Popup({ active, setActive, children }) {
+function Popup({ active, setActive, children, buttons = null }) {
   const nodeRef = useRef(null);
 
   return (
@@ -19,6 +19,7 @@ function Popup({ active, setActive, children }) {
         }}
         ref={nodeRef}
       >
+        {buttons}
         <div
           className="modal__content"
           onClick={(e) => {

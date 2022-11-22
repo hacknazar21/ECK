@@ -25,7 +25,7 @@ export default function FirstStep() {
   const [isCode, setIsCode] = useState(false);
   const { login } = useContext(AuthContext);
   const { formChangeHandler, formSubmitHandler, form, loading } = useForm(
-    !isCode ? onSuccessRegister : sendCodeHandler,
+    onSuccessRegister,
     {
       radio: {
         user_type: "CUSTOMER",
@@ -33,19 +33,20 @@ export default function FirstStep() {
     }
   );
   const [type, setType] = useState("CUSTOMER");
-  const [code, setCode] = useState(null);
+
   async function onSuccessRegister(response) {
+    console.log(form);
+    if (isCode) {
+      return router.push(
+        form.radio.user_type === "CUSTOMER"
+          ? "/auth/registration/customer-reg"
+          : form.select.entity_type === "INDIVIDUAL"
+          ? "/auth/registration/executor-reg-fiz"
+          : "/auth/registration/executor-reg-ur"
+      );
+    }
     login(response.access, response.refresh);
     setIsCode(true);
-  }
-  function sendCodeHandler() {
-    router.push(
-      form.user_type === "CUSTOMER"
-        ? "/auth/registration/customer-reg"
-        : form.user_type !== "CUSTOMER" && form.entity_type === "INDIVIDUAL"
-        ? "/auth/registration/executor-reg-fiz"
-        : "/auth/registration/executor-reg-ur"
-    );
   }
   return (
     <motion.section

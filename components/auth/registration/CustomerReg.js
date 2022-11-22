@@ -23,11 +23,13 @@ const animationAuth = {
 export default function CustomerReg() {
   const router = useRouter();
   const { request } = useHttp();
-  const { formChangeHandler, formSubmitHandler, form, loading } = useForm();
-  const { login } = useContext(AuthContext);
+  const { formChangeHandler, formSubmitHandler, form, loading } =
+    useForm(onSuccessReg);
   const [activities, setActivities] = useState([]);
   const [activitiesModal, setActivitiesModal] = useState(false);
-
+  async function onSuccessReg() {
+    await router.push("/profile/my-profile");
+  }
   useEffect(() => {
     (async () => {
       try {

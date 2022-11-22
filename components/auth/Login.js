@@ -29,7 +29,7 @@ export default function Login() {
   const { login } = useContext(AuthContext);
   async function onSuccessLogin(response) {
     login(response.access, response.refresh);
-    await router.push("/profile/customer/my-profile");
+    await router.push("/profile/my-profile");
   }
   return (
     <AnimatePresence>

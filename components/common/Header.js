@@ -77,7 +77,7 @@ export default function Header() {
                   </Link>
                 )}
                 {isAuth && (
-                  <Link href="/profile/customer/my-profile">
+                  <Link href="/profile/my-profile">
                     <a className="header__account-link">Личный кабинет</a>
                   </Link>
                 )}
