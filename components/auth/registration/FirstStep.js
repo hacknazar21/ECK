@@ -30,12 +30,14 @@ export default function FirstStep() {
       radio: {
         user_type: "CUSTOMER",
       },
+      select: {
+        entity_type: "INDIVIDUAL",
+      },
     }
   );
   const [type, setType] = useState("CUSTOMER");
 
   async function onSuccessRegister(response) {
-    console.log(form);
     if (isCode) {
       return router.push(
         form.radio.user_type === "CUSTOMER"

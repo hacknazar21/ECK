@@ -111,7 +111,8 @@ export default function ExecutorUrReg() {
                   htmlFor="fields_of_activity_list"
                   className="auth__input-label"
                 >
-                  {form.fields_of_activity_list?.length > 0
+                  {form["select-checkboxes"]?.fields_of_activity_list?.length >
+                  0
                     ? "Выбрано"
                     : "Сфера деятельности"}
                 </label>
@@ -226,7 +227,6 @@ export default function ExecutorUrReg() {
                   Адрес
                 </label>
               </div>
-
               <div className="auth__actions">
                 <button type="submit" className="auth__submit-button">
                   Зарегистрироваться
