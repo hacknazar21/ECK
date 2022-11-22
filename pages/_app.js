@@ -47,6 +47,8 @@ function MyApp({ Component, pageProps }) {
             } catch (e) {
               await logout();
             }
+          } else if (error?.code === "user_not_found") {
+            await logout();
           }
         }
       }
