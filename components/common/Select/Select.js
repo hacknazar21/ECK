@@ -113,6 +113,7 @@ export default function Select({
       </div>
       <ul ref={wrapper} className="select__list">
         {selectEls?.map((selectEl, id) => {
+          console.log(selectEl);
           return (
             <li
               key={id}

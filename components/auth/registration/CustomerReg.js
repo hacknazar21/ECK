@@ -110,7 +110,8 @@ export default function CustomerReg() {
                   htmlFor="fields_of_activity_list"
                   className="auth__input-label"
                 >
-                  {form.fields_of_activity_list?.length > 0
+                  {form["select-checkboxes"]?.fields_of_activity_list?.length >
+                  0
                     ? "Выбрано"
                     : "Сфера деятельности"}
                 </label>
@@ -232,7 +233,9 @@ export default function CustomerReg() {
           {activities.map((activity, id) => {
             return (
               <Select
-                defaultValue={form?.fields_of_activity_list}
+                defaultValue={
+                  form["select-checkboxes"]?.fields_of_activity_list
+                }
                 saveHead={true}
                 key={id}
                 name={"fields_of_activity_list"}

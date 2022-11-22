@@ -256,7 +256,9 @@ export default function ExecutorUrReg() {
             {activities.map((activity, id) => {
               return (
                 <Select
-                  defaultValue={form?.fields_of_activity_list}
+                  defaultValue={
+                    form["select-checkboxes"]?.fields_of_activity_list
+                  }
                   saveHead={true}
                   key={id}
                   name={"fields_of_activity_list"}
