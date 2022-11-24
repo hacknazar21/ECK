@@ -28,14 +28,14 @@ function STContent(props) {
     setMembersToInvite([]);
     try {
       const data = await request(
-        "/api/search/?search=" + searchMemberValue,
+        "/api/auth/users/?search=" + searchMemberValue,
         "GET",
         null,
         {
           Authorization: `Bearer ${token}`,
         }
       );
-      setSearchedMembers([...data.users]);
+      setSearchedMembers([...data.results]);
     } catch (e) {}
   }
   function removeMemberHandler(e) {
@@ -290,7 +290,7 @@ function STContent(props) {
                 </div>
                 <div className="single-team-search__result-info">
                   <div className="single-team-search__result-name">
-                    {searchedMember.display_name}
+                    {searchedMember.full_name}
                   </div>
                   <a
                     href={"mailto:" + searchedMember.email}
