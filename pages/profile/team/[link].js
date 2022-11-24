@@ -4,20 +4,19 @@ import Header from "../../../components/common/Header";
 import PageLayout from "../../../layouts/PageLayout";
 import PagesLayout from "../../../layouts/PagesLayout";
 import Footer from "../../../components/common/Footer";
-import Support from "../../../components/techinal-support/support";
-import MyProfile from "../../../components/profile/executor/MyProfile";
+import SingleTeam from "../../../components/profile/executor/SingleTeam";
 
-export default function MyProfilePage() {
+export default function SingleTeamPage() {
   return (
     <>
       <Head>
-        <title>Личный кабинет - Мой профиль</title>
+        <title>Личный кабинет - Мои команды</title>
       </Head>
       <HFLayout>
         <Header />
         <PagesLayout>
           <PageLayout>
-            <MyProfile />
+            <SingleTeam />
           </PageLayout>
         </PagesLayout>
         <Footer />

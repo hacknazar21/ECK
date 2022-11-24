@@ -28,7 +28,7 @@ export default function CustomerReg() {
   const [activities, setActivities] = useState([]);
   const [activitiesModal, setActivitiesModal] = useState(false);
   async function onSuccessReg() {
-    await router.push("/profile/my-profile");
+    await router.push("/");
   }
   useEffect(() => {
     (async () => {

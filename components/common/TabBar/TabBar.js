@@ -49,7 +49,7 @@ class MyComponent extends Component {
           {component}
         </div>
         {React.Children.map(children, (child) => {
-          if (child.props.label === activeTab) {
+          if (child?.props.label === activeTab) {
             return React.cloneElement(child, { activeTab });
           }
           return null;
@@ -73,7 +73,7 @@ class MyComponent extends Component {
   }
 
   getChildrenLabels(children) {
-    return children.map(({ props }) => props.label);
+    return children.map((child) => child && child.props.label);
   }
 
   setActiveTab(activeTab) {

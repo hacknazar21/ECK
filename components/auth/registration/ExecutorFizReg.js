@@ -29,7 +29,7 @@ export default function ExecutorUrReg() {
   const { request } = useHttp();
 
   async function onSuccessReg(response) {
-    await router.push("/profile/my-profile");
+    await router.push("/");
   }
 
   useEffect(() => {

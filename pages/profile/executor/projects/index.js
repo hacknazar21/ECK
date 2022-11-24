@@ -4,7 +4,7 @@ import Header from "../../../../components/common/Header";
 import PageLayout from "../../../../layouts/PageLayout";
 import PagesLayout from "../../../../layouts/PagesLayout";
 import Footer from "../../../../components/common/Footer";
-import Projects from "../../../../components/profile/executor/Projects";
+import Projects from "../../../../components/profile/Projects";
 
 export default function ProjectsPage() {
   return (

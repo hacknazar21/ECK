@@ -43,7 +43,9 @@
       z-index: 1;
     }
   }
-
+  &__empty{
+    padding: rem(20) 0;
+  }
   &__title {
     font-weight: 500;
     font-size: rem(14);

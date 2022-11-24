@@ -27,7 +27,7 @@ export function Spoiler({
         ? spoilerTitle.current.classList.add("spoiler-open")
         : spoilerTitle.current.classList.remove("spoiler-open");
       isOpen
-        ? setStyleSpoiler({ maxHeight })
+        ? setStyleSpoiler({ maxHeight: maxHeight + 20 })
         : setStyleSpoiler({ maxHeight: 0 });
     }
   }, [isOpen]);

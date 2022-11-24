@@ -12,7 +12,7 @@ import FourOhOne from "./401";
 function MyApp({ Component, pageProps }) {
   const { token, userId, login, logout, refreshToken } = useAuth();
   const isAuth = !!token;
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({});
   const { request } = useHttp();
   const router = useRouter();
   useEffect(() => {
@@ -54,6 +54,25 @@ function MyApp({ Component, pageProps }) {
       }
     })();
   }, [token, router.pathname]);
+
+  useEffect(() => {
+    if (!isAuth)
+      if (
+        router.pathname.indexOf("team") !== -1 ||
+        router.pathname.indexOf("announcements") !== -1 ||
+        router.pathname.indexOf("profile") !== -1
+      ) {
+        router.push("/");
+      }
+    if (token && !userData?.is_validated)
+      if (
+        router.pathname.indexOf("team") !== -1 ||
+        router.pathname.indexOf("announcements") !== -1 ||
+        router.pathname.indexOf("profile") !== -1
+      ) {
+        router.push("/");
+      }
+  }, [router.pathname, token]);
   return (
     <>
       <Head>
@@ -75,14 +94,12 @@ function MyApp({ Component, pageProps }) {
             logout,
             isAuth,
             userData,
-            setUserData,
+            setUserData: (data) => {
+              setUserData(data);
+            },
           }}
         >
-          {!isAuth && router.pathname.indexOf("team") !== -1 ? (
-            <FourOhOne />
-          ) : (
-            <Component {...pageProps} />
-          )}
+          <Component {...pageProps} />
         </AuthContext.Provider>
       </AnimatePresence>
     </>

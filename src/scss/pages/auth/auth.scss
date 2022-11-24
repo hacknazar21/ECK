@@ -52,35 +52,40 @@
       margin-bottom: rem(30);
     }
     position: relative;
-    &.file, &.button{
-      input{
-        position: absolute;
-        opacity: 0;
-        left: -1000px;
-        top: -1000px;
-      }
-      label{
-        display: block !important;
-        width: 100%;
-        position: relative;
-        padding-bottom:  rem(15);
-        border-bottom: 1px solid #CFDCE4;
-        &:before{
-          content: "";
-          width:  rem(16);
-          height: rem(16);
-          right: 0;
-          background: url("../../../img/file-input.png") center/contain no-repeat;
-          position: absolute;
-        }
-        @media(any-hover: hover){
-          &:hover{
-            cursor: pointer;
+   &:not(.image-file) {
+     &.file, &.button {
+       input {
+         position: absolute;
+         opacity: 0;
+         left: -1000px;
+         top: -1000px;
+       }
 
-          }
-        }
-      }
-    }
+       label {
+         display: block !important;
+         width: 100%;
+         position: relative;
+         padding-bottom: rem(15);
+         border-bottom: 1px solid #CFDCE4;
+
+         &:before {
+           content: "";
+           width: rem(16);
+           height: rem(16);
+           right: 0;
+           background: url("../../../img/file-input.png") center/contain no-repeat;
+           position: absolute;
+         }
+
+         @media(any-hover: hover) {
+           &:hover {
+             cursor: pointer;
+
+           }
+         }
+       }
+     }
+   }
     &.button {
       label{
         &:before{

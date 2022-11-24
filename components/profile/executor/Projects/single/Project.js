@@ -9,6 +9,7 @@ import TabBarItem from "../../../../common/TabBar/TabBarItem";
 import Img1 from "../../../../../src/img/projects/image 13.png";
 import Chat from "../../../../common/Chat/Chat";
 import Report from "./Report";
+import ProfileMenu from "../../../ProfileMenu";
 
 function Project(props) {
   const router = useRouter();
@@ -28,19 +29,7 @@ function Project(props) {
       <div className="projects__container">
         <ProfilePageLayout>
           <Aside>
-            <li className={"aside-menu__item"}>
-              <Link href={"/profile/customer/my-profile"}>
-                <a className="aside-menu__link">Мой профиль</a>
-              </Link>
-            </li>
-            <li className={"aside-menu__item"}>
-              <Link href={"/profile/customer/notifications"}>
-                <a className="aside-menu__link">Уведомления</a>
-              </Link>
-            </li>
-            <li className={"aside-menu__item active"}>
-              <div className="aside-menu__link">Мои проекты</div>
-            </li>
+            <ProfileMenu />
           </Aside>
           <section className="single-project__content single-project-content profile-content">
             <TabBar

@@ -13,7 +13,7 @@ function AContent(props) {
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { token } = useContext(AuthContext);
+  const { token, userData } = useContext(AuthContext);
   function openPopupClickHandler(e) {
     setProject(projects.filter((project) => project.id === this?.project)[0]);
     setActive(true);
@@ -28,7 +28,7 @@ function AContent(props) {
     (async () => {
       try {
         const data = await request(
-          "/api/projects/?status__in=APPLICATION,DECLARED",
+          "/api/projects/announcements/",
           "GET",
           null,
           {
@@ -105,15 +105,17 @@ function AContent(props) {
                 </svg>
               </button>
             </div>
-            <Link href="/announcements/create">
-              <a className="team-actions__add-btn add-btn">
-                <span>
-                  <span></span>
-                  <span></span>
-                </span>
-                Добавить объявление
-              </a>
-            </Link>
+            {userData.user_type === "CUSTOMER" && (
+              <Link href="/announcements/create">
+                <a className="team-actions__add-btn add-btn">
+                  <span>
+                    <span></span>
+                    <span></span>
+                  </span>
+                  Добавить объявление
+                </a>
+              </Link>
+            )}
           </div>
         </div>
       </div>

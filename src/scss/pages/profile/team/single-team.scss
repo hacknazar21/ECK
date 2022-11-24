@@ -2,6 +2,7 @@
   &__content {
   }
   &__form {
+    width: rem(500);
   }
 
   &__search-box {
@@ -154,6 +155,9 @@
   }
 
   &__result {
+    &.checked{
+      background-color: rgba(119, 154, 234, 0.29);
+    }
     @media(any-hover: hover){
       &:hover{
         cursor: pointer;

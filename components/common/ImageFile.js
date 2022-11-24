@@ -11,25 +11,21 @@ function ImageFile({
   defaultValue = null,
 }) {
   const classes = ["file", ...classNames];
-  const [files, setFiles] = useState([]);
   const [imagePreview, setImagePreview] = useState(null);
   function filesChangeHandler(e) {
     const filesCurrent = Array.from(e.target.files);
-    setFiles([...filesCurrent]);
-  }
-  useEffect(() => {
-    const [file] = files;
-    if (file) {
-      setImagePreview(URL.createObjectURL(file));
-    }
     onChange({
       target: {
         name,
-        value: files,
+        value: filesCurrent,
         type: "file",
       },
     });
-  }, [JSON.stringify(files)]);
+    if (filesCurrent[0]) {
+      setImagePreview(URL.createObjectURL(filesCurrent[0]));
+      console.log(URL.createObjectURL(filesCurrent[0]));
+    }
+  }
   return (
     <>
       <div className={classes.join(" ")}>
@@ -47,7 +43,7 @@ function ImageFile({
           <div className="my-profile-form__image-preview">
             <img
               loading={"lazy"}
-              src={defaultValue || imagePreview?.src || Avatar.src}
+              src={imagePreview || defaultValue || Avatar.src}
               alt=""
             />
           </div>

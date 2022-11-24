@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import Avatar from "../../../../src/img/profile/avatar.png";
 import Select from "../../../common/Select/Select";
 import Loading from "../../../common/Loading";
 import { useRouter } from "next/router";
+import useForm from "../../../../hooks/hooks.form";
+import FieldsOfActivities from "../../../common/FieldsOfActivities";
+import File from "../../../common/File";
+import ImageFile from "../../../common/ImageFile";
 
 function CTContent(props) {
-  const formChangeHandler = (event) => {};
+  const { formSubmitHandler, formChangeHandler, form, loading } =
+    useForm(createTeamHandler);
   const router = useRouter();
+  function createTeamHandler(data) {
+    router.back();
+  }
   return (
     <div className="my-profile__content my-profile-content">
       <div className="my-profile-content__box auth__box">
@@ -22,72 +30,57 @@ function CTContent(props) {
           </button>
           Создание команды
         </h1>
-        <div className="my-profile-content__form my-profile-form">
-          <div className="my-profile-form__upload-box">
-            <div className="my-profile-form__upload-input-box">
-              <input
-                type="file"
-                id="avatar"
-                name={"avatar"}
-                className="my-profile-form__upload-input"
-              />
-              <label htmlFor="avatar" className="my-profile-form__upload-label">
-                <div className="my-profile-form__image-preview">
-                  <img src={Avatar.src} alt="" />
-                </div>
-                Нажмите чтобы зарузить фото
-              </label>
-            </div>
-          </div>
+        <form
+          onSubmit={formSubmitHandler}
+          action="/api/teams/"
+          data-method="POST"
+          className="my-profile-content__form my-profile-form"
+        >
           <div className="auth__inputs">
+            <ImageFile
+              onChange={formChangeHandler}
+              classNames={["auth__input-box image-file"]}
+              name={"image"}
+              defaultValue={Avatar.src}
+            />
             <div className="auth__input-box">
               <input
                 type="text"
-                id={"full_name"}
+                id={"name"}
+                name={"name"}
+                onInput={formChangeHandler}
                 required={true}
                 placeholder=" "
                 className="auth__input"
               />
-              <label htmlFor="full_name" className="auth__input-label">
+              <label htmlFor="name" className="auth__input-label">
                 Название команды
               </label>
             </div>
             <div className="auth__input-box">
               <input
                 type="text"
-                id={"BIN"}
+                id={"description"}
+                name={"description"}
+                onInput={formChangeHandler}
                 required={true}
                 placeholder=" "
                 className="auth__input"
               />
-              <label htmlFor="BIN" className="auth__input-label">
+              <label htmlFor="description" className="auth__input-label">
                 Описание
               </label>
             </div>
-            <div className="auth__input-box">
-              <Select
-                name={"field_of_activity"}
-                onSelect={formChangeHandler}
-                title={"Сфера деятельности"}
-                multiply={true}
-                items={[
-                  { name: "Рисование", value: "draw" },
-                  { name: "Программирование", value: "programming" },
-                ]}
-              />
-            </div>
-            <div className="auth__input-box">
-              <input
-                type="text"
-                id={"licence"}
-                required={true}
-                placeholder=" "
-                className="auth__input"
-              />
-              <label htmlFor="licence" className="auth__input-label">
-                Сертификат/лицензия
-              </label>
-            </div>
+            <FieldsOfActivities
+              form={form}
+              formChangeHandler={formChangeHandler}
+            />
+            <File
+              isInput={true}
+              name={"certificates"}
+              label={"Лицензии/Сертификаты"}
+              onChange={formChangeHandler}
+            />
             <div className="auth__input-box">
               <input
                 id={"email"}
@@ -102,11 +95,13 @@ function CTContent(props) {
               </label>
             </div>
             <div className="auth__actions">
-              <button className="auth__submit-button">Создать команду</button>
-              <Loading />
+              <button type={"submit"} className="auth__submit-button">
+                Создать команду
+              </button>
+              {loading && <Loading />}
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

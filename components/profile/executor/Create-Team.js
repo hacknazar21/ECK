@@ -1,10 +1,7 @@
 import React from "react";
 import ProfilePageLayout from "../../../layouts/ProfilePageLayout";
 import Aside from "../../common/Aside/Aside";
-import MyProfileContent from "./MyProfile/MyProfileContent";
-import NContent from "./Notifications/NContent";
 import Link from "next/link";
-import TContent from "./Team/TContent";
 import CTContent from "./Team/CTContent";
 
 function Team(props) {
