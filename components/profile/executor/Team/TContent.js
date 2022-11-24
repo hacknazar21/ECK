@@ -46,7 +46,10 @@ function TContent(props) {
         <TabBarItem className={"projects-cards profile-cards"} label={"Все"}>
           {teams.map((team) => {
             return (
-              <article className="team-content__card profile-cards__card profile-card team-card">
+              <article
+                key={team.id}
+                className="team-content__card profile-cards__card profile-card team-card"
+              >
                 <div className="team-card__logo profile-card__logo">
                   <div className="team-card__image profile-card__image">
                     <img src={team.image} alt="" />
@@ -63,7 +66,10 @@ function TContent(props) {
                   <div className="team-card__members-box profile-members__box">
                     <div className="team-card__icons profile-members__icons">
                       {team.members?.map((member) => (
-                        <div className="team-card__icon profile-members__icon">
+                        <div
+                          key={member.id}
+                          className="team-card__icon profile-members__icon"
+                        >
                           <img src={member.avatar || Avatar.src} alt="" />
                         </div>
                       ))}

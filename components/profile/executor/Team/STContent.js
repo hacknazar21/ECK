@@ -124,7 +124,10 @@ function STContent(props) {
       >
         <TabBarItem className={"profile-block"} label={"Участники"}>
           {members.map((member) => (
-            <article className="single-team-members__member single-team-member">
+            <article
+              key={member.id}
+              className="single-team-members__member single-team-member"
+            >
               <div className="single-team-member__info">
                 <div className="single-team-member__icon">
                   <img src={member.avatar} alt="" />
@@ -196,7 +199,10 @@ function STContent(props) {
         {teamInfo.is_team_owner && (
           <TabBarItem className={"profile-block"} label={"Заявки"}>
             {requests.map((request) => (
-              <article className="single-team-members__member single-team-member">
+              <article
+                key={request.id}
+                className="single-team-members__member single-team-member"
+              >
                 <div className="single-team-member__info">
                   <div className="single-team-member__icon">
                     <img src={Avatar.src} alt="" />
@@ -263,6 +269,7 @@ function STContent(props) {
           <div className="single-team-search__results">
             {searchedMembers.map((searchedMember) => (
               <div
+                key={searchedMember.id}
                 onClick={(e) => {
                   !e.target.classList.contains("checked")
                     ? setMembersToInvite((prevState) => [

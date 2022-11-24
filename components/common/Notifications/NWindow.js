@@ -102,6 +102,7 @@ function NWindow(props) {
             <section className="notifications-window__notifications">
               {notifications.map((notification) => (
                 <NotificationWindow
+                  key={notification.id}
                   updateNotifications={updateNotifications}
                   notification={notification}
                 />

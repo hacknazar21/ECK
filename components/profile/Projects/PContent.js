@@ -40,7 +40,10 @@ function PContent(props) {
         >
           {projects?.map((project) => {
             return (
-              <article className="projects-cards__card projects-card profile-cards__card profile-card">
+              <article
+                key={project.id}
+                className="projects-cards__card projects-card profile-cards__card profile-card"
+              >
                 <h2 className="projects-card__title profile-card__title">
                   {project.title}
                 </h2>
@@ -92,7 +95,10 @@ function PContent(props) {
             ?.filter((project) => project.status === "IN_PROGRESS")
             .map((project) => {
               return (
-                <article className="projects-cards__card projects-card profile-cards__card profile-card">
+                <article
+                  key={project}
+                  className="projects-cards__card projects-card profile-cards__card profile-card"
+                >
                   <h2 className="projects-card__title profile-card__title">
                     {project.title}
                   </h2>
@@ -109,7 +115,10 @@ function PContent(props) {
                           {project.participants?.map((participant, id) => {
                             if (id < 5)
                               return (
-                                <div className="projects-card__icon profile-members__icon">
+                                <div
+                                  key={participant.id}
+                                  className="projects-card__icon profile-members__icon"
+                                >
                                   <img src={participant.image} alt="" />
                                 </div>
                               );
@@ -144,7 +153,10 @@ function PContent(props) {
             ?.filter((project) => project.status === "FINISHED")
             .map((project) => {
               return (
-                <article className="projects-cards__card projects-card profile-cards__card profile-card">
+                <article
+                  key={project.id}
+                  className="projects-cards__card projects-card profile-cards__card profile-card"
+                >
                   <h2 className="projects-card__title profile-card__title">
                     {project.title}
                   </h2>
@@ -161,7 +173,10 @@ function PContent(props) {
                           {project.participants?.map((participant, id) => {
                             if (id < 5)
                               return (
-                                <div className="projects-card__icon profile-members__icon">
+                                <div
+                                  key={participant.id}
+                                  className="projects-card__icon profile-members__icon"
+                                >
                                   <img src={participant.image} alt="" />
                                 </div>
                               );
