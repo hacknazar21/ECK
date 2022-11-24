@@ -68,10 +68,12 @@ function NotificationWindow({ notification, updateNotifications }) {
         <h3 className="window-notification-info__title">
           {notification.message}
         </h3>
-        <ActionButtons
-          notification={notification}
-          updateNotifications={updateNotifications}
-        />
+        {!notification.is_visited && (
+          <ActionButtons
+            notification={notification}
+            updateNotifications={updateNotifications}
+          />
+        )}
       </div>
     </article>
   );
