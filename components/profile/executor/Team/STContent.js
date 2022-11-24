@@ -38,7 +38,26 @@ function STContent(props) {
       setSearchedMembers([...data.results]);
     } catch (e) {}
   }
-  function removeMemberHandler(e) {
+  async function inviteClickHandler(e) {
+    try {
+      for (const memberToInvite of membersToInvite) {
+        const data = await request(
+          "/api/teams/invites/",
+          "POST",
+          {
+            team: teamInfo.id,
+            user: memberToInvite,
+          },
+          {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          }
+        );
+        setActive(false);
+      }
+    } catch (e) {}
+  }
+  async function removeMemberHandler(e) {
     const card = e.target.closest(".single-team-members__member");
     if (card) {
       const name = card.querySelector(".single-team-member__name")?.innerText;
@@ -54,7 +73,36 @@ function STContent(props) {
       }
     }
   }
-
+  async function leaveClickHandler(e) {
+    try {
+      await request(
+        `/api/teams/${teamInfo.slug}/leave/`,
+        "DELETE",
+        {},
+        {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        }
+      );
+    } catch (e) {
+      router.push("/profile/team/");
+    }
+  }
+  async function archiveClickHandler(e) {
+    try {
+      await request(
+        `/api/teams/${teamInfo.slug}/`,
+        "DELETE",
+        {},
+        {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        }
+      );
+    } catch (e) {
+      await router.push("/profile/team/");
+    }
+  }
   useEffect(() => {
     (async () => {
       try {
@@ -63,11 +111,12 @@ function STContent(props) {
         });
         setTeamInfo({ ...data });
         const dataMembers = await request(
-          "/api/teams/" + link + "/members",
+          "/api/teams/" + link + "/members/",
           "GET",
           null,
           {
             Authorization: `Bearer ${token}`,
+            Accept: "application/json",
           }
         );
         setMembers([...dataMembers.results]);
@@ -83,26 +132,6 @@ function STContent(props) {
       } catch (e) {}
     })();
   }, [token]);
-
-  async function inviteClickHandler() {
-    try {
-      for (const memberToInvite of membersToInvite) {
-        const data = await request(
-          "/api/teams/invites/",
-          "POST",
-          {
-            team: teamInfo.id,
-            user: memberToInvite,
-          },
-          {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          }
-        );
-        console.log(data);
-      }
-    } catch (e) {}
-  }
 
   return (
     <section className="single-team__content single-team-content profile-content">
@@ -185,12 +214,18 @@ function STContent(props) {
               </button>
             )}
             {teamInfo.is_team_owner && (
-              <button className="window-notification__button window-notification__button_no-active">
-                Распустить команду
+              <button
+                onClick={archiveClickHandler}
+                className="window-notification__button window-notification__button_no-active"
+              >
+                Архивировать команду
               </button>
             )}
             {!teamInfo.is_team_owner && (
-              <button className="window-notification__button window-notification__button_no-active">
+              <button
+                onClick={leaveClickHandler}
+                className="window-notification__button window-notification__button_no-active"
+              >
                 Покинуть команду
               </button>
             )}
