@@ -89,15 +89,13 @@ function MyProfileContent(props) {
                       <h3 className="files__title">Загруженные документы</h3>
                       {userData?.certificates?.map((file, id) => {
                         return (
-                          <>
-                            <a
-                              href={file.file}
-                              key={file.id}
-                              className="file__item"
-                            >
-                              {id + 1}. {file.uploaded_name}
-                            </a>
-                          </>
+                          <a
+                            href={file.file}
+                            key={file.id}
+                            className="file__item"
+                          >
+                            {id + 1}. {file.uploaded_name}
+                          </a>
                         );
                       })}
                     </div>

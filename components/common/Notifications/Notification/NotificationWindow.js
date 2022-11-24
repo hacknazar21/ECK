@@ -65,9 +65,10 @@ function NotificationWindow({ notification, updateNotifications }) {
                 .split(":")[1]}
           </span>
         </time>
-        <h3 className="window-notification-info__title">
-          {notification.message}
-        </h3>
+        <h3
+          dangerouslySetInnerHTML={{ __html: notification.message }}
+          className="window-notification-info__title"
+        ></h3>
         {!notification.is_visited && (
           <ActionButtons
             notification={notification}

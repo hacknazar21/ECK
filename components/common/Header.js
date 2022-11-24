@@ -8,14 +8,21 @@ import SResult from "./Search/SResult";
 import NWindow from "./Notifications/NWindow";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../context/AuthContext";
+import Popup from "./Popup";
+import ProfileMenu from "../profile/ProfileMenu";
+import Select from "./Select/Select";
+import HeaderProfileMenu from "./HeaderProfileMenu";
 
 export default function Header() {
   const router = useRouter();
-  const { isAuth } = useContext(AuthContext);
+  const { isAuth, userData } = useContext(AuthContext);
+
   function openMenuClickHandler(e) {
     document.documentElement.classList.toggle("open-menu");
   }
-
+  useEffect(() => {
+    document.documentElement.classList.remove("open-menu");
+  }, [router.pathname]);
   return (
     <>
       <header className="header">
@@ -59,6 +66,20 @@ export default function Header() {
                   </a>
                 </li>
               </ul>
+              {isAuth && (
+                <ul className="menu__list menu__list_device_mobile">
+                  <li className="menu__item">
+                    <Link href="/profile/my-profile">
+                      <a className="menu__link">
+                        <span className="menu__avatar">
+                          <img src={userData.avatar} alt="" />
+                        </span>
+                        Мой профиль
+                      </a>
+                    </Link>
+                  </li>
+                </ul>
+              )}
             </menu>
             <div className="header__actions">
               <div className="header__search">
@@ -76,11 +97,7 @@ export default function Header() {
                     <a className="header__account-link">Войти в аккаунт</a>
                   </Link>
                 )}
-                {isAuth && (
-                  <Link href="/profile/my-profile">
-                    <a className="header__account-link">Личный кабинет</a>
-                  </Link>
-                )}
+                {isAuth && <HeaderProfileMenu />}
               </div>
             </div>
             <button onClick={openMenuClickHandler} className="menu__burger">

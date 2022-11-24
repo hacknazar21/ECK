@@ -25,6 +25,10 @@
     @media(max-width:$tablet){
       overflow: hidden;
       transition: max-height 0.6s ease;
+      max-height: rem(38);
+      &.open{
+        max-height: rem(170);
+      }
     }
     &_columns{
       display: grid;

@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../context/AuthContext";
 
-function ProfileMenu(props) {
-  const { pathname, push } = useRouter();
-  const { logout, userData } = useContext(AuthContext);
+function ProfileMenu({ onClick = () => {} }) {
+  const { pathname } = useRouter();
+  const { userData } = useContext(AuthContext);
+  const [isMobile, setIsMobile] = useState(false);
   const menuItems = [
     {
       item: "Мой профиль",
@@ -28,35 +29,67 @@ function ProfileMenu(props) {
       type: "all",
     },
   ];
-
-  async function exitClickHandler() {
-    logout();
-    await push("/");
-  }
-
+  useEffect(() => {
+    if (window.innerWidth <= 992) setIsMobile(true);
+  }, []);
   return (
     <>
-      {menuItems.map((menuItem, id) => {
-        if (menuItem.type === "all" || menuItem.type === userData.user_type)
-          return (
-            <li
-              key={id}
-              className={
-                "aside-menu__item " +
-                (pathname.indexOf(menuItem.link) !== -1 ? "active" : "")
-              }
-            >
+      {!isMobile &&
+        menuItems.map((menuItem, id) => {
+          if (menuItem.type === "all" || menuItem.type === userData.user_type)
+            return (
+              <li
+                key={id + menuItem.link}
+                className={
+                  "aside-menu__item " +
+                  (pathname.indexOf(menuItem.link) !== -1 ? "active" : "")
+                }
+              >
+                {pathname.indexOf(menuItem.link) !== -1 && (
+                  <div
+                    onClick={
+                      pathname.indexOf(menuItem.link) !== -1
+                        ? onClick
+                        : () => {}
+                    }
+                    className="aside-menu__link"
+                  >
+                    {menuItem.item}
+                  </div>
+                )}
+                {pathname.indexOf(menuItem.link) === -1 && (
+                  <Link href={menuItem.link}>
+                    <a className="aside-menu__link">{menuItem.item}</a>
+                  </Link>
+                )}
+              </li>
+            );
+        })}
+      {isMobile &&
+        menuItems
+          .filter((menuItem) => pathname.indexOf(menuItem.link) !== -1)
+          .map((menuItem, id) => (
+            <li key={id + menuItem.link} className={"aside-menu__item active"}>
+              <div
+                onClick={
+                  pathname.indexOf(menuItem.link) !== -1 ? onClick : () => {}
+                }
+                className="aside-menu__link"
+              >
+                {menuItem.item}
+              </div>
+            </li>
+          ))}
+      {isMobile &&
+        menuItems
+          .filter((menuItem) => pathname.indexOf(menuItem.link) === -1)
+          .map((menuItem, id) => (
+            <li key={id + menuItem.link} className={"aside-menu__item"}>
               <Link href={menuItem.link}>
                 <a className="aside-menu__link">{menuItem.item}</a>
               </Link>
             </li>
-          );
-      })}
-      <li className={"aside-menu__item"}>
-        <a onClick={exitClickHandler} className="aside-menu__link">
-          Выйти
-        </a>
-      </li>
+          ))}
     </>
   );
 }
