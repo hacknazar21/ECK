@@ -192,7 +192,17 @@ function PContent() {
                 dateTime={project?.application_start_date?.split("-").join("/")}
                 className="project-modal__section-text"
               >
-                {project?.application_start_date?.split("-").join("/")}
+                {new Date(
+                  project?.application_start_date?.split("-").join("/")
+                ).getDate()}
+                /
+                {new Date(
+                  project?.application_start_date?.split("-").join("/")
+                ).getMonth() + 1}
+                /
+                {new Date(
+                  project?.application_start_date?.split("-").join("/")
+                ).getFullYear()}
               </time>
             </div>
             <div className="project-modal__section-box">
@@ -203,7 +213,17 @@ function PContent() {
                 dateTime={project?.application_end_date?.split("-").join("/")}
                 className="project-modal__section-text"
               >
-                {project?.application_end_date?.split("-").join("/")}
+                {new Date(
+                  project?.application_end_date?.split("-").join("/")
+                ).getDate()}
+                /
+                {new Date(
+                  project?.application_end_date?.split("-").join("/")
+                ).getMonth() + 1}
+                /
+                {new Date(
+                  project?.application_end_date?.split("-").join("/")
+                ).getFullYear()}
               </time>
             </div>
           </div>

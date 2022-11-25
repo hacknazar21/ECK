@@ -67,22 +67,14 @@ function NewTeamInvite({ notification, updateNotifications }) {
         <div className="notification-item__header">
           <time className="notification-item__time">
             <span>
-              {new Date(notification.update_at)
-                .toISOString()
-                .split("T")[0]
-                .replaceAll("-", "/")}
+              {new Date(notification.created_at).getDate()}/
+              {new Date(notification.created_at).getMonth() + 1}/
+              {new Date(notification.created_at).getFullYear()}
             </span>
             <span>|</span>
             <span>
-              {new Date(notification.update_at)
-                .toISOString()
-                .split("T")[1]
-                .split(":")[0] +
-                ":" +
-                new Date(notification.update_at)
-                  .toISOString()
-                  .split("T")[1]
-                  .split(":")[1]}
+              {new Date(notification.created_at).getHours()}:
+              {new Date(notification.created_at).getMinutes()}
             </span>
           </time>
           <h3
