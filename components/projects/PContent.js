@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "../../src/img/avatars/01.png";
-import Img1 from "../../src/img/projects/image 13.png";
 import Popup from "../common/Popup";
 import Link from "next/link";
 import useHttp from "../../hooks/hooks.http";
-import { AuthContext } from "../../context/AuthContext";
 
 function PContent() {
   const [active, setActive] = useState(false);
@@ -12,6 +10,8 @@ function PContent() {
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [fields, setFields] = useState({});
+
   function openPopupClickHandler(e) {
     setProject(projects.filter((project) => project.id === this?.project)[0]);
     setActive(true);
@@ -23,6 +23,34 @@ function PContent() {
     }
   }, [project]);
   useEffect(() => {
+    const parents = [];
+    for (const project1 of projects) {
+      const arr = project1?.fields_of_activity?.map((field_of_activity, id) => {
+        const same = project1.fields_of_activity.filter(
+          (field_of_activity_f) =>
+            field_of_activity_f.parent_field.name ===
+            field_of_activity.parent_field.name
+        );
+        if (parents.indexOf(same[0].parent_field) === -1) {
+          parents.push(same[0].parent_field);
+          return {
+            image: same[0].parent_field.image,
+            parent_field: same[0].parent_field,
+            name: same.map((sameItem) => sameItem.name),
+          };
+        }
+        return null;
+      });
+
+      setFields((prevState) => ({
+        ...prevState,
+        ...{
+          [project1.id]: [...arr.filter((item) => item !== null)],
+        },
+      }));
+    }
+  }, [projects]);
+  useEffect(() => {
     (async () => {
       try {
         const data = await request("/api/projects/");
@@ -32,6 +60,7 @@ function PContent() {
       }
     })();
   }, []);
+
   function changeModalClickHandler(e) {
     e.stopPropagation();
     switch (this?.type) {
@@ -169,14 +198,19 @@ function PContent() {
           </h3>
         </header>
         <div className="projects-content__modal project-modal">
-          <div className="project-modal__type">
-            <div className="project-modal__type-image">
-              <img src={Img1.src} alt="" />
+          {fields[project.id]?.map((field_of_activity) => (
+            <div key={field_of_activity} className="project-modal__type">
+              {field_of_activity.image && (
+                <div className="project-modal__type-image">
+                  <img src={field_of_activity.parent_field.image} alt="" />
+                </div>
+              )}
+              <h4 className="project-modal__type-name">
+                {field_of_activity.parent_field.name},{" "}
+                {field_of_activity.name.join(", ")}
+              </h4>
             </div>
-            <h4 className="project-modal__type-name">
-              Естественные науки, математика и статистика
-            </h4>
-          </div>
+          ))}
           <div className="project-modal__info">
             <h2 className="project-modal__info-title">{project.title}</h2>
             <div className="project-modal__info-text">
@@ -326,88 +360,218 @@ function PContent() {
             <h2 className="project-modal-teams__title">Участники</h2>
             {project.participants?.length === 0 && "Участников пока нет"}
             {project.participants?.map((participant) => {
-              return (
-                <div
-                  key={participant.id}
-                  className="project-modal-teams__team project-modal-team"
-                >
-                  <div className="project-modal-team__content">
-                    <div className="project-modal-team__logo profile-card__logo">
-                      <div className="project-modal-team__image profile-card__image">
-                        <img src={Avatar.src} alt="" />
-                      </div>
-                      <div className="project-modal-team__name profile-card__name profile-card__name_team">
-                        IBM
-                      </div>
-                    </div>
-                    <div className="project-modal-team__logo profile-card__logo">
-                      <div className="project-modal-team__image profile-card__image">
-                        <img src={Avatar.src} alt="" />
-                      </div>
-                      <div className="project-modal-team__name profile-card__name profile-card__name_team">
-                        IBM
-                      </div>
-                    </div>
-                    <div className="project-modal-team__text">
-                      <p>
-                        Разрабатываем мобильную игру для детей на Unity Хотим
-                        внедрить вместо или параллельно с внутриигровой валютой
-                        (золото и кристаллы) – свою криптовалюту или токен. Дабы
-                        игроки...Разрабатываем мобильную игру для детей на Unity
-                        Хотим внедрить вместо или параллельно с внутриигровой
-                        валютой (золото и кристаллы) – свою криптовалюту или
-                        токен. Дабы игроки...Разрабатываем мобильную игру для
-                        детей на Unity Хотим внедрить вместо или параллельно с
-                        внутриигровой валютой (золото и кристаллы) – свою
-                        криптовалюту или токен. Дабы игроки...
-                      </p>
-                    </div>
-                    <div className="project-modal-team__button">
-                      <Link href="">
-                        <a className="window-notification__button window-notification__button_active">
-                          Смотреть профиль
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="project-modal-team__info">
-                    {participant.consortium && (
-                      <>
-                        <div className="project-modal-team__tag profile-card__tag">
-                          Консорциум
+              if (participant.team)
+                return (
+                  <div
+                    key={participant.id}
+                    className="project-modal-teams__team project-modal-team"
+                  >
+                    <div className="project-modal-team__content">
+                      <div className="project-modal-team__logo profile-card__logo">
+                        <div className="project-modal-team__image profile-card__image">
+                          <img src={Avatar.src} alt="" />
                         </div>
-                        <div className="project-modal-team__info-item">
-                          Всего:
-                          <span>350 человек</span>
+                        <div className="project-modal-team__name profile-card__name profile-card__name_team">
+                          IBM
                         </div>
-                      </>
-                    )}
-                    {participant.team && (
-                      <>
-                        <div className="project-modal-team__members-box profile-members__box">
-                          <div className="project-modal-team__icons profile-members__icons">
-                            <div className="project-modal-team__icon profile-members__icon">
-                              <img src={Avatar.src} alt="" />
-                            </div>
-                            <div className="project-modal-team__icon profile-members__icon">
-                              <img src={Avatar.src} alt="" />
-                            </div>
-                            <div className="project-modal-team__icon profile-members__icon">
-                              <img src={Avatar.src} alt="" />
-                            </div>
-                            <div className="project-modal-team__icon profile-members__icon">
-                              <img src={Avatar.src} alt="" />
-                            </div>
+                      </div>
+                      <div className="project-modal-team__text">
+                        <p>
+                          Разрабатываем мобильную игру для детей на Unity Хотим
+                          внедрить вместо или параллельно с внутриигровой
+                          валютой (золото и кристаллы) – свою криптовалюту или
+                          токен. Дабы игроки...Разрабатываем мобильную игру для
+                          детей на Unity Хотим внедрить вместо или параллельно с
+                          внутриигровой валютой (золото и кристаллы) – свою
+                          криптовалюту или токен. Дабы игроки...Разрабатываем
+                          мобильную игру для детей на Unity Хотим внедрить
+                          вместо или параллельно с внутриигровой валютой (золото
+                          и кристаллы) – свою криптовалюту или токен. Дабы
+                          игроки...
+                        </p>
+                      </div>
+                      <div className="project-modal-team__button">
+                        <Link
+                          href="/team/[link]"
+                          as={"/team/" + participant.team.id}
+                        >
+                          <a className="window-notification__button window-notification__button_active">
+                            Смотреть профиль
+                          </a>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="project-modal-team__info">
+                      <div className="project-modal-team__members-box profile-members__box">
+                        <div className="project-modal-team__icons profile-members__icons">
+                          <div className="project-modal-team__icon profile-members__icon">
+                            <img src={Avatar.src} alt="" />
+                          </div>
+                          <div className="project-modal-team__icon profile-members__icon">
+                            <img src={Avatar.src} alt="" />
+                          </div>
+                          <div className="project-modal-team__icon profile-members__icon">
+                            <img src={Avatar.src} alt="" />
+                          </div>
+                          <div className="project-modal-team__icon profile-members__icon">
+                            <img src={Avatar.src} alt="" />
                           </div>
                         </div>
-                        <div className="project-modal-team__info-item">
-                          + {participant.team.members_count} человек
-                        </div>
-                      </>
-                    )}
+                      </div>
+                      <div className="project-modal-team__info-item">
+                        + {participant.team.members_count} человек
+                      </div>
+                    </div>
                   </div>
-                </div>
-              );
+                );
+              else if (participant.consortium)
+                return (
+                  <div
+                    key={participant.id}
+                    className="project-modal-teams__team project-modal-team"
+                  >
+                    <div className="project-modal-team__content">
+                      <div className="project-modal-team__logo profile-card__logo">
+                        <div className="project-modal-team__image profile-card__image">
+                          <img src={Avatar.src} alt="" />
+                        </div>
+                        <div className="project-modal-team__name profile-card__name profile-card__name_team">
+                          IBM
+                        </div>
+                      </div>
+                      <div className="project-modal-team__logo profile-card__logo">
+                        <div className="project-modal-team__image profile-card__image">
+                          <img src={Avatar.src} alt="" />
+                        </div>
+                        <div className="project-modal-team__name profile-card__name profile-card__name_team">
+                          IBM
+                        </div>
+                      </div>
+                      <div className="project-modal-team__text">
+                        <p>
+                          Разрабатываем мобильную игру для детей на Unity Хотим
+                          внедрить вместо или параллельно с внутриигровой
+                          валютой (золото и кристаллы) – свою криптовалюту или
+                          токен. Дабы игроки...Разрабатываем мобильную игру для
+                          детей на Unity Хотим внедрить вместо или параллельно с
+                          внутриигровой валютой (золото и кристаллы) – свою
+                          криптовалюту или токен. Дабы игроки...Разрабатываем
+                          мобильную игру для детей на Unity Хотим внедрить
+                          вместо или параллельно с внутриигровой валютой (золото
+                          и кристаллы) – свою криптовалюту или токен. Дабы
+                          игроки...
+                        </p>
+                      </div>
+                      <div className="project-modal-team__button">
+                        <Link href="">
+                          <a className="window-notification__button window-notification__button_active">
+                            Смотреть профиль
+                          </a>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="project-modal-team__info">
+                      {participant.consortium && (
+                        <>
+                          <div className="project-modal-team__tag profile-card__tag">
+                            Консорциум
+                          </div>
+                          <div className="project-modal-team__info-item">
+                            Всего:
+                            <span>350 человек</span>
+                          </div>
+                        </>
+                      )}
+                      {participant.team && (
+                        <>
+                          <div className="project-modal-team__members-box profile-members__box">
+                            <div className="project-modal-team__icons profile-members__icons">
+                              <div className="project-modal-team__icon profile-members__icon">
+                                <img src={Avatar.src} alt="" />
+                              </div>
+                              <div className="project-modal-team__icon profile-members__icon">
+                                <img src={Avatar.src} alt="" />
+                              </div>
+                              <div className="project-modal-team__icon profile-members__icon">
+                                <img src={Avatar.src} alt="" />
+                              </div>
+                              <div className="project-modal-team__icon profile-members__icon">
+                                <img src={Avatar.src} alt="" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="project-modal-team__info-item">
+                            + {participant.team.members_count} человек
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                );
+              else if (participant.user)
+                return (
+                  <div
+                    key={participant.user.id}
+                    className="project-modal-teams__team project-modal-team"
+                  >
+                    <div className="project-modal-team__content">
+                      <div className="project-modal-team__logo profile-card__logo">
+                        <div className="project-modal-team__image profile-card__image">
+                          <img src={participant.user.avatar} alt="" />
+                        </div>
+                        <div className="project-modal-team__name profile-card__name profile-card__name_team">
+                          {participant.user.full_name}
+                        </div>
+                      </div>
+                      <div className="project-modal-team__button">
+                        <Link
+                          href="/user/[link]"
+                          as={"/user/" + participant.user.id}
+                        >
+                          <a className="window-notification__button window-notification__button_active">
+                            Смотреть профиль
+                          </a>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="project-modal-team__info">
+                      {participant.consortium && (
+                        <>
+                          <div className="project-modal-team__tag profile-card__tag">
+                            Консорциум
+                          </div>
+                          <div className="project-modal-team__info-item">
+                            Всего:
+                            <span>350 человек</span>
+                          </div>
+                        </>
+                      )}
+                      {participant.team && (
+                        <>
+                          <div className="project-modal-team__members-box profile-members__box">
+                            <div className="project-modal-team__icons profile-members__icons">
+                              <div className="project-modal-team__icon profile-members__icon">
+                                <img src={Avatar.src} alt="" />
+                              </div>
+                              <div className="project-modal-team__icon profile-members__icon">
+                                <img src={Avatar.src} alt="" />
+                              </div>
+                              <div className="project-modal-team__icon profile-members__icon">
+                                <img src={Avatar.src} alt="" />
+                              </div>
+                              <div className="project-modal-team__icon profile-members__icon">
+                                <img src={Avatar.src} alt="" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="project-modal-team__info-item">
+                            + {participant.team.members_count} человек
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                );
             })}
           </div>
         </div>
