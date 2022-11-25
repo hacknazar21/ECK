@@ -47,13 +47,21 @@ function NotificationWindow({ notification, updateNotifications }) {
       <div className="window-notification__info window-notification-info">
         <time className="window-notification-info__date">
           <span>
+            {new Date(notification.created_at).getDate().toString().length ===
+              1 && "0"}
             {new Date(notification.created_at).getDate()}/
+            {(new Date(notification.created_at).getMonth() + 1).toString()
+              .length === 1 && "0"}
             {new Date(notification.created_at).getMonth() + 1}/
             {new Date(notification.created_at).getFullYear()}
           </span>
           <span>|</span>
           <span>
+            {new Date(notification.created_at).getHours().toString().length ===
+              1 && "0"}
             {new Date(notification.created_at).getHours()}:
+            {new Date(notification.created_at).getMinutes().toString()
+              .length === 1 && "0"}
             {new Date(notification.created_at).getMinutes()}
           </span>
         </time>

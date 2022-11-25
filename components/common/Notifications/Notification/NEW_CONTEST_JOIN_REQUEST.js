@@ -72,13 +72,21 @@ function NewContestJoinRequest({ notification, updateNotifications }) {
         <div className="notification-item__header">
           <time className="notification-item__time">
             <span>
+              {new Date(notification.created_at).getDate().toString().length ===
+                1 && "0"}
               {new Date(notification.created_at).getDate()}/
+              {(new Date(notification.created_at).getMonth() + 1).toString()
+                .length === 1 && "0"}
               {new Date(notification.created_at).getMonth() + 1}/
               {new Date(notification.created_at).getFullYear()}
             </span>
             <span>|</span>
             <span>
+              {new Date(notification.created_at).getHours().toString()
+                .length === 1 && "0"}
               {new Date(notification.created_at).getHours()}:
+              {new Date(notification.created_at).getMinutes().toString()
+                .length === 1 && "0"}
               {new Date(notification.created_at).getMinutes()}
             </span>
           </time>

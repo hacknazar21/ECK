@@ -115,7 +115,7 @@ function NContent(props) {
         </TabBarItem>
         <TabBarItem className={"profile-block"} label={"Непрочитанные"}>
           {notifications
-            .filter((notification) => notification.is_viewed)
+            .filter((notification) => !notification.is_viewed)
             .map((notification) => (
               <div
                 key={notification.id}

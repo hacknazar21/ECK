@@ -198,10 +198,16 @@ function AContent(props) {
                 dateTime={project?.application_start_date?.split("-").join("/")}
                 className="project-modal__section-text"
               >
+                {new Date(project?.application_start_date?.split("-").join("/"))
+                  .getDate()
+                  .toString().length === 1 && "0"}
                 {new Date(
                   project?.application_start_date?.split("-").join("/")
                 ).getDate()}
                 /
+                {new Date(project?.application_start_date?.split("-").join("/"))
+                  .getMonth()
+                  .toString().length === 1 && "0"}
                 {new Date(
                   project?.application_start_date?.split("-").join("/")
                 ).getMonth() + 1}
@@ -219,10 +225,16 @@ function AContent(props) {
                 dateTime={project?.application_end_date?.split("-").join("/")}
                 className="project-modal__section-text"
               >
+                {new Date(project?.application_end_date?.split("-").join("/"))
+                  .getDate()
+                  .toString().length === 1 && "0"}
                 {new Date(
                   project?.application_end_date?.split("-").join("/")
                 ).getDate()}
                 /
+                {new Date(project?.application_end_date?.split("-").join("/"))
+                  .getMonth()
+                  .toString().length === 1 && "0"}
                 {new Date(
                   project?.application_end_date?.split("-").join("/")
                 ).getMonth() + 1}
