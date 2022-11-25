@@ -19,7 +19,8 @@ function Contacts({ contacts = [] }) {
               </div>
               <a
                 target="_blank"
-                href="tel:+1 (555) 000-0000"
+                rel="noreferrer"
+                href={contact.subtitle}
                 className="contacts__value"
               >
                 {contact.subtitle}
