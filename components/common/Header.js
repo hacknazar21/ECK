@@ -51,17 +51,17 @@ export default function Header() {
                   </Link>
                 </li>
                 <li className="menu__item">
-                  <a href="" className="menu__link">
-                    О проекте
-                  </a>
+                  <Link href="/about">
+                    <a className="menu__link">О проекте</a>
+                  </Link>
                 </li>
                 <li className="menu__item">
-                  <a href="" className="menu__link">
-                    Контакты
-                  </a>
+                  <Link href="/contacts">
+                    <a className="menu__link">Контакты</a>
+                  </Link>
                 </li>
                 <li className="menu__item">
-                  <a href="" className="menu__link">
+                  <a target="_blank" href="" className="menu__link">
                     Инструкция
                   </a>
                 </li>
@@ -108,7 +108,14 @@ export default function Header() {
             </button>
           </div>
         </div>
-        {router.pathname !== "/" ? <Menu /> : ""}
+        {router.pathname !== "/" &&
+        router.pathname !== "/about" &&
+        router.pathname !== "/contacts" &&
+        router.pathname.indexOf("/news/") === -1 ? (
+          <Menu />
+        ) : (
+          ""
+        )}
       </header>
     </>
   );

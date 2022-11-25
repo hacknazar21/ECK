@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import OfferHead from "../../src/img/home/offer-head.png";
+import OfferBg from "../../src/img/home/offer-bg.png";
 import { motion } from "framer-motion";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
+
 const animation = {
   hidden: {
     x: -100,
@@ -21,11 +23,11 @@ const animationLogo = {
     scale: 1,
   },
 };
-export default function Offer() {
+export default function Offer({ content }) {
   useEffect(() => {}, []);
-  const [text, count] = useTypewriter({
-    words: ["Единый центр компетенции"],
-    loop: true,
+  const [text] = useTypewriter({
+    words: [content.title || "Единый центр компетенции"],
+    loop: false,
     delaySpeed: 2000,
   });
   return (
@@ -36,7 +38,14 @@ export default function Offer() {
       className="offer"
     >
       <div className="offer__container">
-        <div className="offer__box">
+        <div
+          className="offer__box"
+          style={{
+            backgroundImage: `url(${
+              content.banner_block.background || OfferBg.src
+            })`,
+          }}
+        >
           <div className="offer__text">
             <motion.h1 custom={1} variants={animation} className="offer__title">
               <span>{text}</span>
@@ -48,13 +57,13 @@ export default function Offer() {
               className="offer__subtitle"
             >
               <p>
-                Многоуровневая интеллектуальная система автоматического обмена
-                решениями, новыми технологиями, информационными ресурсами
+                {content.subtitle ||
+                  "Многоуровневая интеллектуальная система автоматического обмена решениями, новыми технологиями, информационными ресурсами"}
               </p>
             </motion.div>
           </div>
           <motion.div variants={animationLogo} className="offer__image">
-            <img src={OfferHead.src} alt="" />
+            <img src={content.banner_block.image || OfferHead.src} alt="" />
           </motion.div>
         </div>
       </div>

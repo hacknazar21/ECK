@@ -19,7 +19,6 @@ function Notification({ notification, updateNotifications }) {
           Authorization: `Bearer ${token}`,
         }
       );
-      console.log(data);
       updateNotifications();
     } catch (e) {
       console.log(e);

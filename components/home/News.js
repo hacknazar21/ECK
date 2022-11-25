@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import OfferHead from "../../src/img/home/offer-head.png";
 import Swiper, { Navigation, Autoplay } from "swiper";
+import Link from "next/link";
 
-export default function News() {
+export default function News({ content }) {
   useEffect(() => {
     new Swiper(".news__slider.news-swiper", {
       // Указываем скласс нужного слайдера
@@ -58,119 +59,32 @@ export default function News() {
     <section className="news">
       <div className="news__container">
         <div className="news__header">
-          <h2 className="news__title section-title">Новости</h2>
+          <h2 className="news__title section-title">{content.title}</h2>
         </div>
         <div className="news__box">
           <div className="news__slider news-swiper">
             <div className="news__wrapper swiper-wrapper">
-              <div className="news__slide swiper-slide news-slide">
-                <div className="news-slide__image">
-                  <img
-                    src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                    alt=""
-                  />
-                </div>
-                <div className="news-slide__title-box">
-                  <h3 className="news-slide__title">Название новости</h3>
-                </div>
-                <div className="news-slide__text-box">
-                  <p className="news-slide__text">
-                    Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                    do amet sint. Velit officia consequat duis enim velit
-                    mollit. Exercitation veniam consequat sunt nostrud amet.
-                  </p>
-                </div>
-              </div>
-              <div className="news__slide swiper-slide news-slide">
-                <div className="news-slide__image">
-                  <img
-                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2015&q=80"
-                    alt=""
-                  />
-                </div>
-                <div className="news-slide__title-box">
-                  <h3 className="news-slide__title">Название новости</h3>
-                </div>
-                <div className="news-slide__text-box">
-                  <p className="news-slide__text">
-                    Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                    do amet sint. Velit officia consequat duis enim velit
-                    mollit. Exercitation veniam consequat sunt nostrud amet.
-                  </p>
-                </div>
-              </div>
-              <div className="news__slide swiper-slide news-slide">
-                <div className="news-slide__image">
-                  <img
-                    src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                    alt=""
-                  />
-                </div>
-                <div className="news-slide__title-box">
-                  <h3 className="news-slide__title">Название новости</h3>
-                </div>
-                <div className="news-slide__text-box">
-                  <p className="news-slide__text">
-                    Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                    do amet sint. Velit officia consequat duis enim velit
-                    mollit. Exercitation veniam consequat sunt nostrud amet.
-                  </p>
-                </div>
-              </div>
-              <div className="news__slide swiper-slide news-slide">
-                <div className="news-slide__image">
-                  <img
-                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2015&q=80"
-                    alt=""
-                  />
-                </div>
-                <div className="news-slide__title-box">
-                  <h3 className="news-slide__title">Название новости</h3>
-                </div>
-                <div className="news-slide__text-box">
-                  <p className="news-slide__text">
-                    Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                    do amet sint. Velit officia consequat duis enim velit
-                    mollit. Exercitation veniam consequat sunt nostrud amet.
-                  </p>
-                </div>
-              </div>
-              <div className="news__slide swiper-slide news-slide">
-                <div className="news-slide__image">
-                  <img
-                    src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                    alt=""
-                  />
-                </div>
-                <div className="news-slide__title-box">
-                  <h3 className="news-slide__title">Название новости</h3>
-                </div>
-                <div className="news-slide__text-box">
-                  <p className="news-slide__text">
-                    Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                    do amet sint. Velit officia consequat duis enim velit
-                    mollit. Exercitation veniam consequat sunt nostrud amet.
-                  </p>
-                </div>
-              </div>
-              <div className="news__slide swiper-slide news-slide">
-                <div className="news-slide__image">
-                  <img
-                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2015&q=80"
-                    alt=""
-                  />
-                </div>
-                <div className="news-slide__title-box">
-                  <h3 className="news-slide__title">Название новости</h3>
-                </div>
-                <div className="news-slide__text-box">
-                  <p className="news-slide__text">
-                    Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                    do amet sint. Velit officia consequat duis enim velit
-                    mollit. Exercitation veniam consequat sunt nostrud amet.
-                  </p>
-                </div>
-              </div>
+              {content.data?.map((news) => (
+                <Link
+                  key={news.slug}
+                  href="/news/[link]"
+                  as={"/news/" + news.slug}
+                >
+                  <a className="news__slide swiper-slide news-slide">
+                    <div className="news-slide__image">
+                      <img src={news.image} alt="" />
+                    </div>
+                    <div className="news-slide__title-box">
+                      <h3 className="news-slide__title">{news.title}</h3>
+                    </div>
+                    <div className="news-slide__text-box">
+                      <p className="news-slide__text">
+                        {news.description || news.content}
+                      </p>
+                    </div>
+                  </a>
+                </Link>
+              ))}
             </div>
             <div className="news__slider-buttons">
               <button className="swiper-button-prev">

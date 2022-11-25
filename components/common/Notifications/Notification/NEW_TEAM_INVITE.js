@@ -85,7 +85,10 @@ function NewTeamInvite({ notification, updateNotifications }) {
                   .split(":")[1]}
             </span>
           </time>
-          <h3 className="notification-item__title">{notification.message}</h3>
+          <h3
+            dangerouslySetInnerHTML={{ __html: notification.message }}
+            className="notification-item__title"
+          ></h3>
         </div>
       }
     />

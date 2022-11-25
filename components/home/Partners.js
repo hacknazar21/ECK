@@ -3,7 +3,7 @@ import Swiper, { Autoplay, Navigation } from "swiper";
 import Part1 from "../../src/img/home/partners/Rectangle 3.png";
 import Part2 from "../../src/img/home/partners/Rectangle 4.png";
 import Part3 from "../../src/img/home/partners/Rectangle 5.png";
-export default function Partners() {
+export default function Partners({ content }) {
   useEffect(() => {
     new Swiper(".partners__slider.partners-swiper", {
       // Указываем скласс нужного слайдера
@@ -59,76 +59,23 @@ export default function Partners() {
     <section className="partners">
       <div className="partners__container">
         <div className="partners__header">
-          <h2 className="partners__title section-title">Наши партнеры</h2>
+          <h2 className="partners__title section-title">{content.title}</h2>
         </div>
       </div>
       <div className="partners__box">
         <div className="partners__container">
           <div className="partners__slider partners-swiper">
             <div className="partners__wrapper swiper-wrapper">
-              <div className="partners__slide swiper-slide partners-slide">
-                <div className="partners-slide__image">
-                  <img src={Part1.src} alt="" />
+              {content.data?.map((partner, id) => (
+                <div
+                  key={id}
+                  className="partners__slide swiper-slide partners-slide"
+                >
+                  <div className="partners-slide__image">
+                    <img src={partner.logo} alt={partner.name} />
+                  </div>
                 </div>
-              </div>
-              <div className="partners__slide swiper-slide partners-slide">
-                <div className="partners-slide__image">
-                  <img src={Part2.src} alt="" />
-                </div>
-              </div>
-              <div className="partners__slide swiper-slide partners-slide">
-                <div className="partners-slide__image">
-                  <img src={Part3.src} alt="" />
-                </div>
-              </div>
-
-              <div className="partners__slide swiper-slide partners-slide">
-                <div className="partners-slide__image">
-                  <img src={Part1.src} alt="" />
-                </div>
-              </div>
-              <div className="partners__slide swiper-slide partners-slide">
-                <div className="partners-slide__image">
-                  <img src={Part2.src} alt="" />
-                </div>
-              </div>
-              <div className="partners__slide swiper-slide partners-slide">
-                <div className="partners-slide__image">
-                  <img src={Part3.src} alt="" />
-                </div>
-              </div>
-
-              <div className="partners__slide swiper-slide partners-slide">
-                <div className="partners-slide__image">
-                  <img src={Part1.src} alt="" />
-                </div>
-              </div>
-              <div className="partners__slide swiper-slide partners-slide">
-                <div className="partners-slide__image">
-                  <img src={Part2.src} alt="" />
-                </div>
-              </div>
-              <div className="partners__slide swiper-slide partners-slide">
-                <div className="partners-slide__image">
-                  <img src={Part3.src} alt="" />
-                </div>
-              </div>
-
-              <div className="partners__slide swiper-slide partners-slide">
-                <div className="partners-slide__image">
-                  <img src={Part1.src} alt="" />
-                </div>
-              </div>
-              <div className="partners__slide swiper-slide partners-slide">
-                <div className="partners-slide__image">
-                  <img src={Part2.src} alt="" />
-                </div>
-              </div>
-              <div className="partners__slide swiper-slide partners-slide">
-                <div className="partners-slide__image">
-                  <img src={Part3.src} alt="" />
-                </div>
-              </div>
+              ))}
             </div>
             {/*<div className="partners__slider-buttons">*/}
             {/*  <button className="swiper-button-prev">*/}

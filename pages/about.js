@@ -1,31 +1,22 @@
 import Head from "next/head";
 import HFLayout from "../layouts/HFLayout";
 import Header from "../components/common/Header";
-import Offer from "../components/home/Offer";
-import Categories from "../components/home/Categories";
 import PageLayout from "../layouts/PageLayout";
 import PagesLayout from "../layouts/PagesLayout";
 import Footer from "../components/common/Footer";
-import News from "../components/home/News";
-import Partners from "../components/home/Partners";
-import { useEffect } from "react";
+import About from "../components/About";
 
-export default function Home({ content }) {
+export default function AboutPage({ about }) {
   return (
     <>
       <Head>
-        <title>{content.title || "Главная"}</title>
+        <title>{about.title || "О проекте"}</title>
       </Head>
       <HFLayout>
         <Header />
         <PagesLayout>
           <PageLayout>
-            <Offer content={content.blocks[0]} />
-            <Categories content={content.blocks[1]} />
-          </PageLayout>
-          <PageLayout>
-            <News content={content.blocks[2]} />
-            <Partners content={content.blocks[3]} />
+            <About about={about.blocks || []} />
           </PageLayout>
         </PagesLayout>
         <Footer />
@@ -37,18 +28,19 @@ export async function getServerSideProps() {
   try {
     // Fetch data from external API
     const res = await fetch(
-      process.env.API_HOST + "/api/content/find/main_page/"
+      process.env.API_HOST + "/api/content/find/about_page/"
     );
     const data = await res.json();
     return {
       props: {
-        content: data,
+        about: data,
       }, // will be passed to the page component as props
     };
   } catch (e) {
+    console.log(e);
     return {
       props: {
-        content: {},
+        about: {},
       },
     };
   }
