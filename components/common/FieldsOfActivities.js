@@ -45,7 +45,10 @@ function FieldsOfActivities({
         <ul className="auth__input-list-default">
           {defaultValues?.length > 0 &&
             defaultValues?.map((defaultValue) => (
-              <li className="auth__input-list-item-default">
+              <li
+                key={defaultValue.id}
+                className="auth__input-list-item-default"
+              >
                 {defaultValue.name}
               </li>
             ))}
