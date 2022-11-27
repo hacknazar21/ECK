@@ -59,8 +59,8 @@ a {
 }
 body {
   // Скролл заблокирован
+  overflow: hidden !important;
   .lock & {
-    overflow: hidden !important;
     touch-action: none !important;
   }
   .menu-open & {

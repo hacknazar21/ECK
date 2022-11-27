@@ -4,9 +4,9 @@ import Header from "../../components/common/Header";
 import Footer from "../../components/common/Footer";
 import PageLayout from "../../layouts/PageLayout";
 import PagesLayout from "../../layouts/PagesLayout";
-import SingleTeam from "../../components/team/SingleTeam";
+import User from "../../components/user/User";
 
-export default function TeamLinkPage() {
+export default function UserPage() {
   return (
     <>
       <Head>
@@ -15,7 +15,9 @@ export default function TeamLinkPage() {
       <HFLayout>
         <Header />
         <PagesLayout>
-          <PageLayout></PageLayout>
+          <PageLayout>
+            <User />
+          </PageLayout>
         </PagesLayout>
         <Footer />
       </HFLayout>

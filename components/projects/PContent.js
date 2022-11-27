@@ -17,12 +17,6 @@ function PContent() {
     setActive(true);
   }
   useEffect(() => {
-    const currentIndex = projects.indexOf(project);
-    if (currentIndex !== -1) {
-      setCurrentIndex(currentIndex);
-    }
-  }, [project]);
-  useEffect(() => {
     const parents = [];
     for (const project1 of projects) {
       const arr = project1?.fields_of_activity?.map((field_of_activity, id) => {
@@ -50,6 +44,12 @@ function PContent() {
       }));
     }
   }, [projects]);
+  useEffect(() => {
+    const currentIndex = projects.indexOf(project);
+    if (currentIndex !== -1) {
+      setCurrentIndex(currentIndex);
+    }
+  }, [project]);
   useEffect(() => {
     (async () => {
       try {

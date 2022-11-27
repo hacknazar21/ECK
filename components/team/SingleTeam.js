@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProfilePageLayout from "../../layouts/ProfilePageLayout";
 import Aside from "../common/Aside/Aside";
 import STContent from "./STContent";
@@ -12,8 +12,27 @@ import Img7 from "../../src/img/aside/07.png";
 import Img8 from "../../src/img/aside/08.png";
 import Img9 from "../../src/img/aside/09.png";
 import Img10 from "../../src/img/aside/10.png";
+import { useRouter } from "next/router";
+import useHttp from "../../hooks/hooks.http";
+import { AuthContext } from "../../context/AuthContext";
 
-function SingleTeam(props) {
+function SingleTeam() {
+  const { query } = useRouter();
+  const [team, setTeam] = useState({});
+  const { request } = useHttp();
+  const { token } = useContext(AuthContext);
+  useEffect(() => {
+    const { link } = query;
+    (async () => {
+      try {
+        const data = await request("/api/teams/" + link + "/", "GET", null, {
+          Authorization: `Bearer ${token}`,
+        });
+        setTeam(data);
+      } catch (e) {}
+    })();
+  }, []);
+
   return (
     <section className="page__my-profile team-page">
       <div className="team-page__container">
@@ -70,7 +89,7 @@ function SingleTeam(props) {
               </button>
             </li>
           </Aside>
-          <STContent />
+          <STContent team={team} />
         </ProfilePageLayout>
       </div>
     </section>
