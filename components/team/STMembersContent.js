@@ -7,7 +7,10 @@ function STMembersContent({ members }) {
   return (
     <>
       {members.map((member) => (
-        <article className="single-team-members__member single-team-member">
+        <article
+          key={member.id}
+          className="single-team-members__member single-team-member"
+        >
           <div className="single-team-member__info">
             <div className="single-team-member__icon">
               <img src={member.avatar} alt="" />
@@ -15,10 +18,10 @@ function STMembersContent({ members }) {
             <div className="single-team-member__name-box">
               <div className="single-team-member__name">{member.full_name}</div>
               <a
-                href="mailto:test@gmail.com"
+                href={"mailto:" + member.email}
                 className="single-team-member__email"
               >
-                test@gmail.com
+                member.email
               </a>
             </div>
             <div className="single-team-member__role">Администратор</div>

@@ -1,5 +1,5 @@
 cd /var/www/html/
 sudo rm -rf ./next
 sudo git pull
-sudo npm run build
+sudo yarn build
 pm2 restart front

@@ -59,8 +59,9 @@ function STContent({ team }) {
                 Документы команды:
               </h2>
               <div className="single-team-page-info__docs">
-                {team.documents?.map((document) => (
+                {team.documents?.map((document, id) => (
                   <a
+                    key={id}
                     href={document.file}
                     target={"_blank"}
                     rel="noreferrer"
