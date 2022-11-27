@@ -74,8 +74,10 @@ function MyProfileContent(props) {
                 </label>
               </div>
               <FieldsOfActivities
+                disabled={!isChange}
                 form={form}
                 formChangeHandler={formChangeHandler}
+                defaultValues={userData?.fields_of_activity}
               />
               <div className="auth__input-box file">
                 <File

@@ -3,7 +3,12 @@ import Select from "./Select/Select";
 import Popup from "./Popup";
 import useHttp from "../../hooks/hooks.http";
 
-function FieldsOfActivities({ formChangeHandler, form, defaultValues = [] }) {
+function FieldsOfActivities({
+  formChangeHandler,
+  form,
+  defaultValues = [],
+  disabled = false,
+}) {
   const [activities, setActivities] = useState([]);
   const [activitiesModal, setActivitiesModal] = useState(false);
   const { request } = useHttp();
@@ -23,6 +28,7 @@ function FieldsOfActivities({ formChangeHandler, form, defaultValues = [] }) {
           onClick={() => {
             setActivitiesModal(true);
           }}
+          disabled={disabled}
           id={"fields_of_activity_list"}
           required={true}
           onInput={formChangeHandler}
@@ -36,6 +42,14 @@ function FieldsOfActivities({ formChangeHandler, form, defaultValues = [] }) {
             ? "Выбрано"
             : "Сфера деятельности"}
         </label>
+        <ul className="auth__input-list-default">
+          {defaultValues?.length > 0 &&
+            defaultValues?.map((defaultValue) => (
+              <li className="auth__input-list-item-default">
+                {defaultValue.name}
+              </li>
+            ))}
+        </ul>
       </div>
       <Popup active={activitiesModal} setActive={setActivitiesModal}>
         <header className="single-team-content-block__header">
@@ -49,7 +63,7 @@ function FieldsOfActivities({ formChangeHandler, form, defaultValues = [] }) {
               <Select
                 defaultValue={
                   form["select-checkboxes"]?.fields_of_activity_list ||
-                  defaultValues
+                  defaultValues.map((defaultValue) => defaultValue.id)
                 }
                 saveHead={true}
                 key={id}
@@ -64,6 +78,15 @@ function FieldsOfActivities({ formChangeHandler, form, defaultValues = [] }) {
             );
           })}
         </div>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            setActivitiesModal(false);
+          }}
+          className="add-btn"
+        >
+          Подтвердить
+        </button>
       </Popup>
     </>
   );

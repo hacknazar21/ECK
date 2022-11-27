@@ -37,10 +37,12 @@ export default function Select({
     }
   }, [open]);
 
-  function clickHandler() {
+  function clickHandler(event) {
+    event.preventDefault();
     setOpen((prevState) => !prevState);
   }
   function selectHandler(event) {
+    event.preventDefault();
     if (wrapper.current && head.current) {
       if (!multiply) {
         setOpen((prevState) => !prevState);
@@ -113,7 +115,7 @@ export default function Select({
       </div>
       <ul ref={wrapper} className="select__list">
         {selectEls?.map((selectEl, id) => {
-          console.log(selectEl);
+          console.log(defaultValue, parseInt(selectEl.value));
           return (
             <li
               key={id}
@@ -123,7 +125,7 @@ export default function Select({
               className={
                 "select__option" +
                 " " +
-                (defaultValue?.indexOf(selectEl.value.toString()) !== -1
+                (defaultValue?.indexOf(parseInt(selectEl.value)) !== -1
                   ? "checked"
                   : "")
               }

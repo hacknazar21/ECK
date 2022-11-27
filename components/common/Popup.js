@@ -28,7 +28,8 @@ function Popup({ active, setActive, children, buttons = null }) {
         >
           {children}
           <button
-            onClick={() => {
+            onClick={(event) => {
+              event.preventDefault();
               setActive(false);
             }}
             className="modal__close"

@@ -21,6 +21,8 @@
 }
 .activities{
   width: rem(370);
+  max-height: rem(400);
+  overflow: auto;
   .select {
     &__head{
       color: #80A4B8;
