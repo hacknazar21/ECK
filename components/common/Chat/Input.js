@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useRef } from "react";
+import useForm from "../../../hooks/hooks.form";
 
-function Input(props) {
+function Input({ chat_id, updateMessages }) {
+  const { formSubmitHandler, formChangeHandler } = useForm(onSuccessMessage, {
+    text: {
+      chat: chat_id,
+    },
+  });
+  const input = useRef(null);
+  function onSuccessMessage(e) {
+    updateMessages();
+    input.current.value = "";
+  }
   return (
-    <div className="chat-input-box">
+    <form
+      onSubmit={formSubmitHandler}
+      data-method={"POST"}
+      action={"/api/chats/send_message/"}
+      className="chat-input-box"
+    >
       <input
+        ref={input}
         type="text"
+        name="text"
+        onInput={formChangeHandler}
         className="chat-input"
         placeholder="Ваше сообщение ..."
       />
@@ -12,6 +31,9 @@ function Input(props) {
         <input
           type="file"
           id="file"
+          multiple={true}
+          onChange={formChangeHandler}
+          name={"attachments_list"}
           className="chat-input-button chat-input-button_file"
         />
         <label htmlFor="file">
@@ -32,7 +54,10 @@ function Input(props) {
           </svg>
         </label>
       </div>
-      <button className="chat-input-button chat-input-button_send">
+      <button
+        type="submit"
+        className="chat-input-button chat-input-button_send"
+      >
         <svg
           width="24"
           height="24"
@@ -46,7 +71,7 @@ function Input(props) {
           />
         </svg>
       </button>
-    </div>
+    </form>
   );
 }
 

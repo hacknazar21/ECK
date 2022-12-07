@@ -24,10 +24,12 @@ function Chat({ chat_id, setter }) {
   const router = useRouter();
 
   useEffect(() => {
+    console.log(ref);
     if (ref.current) {
       ref.current.scrollTop = ref.current.scrollHeight;
+      console.log("efwe");
     }
-  }, [ref]);
+  }, [ref, messages]);
   useEffect(() => {
     ws.current = new WebSocket(`${API_SOCKET_HOST}/ws/chat/${chat_id}/`); // создаем ws соединение
     ws.current.onopen = () => setStatus("Соединение открыто"); // callback на ивент открытия соединения
@@ -44,7 +46,7 @@ function Chat({ chat_id, setter }) {
           if (token) headers["Authorization"] = `Bearer ${token}`;
 
           const data = await request(
-            `/api/chats/${chat_id}/messages`,
+            `/api/chats/${chat_id}/messages/?ordering=created_at`,
             "GET",
             null,
             headers
@@ -61,19 +63,18 @@ function Chat({ chat_id, setter }) {
     ws.current.onmessage = (e) => {
       //подписка на получение данных по вебсокету
       const message = JSON.parse(e.data);
-      console.log(message);
+      setMessages((prevState) => [...prevState, message]);
     };
   }, []);
 
   return (
     <div className="chat">
       <button onClick={setter}>Назад к списку чатов</button>
-      {status}
       <Window ref={ref}>
         {messages.map((message) => (
           <Message
             key={message.id}
-            isMe={false}
+            isMe={message.is_mine}
             name={message.sender.display_name}
             icon={message.sender.avatar}
             datetime={new Date(message.update_at)}
@@ -82,7 +83,7 @@ function Chat({ chat_id, setter }) {
           </Message>
         ))}
       </Window>
-      <Input />
+      <Input chat_id={chat_id} updateMessages={() => {}} />
     </div>
   );
 }
