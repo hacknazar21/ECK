@@ -17,25 +17,23 @@ function Chat({ chat_id, setter }) {
   const ref = useRef(null);
   const [messages, setMessages] = useState([]);
   const API_SOCKET_HOST = "wss://eprof.kz";
-  const [status, setStatus] = useState("");
+  const [pagination, setPagination] = useState(true);
+  const [messagesOffset, setMessagesOffset] = useState(0);
+  const LIMIT = 50;
   const ws = useRef(null);
   const { request } = useHttp();
   const { token, userData } = useContext(AuthContext);
   const router = useRouter();
 
   useEffect(() => {
-    console.log(ref);
-    if (ref.current) {
+    console.log(messages);
+    if (ref.current && messagesOffset === 0) {
       ref.current.scrollTop = ref.current.scrollHeight;
-      console.log("efwe");
     }
   }, [ref, messages]);
   useEffect(() => {
     ws.current = new WebSocket(`${API_SOCKET_HOST}/ws/chat/${chat_id}/`); // создаем ws соединение
-    ws.current.onopen = () => setStatus("Соединение открыто"); // callback на ивент открытия соединения
-    ws.current.onclose = () => setStatus("Соединение закрыто"); // callback на ивент закрытия соединения
     gettingData();
-    console.log(ws);
     return () => ws.current.close(); // кода меняется isPaused - соединение закрывается
   }, [ws]);
   useEffect(() => {
@@ -46,18 +44,47 @@ function Chat({ chat_id, setter }) {
           if (token) headers["Authorization"] = `Bearer ${token}`;
 
           const data = await request(
-            `/api/chats/${chat_id}/messages/?ordering=created_at`,
+            `/api/chats/${chat_id}/messages/?ordering=-created_at&limit=${LIMIT}`,
             "GET",
             null,
             headers
           );
-          setMessages(data.results);
+          setMessages(data.results.reverse());
         } catch (e) {
           console.log(e);
         }
       })();
     }
   }, []);
+  useEffect(() => {
+    if (messagesOffset) {
+      (async () => {
+        try {
+          const headers = {};
+          if (token) headers["Authorization"] = `Bearer ${token}`;
+
+          const data = await request(
+            `/api/chats/${chat_id}/messages/?ordering=-created_at&limit=${LIMIT}&offset=${messagesOffset}`,
+            "GET",
+            null,
+            headers
+          );
+          if (!data.next) setPagination(false);
+          setMessages((prevState) => {
+            data.results.map(
+              (message) => (prevState = [message, ...prevState])
+            );
+            return prevState;
+          });
+        } catch (e) {
+          console.log(e);
+        }
+      })();
+    }
+  }, [messagesOffset]);
+  function onSendMessage() {
+    ref.current.scrollTop = ref.current.scrollHeight;
+  }
   const gettingData = useCallback(() => {
     if (!ws.current) return;
     ws.current.onmessage = (e) => {
@@ -71,19 +98,35 @@ function Chat({ chat_id, setter }) {
     <div className="chat">
       <button onClick={setter}>Назад к списку чатов</button>
       <Window ref={ref}>
-        {messages.map((message) => (
+        {pagination && (
+          <button
+            onClick={() => {
+              setMessagesOffset((prevState) => prevState + LIMIT);
+            }}
+          >
+            Показать еще
+          </button>
+        )}
+        {messages.map((message, id) => (
           <Message
             key={message.id}
+            isFirst={id === 0}
             isMe={message.sender.id === userData.id}
             name={message.sender.display_name}
             icon={message.sender.avatar}
             datetime={new Date(message.update_at)}
+            attachments={message.attachments}
           >
             {message.text}
           </Message>
         ))}
       </Window>
-      <Input chat_id={chat_id} updateMessages={() => {}} />
+      <Input
+        chat_id={chat_id}
+        updateMessages={() => {
+          onSendMessage();
+        }}
+      />
     </div>
   );
 }

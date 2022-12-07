@@ -22,6 +22,24 @@
   &__button {
 
   }
+  &__attachments {
+  }
+
+  &__attachment {
+    padding: rem(5) 0;
+  }
+
+  &__attachment-link {
+    display: flex;
+    align-items: center;
+    gap: rem(5);
+    font-weight: 400;
+    font-size: rem(14);
+    line-height: math.div(16,14);
+    color: #1664AC;
+    word-break: break-word;
+    text-align: left;
+  }
 }
 
 .unActive-button {
