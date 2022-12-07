@@ -393,7 +393,7 @@ function ProjectJoin({ project }) {
                   </div>
                   <div className="single-team-search__results">
                     {teams.map((team) => (
-                      <div className="single-team-search__result">
+                      <div key={team.id} className="single-team-search__result">
                         <div
                           onClick={searchResultClick.bind({
                             team_id: team?.id,

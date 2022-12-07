@@ -1,5 +1,6 @@
 cd /var/www/html/
 sudo rm -rf ./next
+sudo rm -rf yarn.lock
 sudo git pull
 sudo yarn build
 pm2 restart front
