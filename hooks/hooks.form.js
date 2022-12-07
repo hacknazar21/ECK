@@ -8,6 +8,9 @@ const useForm = (onSuccess = (response) => {}, defaultForm = {}) => {
   const validation = new Validation();
   const { request, loading } = useHttp();
   const { token } = useContext(AuthContext);
+  const dropForm = () => {
+    setForm(defaultForm || {});
+  };
   const formChangeHandler = (event) => {
     setForm((prevState) => {
       if (!prevState[event.target.type])
@@ -143,6 +146,7 @@ const useForm = (onSuccess = (response) => {}, defaultForm = {}) => {
     form,
     setForm,
     loading,
+    dropForm,
   };
 };
 export default useForm;

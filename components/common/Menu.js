@@ -63,8 +63,14 @@ function Menu(props) {
             </a>
           </Link>
         </li>
-        <li className="under-header-menu__item">
-          <a href="" className="under-header-menu__link">
+        <li
+          className={
+            "under-header-menu__item" +
+            " " +
+            (router.route.indexOf("/geography") !== -1 ? "active" : "")
+          }
+        >
+          <a href="" className={"under-header-menu__link"}>
             География
             <span>
               <img src={Cat4.src} alt="" />

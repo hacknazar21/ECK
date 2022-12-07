@@ -20,13 +20,18 @@ function Message({
         <></>
       )}
       <div className="message__item">
-        {!isMe ? <div className="message__name">{name}</div> : <></>}
+        {!isMe && <div className="message__name">{name}</div>}
         {children}
         {attachments.length !== 0 && (
           <div className="message__attachments">
             {attachments.map((attachment, id) => (
               <div key={attachment.id || id} className="message__attachment">
-                <a href={attachment.file} className="message__attachment-link">
+                <a
+                  target={"_blank"}
+                  referrerPolicy={"no-referrer"}
+                  href={attachment.file}
+                  className="message__attachment-link"
+                >
                   <svg
                     width="21"
                     height="21"

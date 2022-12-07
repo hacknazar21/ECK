@@ -3,14 +3,18 @@ import useForm from "../../../hooks/hooks.form";
 import File from "./File";
 
 function Input({ chat_id, updateMessages }) {
-  const { formSubmitHandler, formChangeHandler } = useForm(onSuccessMessage, {
-    text: {
-      chat: chat_id,
-    },
-  });
+  const { formSubmitHandler, formChangeHandler, dropForm, loading } = useForm(
+    onSuccessMessage,
+    {
+      text: {
+        chat: chat_id,
+      },
+    }
+  );
   const input = useRef(null);
   function onSuccessMessage(e) {
     updateMessages();
+    dropForm();
     input.current.value = "";
   }
   return (
@@ -29,7 +33,7 @@ function Input({ chat_id, updateMessages }) {
         className="chat-input"
         placeholder="Ваше сообщение ..."
       />
-      <File onChange={formChangeHandler} />
+      <File loading={loading} onChange={formChangeHandler} />
       <button
         type="submit"
         className="chat-input-button chat-input-button_send"
