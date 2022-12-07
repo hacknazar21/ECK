@@ -72,6 +72,7 @@ function Chat({ chat_id, setter }) {
       <Window ref={ref}>
         {messages.map((message) => (
           <Message
+            key={message.id}
             isMe={false}
             name={message.sender.display_name}
             icon={message.sender.avatar}

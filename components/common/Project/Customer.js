@@ -31,8 +31,9 @@ function Customer({ customer, documents }) {
         <div className="project-modal__section-box">
           <div className="project-modal__section-title">Документы</div>
           <div className="single-team-page-info__docs">
-            {documents.map((document) => (
+            {documents.map((document, id) => (
               <a
+                key={id}
                 href={document.file}
                 target={"_blank"}
                 rel="noreferrer"

@@ -6,6 +6,7 @@ function Chats({ chats, setter }) {
       <div className="chats__items">
         {chats?.map((chat) => (
           <div
+            key={chat.id}
             onClick={() => {
               setter(chat.id);
             }}

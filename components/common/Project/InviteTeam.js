@@ -112,8 +112,8 @@ function InviteTeam({ project_number, project_id }) {
                 />
               </div>
               <div className="single-team-search__results">
-                {executors.map((executor) => (
-                  <div className="single-team-search__result">
+                {executors.map((executor, id) => (
+                  <div key={id} className="single-team-search__result">
                     <div
                       onClick={searchResultClick.bind({
                         executor_id: executor.user?.id || executor.team?.id,

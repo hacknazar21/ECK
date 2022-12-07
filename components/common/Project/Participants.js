@@ -6,12 +6,15 @@ function Participants({ participants }) {
   return (
     <div className="project-modal__teams project-modal-teams">
       <h2 className="project-modal-teams__title">Участники</h2>
-      {participants?.map((participant) => (
-        <div className="project-modal-teams__team project-modal-team">
+      {participants?.map((participant, id) => (
+        <div key={id} className="project-modal-teams__team project-modal-team">
           <div className="project-modal-team__content">
             {participant.consortium &&
               participant.consortium.teams?.map((team) => (
-                <div className="project-modal-team__logo profile-card__logo">
+                <div
+                  key={team.id}
+                  className="project-modal-team__logo profile-card__logo"
+                >
                   <div className="project-modal-team__image profile-card__image">
                     <img src={team?.image} alt="" />
                   </div>
@@ -70,8 +73,11 @@ function Participants({ participants }) {
             <div className="project-modal-team__info">
               <div className="project-modal-team__members-box profile-members__box">
                 <div className="project-modal-team__icons profile-members__icons">
-                  {participant.team.members?.map((member) => (
-                    <div className="project-modal-team__icon profile-members__icon">
+                  {participant.team.members?.map((member, id) => (
+                    <div
+                      key={id}
+                      className="project-modal-team__icon profile-members__icon"
+                    >
                       <img src={member.avatar} alt="" />
                     </div>
                   ))}

@@ -40,7 +40,7 @@ function PContent(props) {
           className={"projects-cards profile-cards"}
         >
           {projects?.map((project) => {
-            return <ProjectCard project={project} />;
+            return <ProjectCard key={project.id} project={project} />;
           })}
         </TabBarItem>
         <TabBarItem
@@ -50,7 +50,7 @@ function PContent(props) {
           {projects
             ?.filter((project) => project.status === "IN_PROGRESS")
             .map((project) => {
-              return <ProjectCard project={project} />;
+              return <ProjectCard key={project.id} project={project} />;
             })}
         </TabBarItem>
         <TabBarItem
@@ -60,7 +60,7 @@ function PContent(props) {
           {projects
             ?.filter((project) => project.status === "FINISHED")
             .map((project) => {
-              return <ProjectCard project={project} />;
+              return <ProjectCard key={project.id} project={project} />;
             })}
         </TabBarItem>
       </TabBar>
