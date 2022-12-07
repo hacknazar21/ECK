@@ -21,7 +21,7 @@
     }
     background-color: #FFFFFF;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.35);
-    padding: rem(20);
+    padding:  rem(20) 0;
     border: 1px solid #E5E7EB;
     border-radius: 8px 8px 0px 0px;
   }
@@ -30,8 +30,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 rem(20);
     padding-bottom: rem(20);
     position: relative;
+    
     &:before{
       content: "";
       position: absolute;
@@ -57,7 +59,10 @@
   }
 
   &__notifications {
-
+    padding: 0 rem(20);
+    max-height: 350px;
+    overflow-y: auto;
+    overflow-x: visible;
   }
 
   &__notification {
@@ -143,7 +148,7 @@
   }
 
   &__actions {
-    margin-top: rem(8);
+    margin-top: auto;
     display: flex;
     @media(max-width:$tablet){
       flex-direction: column;

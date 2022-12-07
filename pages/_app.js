@@ -62,7 +62,7 @@ function MyApp({ Component, pageProps }) {
         router.pathname.indexOf("announcements") !== -1 ||
         router.pathname.indexOf("profile") !== -1
       ) {
-        router.push("/");
+        //router.push("/");
       }
     if (token && !userData?.is_validated)
       if (
@@ -70,7 +70,7 @@ function MyApp({ Component, pageProps }) {
         router.pathname.indexOf("announcements") !== -1 ||
         router.pathname.indexOf("profile") !== -1
       ) {
-        router.push("/");
+        //router.push("/");
       }
   }, [router.pathname, token]);
   return (

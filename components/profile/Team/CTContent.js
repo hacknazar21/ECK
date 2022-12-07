@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import Avatar from "../../../../src/img/profile/avatar.png";
-import Select from "../../../common/Select/Select";
-import Loading from "../../../common/Loading";
+import Avatar from "../../../src/img/profile/avatar.png";
+import Select from "../../common/Select/Select";
+import Loading from "../../common/Loading";
 import { useRouter } from "next/router";
-import useForm from "../../../../hooks/hooks.form";
-import FieldsOfActivities from "../../../common/FieldsOfActivities";
-import File from "../../../common/File";
-import ImageFile from "../../../common/ImageFile";
+import useForm from "../../../hooks/hooks.form";
+import FieldsOfActivities from "../../common/FieldsOfActivities";
+import File from "../../common/File";
+import ImageFile from "../../common/ImageFile";
 
 function CTContent(props) {
   const { formSubmitHandler, formChangeHandler, form, loading } =
@@ -32,7 +32,7 @@ function CTContent(props) {
         </h1>
         <form
           onSubmit={formSubmitHandler}
-          action="/api/teams/"
+          action="/components/profile/Team/CTContent"
           data-method="POST"
           className="my-profile-content__form my-profile-form"
         >

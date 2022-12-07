@@ -29,7 +29,7 @@ const useForm = (onSuccess = (response) => {}, defaultForm = {}) => {
       } else
         prevState[event.target.type][event.target.name] = event.target.value;
       validateValue(event.target);
-      return prevState;
+      return { ...prevState };
     });
   };
   const formSubmitHandler = async (event) => {
@@ -37,6 +37,7 @@ const useForm = (onSuccess = (response) => {}, defaultForm = {}) => {
     const action = event.target.action;
     const method = event.target.dataset.method;
     const formData = new FormData();
+
     for (const formType in form) {
       switch (formType) {
         case "file":
@@ -61,10 +62,12 @@ const useForm = (onSuccess = (response) => {}, defaultForm = {}) => {
     }
     const headers = {};
     if (token) headers["Authorization"] = `Bearer ${token}`;
+    headers["Accept"] = `application/json`;
     try {
       const response = await request(action, method, formData, headers, true);
       onSuccess(response);
     } catch (e) {
+      console.log(e.message);
       try {
         const errorsResp = JSON.parse(e.message);
         const errors = [];

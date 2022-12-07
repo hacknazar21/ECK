@@ -13,6 +13,7 @@ import useForm from "../../hooks/hooks.form";
 import Popup from "../common/Popup";
 import { AuthContext } from "../../context/AuthContext";
 import useHttp from "../../hooks/hooks.http";
+import FieldsOfActivities from "../common/FieldsOfActivities";
 const animationAuth = {
   in: {
     x: -200,
@@ -136,28 +137,10 @@ export default function Create() {
                     Описание заказа
                   </label>
                 </div>
-                <div className="auth__input-box button">
-                  <input
-                    type={"button"}
-                    onClick={() => {
-                      setActivitiesModal(true);
-                    }}
-                    id={"fields_of_activity_list"}
-                    onInput={formChangeHandler}
-                    placeholder=" "
-                    name={"fields_of_activity_list"}
-                    className="auth__input"
-                  />
-                  <label
-                    htmlFor="fields_of_activity_list"
-                    className="auth__input-label"
-                  >
-                    {!form.fields_of_activity_list ||
-                    form.fields_of_activity_list?.length === 0
-                      ? "Сфера деятельности"
-                      : "Выбрано"}
-                  </label>
-                </div>
+                <FieldsOfActivities
+                  form={form}
+                  formChangeHandler={formChangeHandler}
+                />
                 <div className="auth__input-box">
                   <DatePicker
                     locale="ru"
@@ -221,36 +204,6 @@ export default function Create() {
                 </div>
               </div>
             </form>
-            <Popup active={activitiesModal} setActive={setActivitiesModal}>
-              <header className="single-team-content-block__header">
-                <h3 className="single-team-content__title profile-title">
-                  Сферы деятельности
-                </h3>
-              </header>
-              <div className="activities">
-                {activities.map((activity, id) => {
-                  return (
-                    <Select
-                      defaultValue={
-                        form["select-checkboxes"]?.fields_of_activity_list
-                      }
-                      key={id}
-                      saveHead={true}
-                      name={"fields_of_activity_list"}
-                      onSelect={formChangeHandler}
-                      title={activity.name}
-                      multiply={true}
-                      items={activity.child_fields.map((child_field) => {
-                        return {
-                          name: child_field.name,
-                          value: child_field.id,
-                        };
-                      })}
-                    />
-                  );
-                })}
-              </div>
-            </Popup>
           </div>
         </motion.div>
       </motion.section>

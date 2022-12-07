@@ -36,7 +36,7 @@ function NewContestJoinRequest({ notification, updateNotifications }) {
                       if (id < 5)
                         return (
                           <div
-                            key={participant.id}
+                            key={id}
                             className="notification-item-members__icon profile-members__icon"
                           >
                             <img

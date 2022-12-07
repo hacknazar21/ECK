@@ -1,4 +1,7 @@
 .file {
+  &_margin_bottom{
+    margin-bottom: rem(30);
+  }
   &__box {
     padding: rem(22) 0;
     background-color: rgba(39, 139, 232, 0.2);

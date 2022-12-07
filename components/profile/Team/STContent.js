@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
-import Avatar from "../../../../src/img/avatars/01.png";
+import Avatar from "../../../src/img/avatars/01.png";
 import { useRouter } from "next/router";
-import Popup from "../../../common/Popup";
-import TabBarItem from "../../../common/TabBar/TabBarItem";
-import TabBar from "../../../common/TabBar/TabBar";
-import useHttp from "../../../../hooks/hooks.http";
-import { AuthContext } from "../../../../context/AuthContext";
+import Popup from "../../common/Popup";
+import TabBarItem from "../../common/TabBar/TabBarItem";
+import TabBar from "../../common/TabBar/TabBar";
+import useHttp from "../../../hooks/hooks.http";
+import { AuthContext } from "../../../context/AuthContext";
 function STContent(props) {
   const router = useRouter();
   const { request } = useHttp();

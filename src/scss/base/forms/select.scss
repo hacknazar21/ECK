@@ -62,10 +62,11 @@
 		}
 		display: flex;
 		align-items: center;
-		
+		column-gap: rem(10);
 	}
 	&__checkbox{
 		flex: 0 0 rem(20);
+		width: rem(20);
 		height: rem(20);
 		border: 2px solid #AAAAAA;
 		border-radius: 4px;

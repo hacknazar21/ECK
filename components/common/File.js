@@ -17,6 +17,7 @@ function File({
     setFiles((prevState) => [...prevState, ...filesCurrent]);
   }
   function deleteFileHandler(e) {
+    e.preventDefault();
     const fileID = e.target.dataset.id;
     setFiles((prevState) =>
       prevState.filter((file, id) => id !== parseInt(fileID))
@@ -39,6 +40,7 @@ function File({
             type={"file"}
             multiple={true}
             id={name}
+            accept="application/pdf"
             onChange={filesChangeHandler}
             placeholder=" "
             required={required}
@@ -77,7 +79,10 @@ function File({
               Выберите документы
             </label>
             <input
+              multiple={true}
+              accept="application/pdf"
               type="file"
+              name={name}
               onChange={filesChangeHandler}
               id={"docs"}
               className="file__input"

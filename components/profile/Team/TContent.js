@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import Avatar from "../../../../src/img/avatars/01.png";
+import Avatar from "../../../src/img/avatars/01.png";
 import Link from "next/link";
-import TabBarItem from "../../../common/TabBar/TabBarItem";
-import TabBar from "../../../common/TabBar/TabBar";
-import useHttp from "../../../../hooks/hooks.http";
-import { AuthContext } from "../../../../context/AuthContext";
+import TabBarItem from "../../common/TabBar/TabBarItem";
+import TabBar from "../../common/TabBar/TabBar";
+import useHttp from "../../../hooks/hooks.http";
+import { AuthContext } from "../../../context/AuthContext";
 
 function TContent(props) {
   const [teams, setTeams] = useState([]);

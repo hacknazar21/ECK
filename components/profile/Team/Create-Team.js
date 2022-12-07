@@ -2,7 +2,7 @@ import React from "react";
 import ProfilePageLayout from "../../../layouts/ProfilePageLayout";
 import Aside from "../../common/Aside/Aside";
 import Link from "next/link";
-import CTContent from "./Team/CTContent";
+import CTContent from "./CTContent";
 
 function Team(props) {
   return (

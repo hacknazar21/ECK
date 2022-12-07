@@ -285,10 +285,18 @@
       max-height: 400px;
     }
   }
+  
 }
 
 .header-accountMenu {
   &__list {
+  }
+  &__header{
+    color: #141414;
+    padding: 0 rem(15);
+    padding-top: rem(15);
+    text-align: center;
+    font-weight: rem(700);
   }
 }
 

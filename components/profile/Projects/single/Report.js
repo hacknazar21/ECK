@@ -1,5 +1,5 @@
 import React from "react";
-import File from "../../../../common/File";
+import File from "../../../common/File";
 
 function Report(props) {
   return (

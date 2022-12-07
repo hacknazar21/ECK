@@ -5,6 +5,7 @@ import TabBarItem from "../../common/TabBar/TabBarItem";
 import TabBar from "../../common/TabBar/TabBar";
 import useHttp from "../../../hooks/hooks.http";
 import { AuthContext } from "../../../context/AuthContext";
+import ProjectCard from "./ProjectCard";
 
 function PContent(props) {
   const [projects, setProjects] = useState([]);
@@ -39,52 +40,7 @@ function PContent(props) {
           className={"projects-cards profile-cards"}
         >
           {projects?.map((project) => {
-            return (
-              <article
-                key={project.id}
-                className="projects-cards__card projects-card profile-cards__card profile-card"
-              >
-                <h2 className="projects-card__title profile-card__title">
-                  {project.title}
-                </h2>
-                <div className="projects-card__text profile-card__text">
-                  <p>{project.description}</p>
-                </div>
-                {project.participants?.length > 0 && (
-                  <div className="projects-card__members projects-card-members profile-members">
-                    <div className="projects-card-members__title profile-members__title">
-                      Всего участников
-                    </div>
-                    <div className="projects-card__members-box profile-members__box">
-                      <div className="projects-card__icons profile-members__icons">
-                        {project.participants?.map((participant, id) => {
-                          if (id < 5)
-                            return (
-                              <div className="projects-card__icon profile-members__icon">
-                                <img src={participant.image} alt="" />
-                              </div>
-                            );
-                          else return null;
-                        })}
-                      </div>
-                      <div className="projects-card__number profile-members__number">
-                        <span>{project.participants_count} участников</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                <div className="window-notification__actions">
-                  <Link
-                    href="/profile/customer/projects/[link]"
-                    as="/profile/customer/projects/ibm-project-123"
-                  >
-                    <a className="window-notification__button window-notification__button_active">
-                      Смотреть
-                    </a>
-                  </Link>
-                </div>
-              </article>
-            );
+            return <ProjectCard project={project} />;
           })}
         </TabBarItem>
         <TabBarItem
@@ -94,55 +50,7 @@ function PContent(props) {
           {projects
             ?.filter((project) => project.status === "IN_PROGRESS")
             .map((project) => {
-              return (
-                <article
-                  key={project}
-                  className="projects-cards__card projects-card profile-cards__card profile-card"
-                >
-                  <h2 className="projects-card__title profile-card__title">
-                    {project.title}
-                  </h2>
-                  <div className="projects-card__text profile-card__text">
-                    <p>{project.description}</p>
-                  </div>
-                  {project.participants?.length > 0 && (
-                    <div className="projects-card__members projects-card-members profile-members">
-                      <div className="projects-card-members__title profile-members__title">
-                        Всего участников
-                      </div>
-                      <div className="projects-card__members-box profile-members__box">
-                        <div className="projects-card__icons profile-members__icons">
-                          {project.participants?.map((participant, id) => {
-                            if (id < 5)
-                              return (
-                                <div
-                                  key={participant.id}
-                                  className="projects-card__icon profile-members__icon"
-                                >
-                                  <img src={participant.image} alt="" />
-                                </div>
-                              );
-                            else return null;
-                          })}
-                        </div>
-                        <div className="projects-card__number profile-members__number">
-                          <span>{project.participants_count} участников</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  <div className="window-notification__actions">
-                    <Link
-                      href="/profile/customer/projects/[link]"
-                      as="/profile/customer/projects/ibm-project-123"
-                    >
-                      <a className="window-notification__button window-notification__button_active">
-                        Смотреть
-                      </a>
-                    </Link>
-                  </div>
-                </article>
-              );
+              return <ProjectCard project={project} />;
             })}
         </TabBarItem>
         <TabBarItem
@@ -152,55 +60,7 @@ function PContent(props) {
           {projects
             ?.filter((project) => project.status === "FINISHED")
             .map((project) => {
-              return (
-                <article
-                  key={project.id}
-                  className="projects-cards__card projects-card profile-cards__card profile-card"
-                >
-                  <h2 className="projects-card__title profile-card__title">
-                    {project.title}
-                  </h2>
-                  <div className="projects-card__text profile-card__text">
-                    <p>{project.description}</p>
-                  </div>
-                  {project.participants?.length > 0 && (
-                    <div className="projects-card__members projects-card-members profile-members">
-                      <div className="projects-card-members__title profile-members__title">
-                        Всего участников
-                      </div>
-                      <div className="projects-card__members-box profile-members__box">
-                        <div className="projects-card__icons profile-members__icons">
-                          {project.participants?.map((participant, id) => {
-                            if (id < 5)
-                              return (
-                                <div
-                                  key={participant.id}
-                                  className="projects-card__icon profile-members__icon"
-                                >
-                                  <img src={participant.image} alt="" />
-                                </div>
-                              );
-                            else return null;
-                          })}
-                        </div>
-                        <div className="projects-card__number profile-members__number">
-                          <span>{project.participants_count} участников</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  <div className="window-notification__actions">
-                    <Link
-                      href="/profile/customer/projects/[link]"
-                      as="/profile/customer/projects/ibm-project-123"
-                    >
-                      <a className="window-notification__button window-notification__button_active">
-                        Смотреть
-                      </a>
-                    </Link>
-                  </div>
-                </article>
-              );
+              return <ProjectCard project={project} />;
             })}
         </TabBarItem>
       </TabBar>

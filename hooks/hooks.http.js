@@ -20,14 +20,13 @@ const useHttp = () => {
         }
         const response = await fetch(url, { method, body, headers });
         setRespCode(response.status);
-        const data = await response.json();
+
         if (!response.ok) {
-          throw new Error(
-            data.message || JSON.stringify(data) || "Что-то пошло не так"
-          );
+          throw new Error("Что-то пошло не так");
         } else {
           setIsOk(true);
         }
+        const data = await response.json();
         if (data.success) {
           setSuccess(data.success);
         }

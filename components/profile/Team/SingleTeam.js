@@ -1,22 +1,23 @@
 import React from "react";
 import ProfilePageLayout from "../../../layouts/ProfilePageLayout";
 import Aside from "../../common/Aside/Aside";
-import TContent from "./Team/TContent";
+import Link from "next/link";
+import STContent from "./STContent";
 import ProfileMenu from "../ProfileMenu";
 
-function Team(props) {
+function SingleTeam({ link }) {
   return (
-    <section className="page__my-profile notifications">
-      <div className="notifications__container">
+    <section className="page__my-profile single-team">
+      <div className="single-team__container">
         <ProfilePageLayout>
           <Aside>
             <ProfileMenu />
           </Aside>
-          <TContent />
+          <STContent />
         </ProfilePageLayout>
       </div>
     </section>
   );
 }
 
-export default Team;
+export default SingleTeam;

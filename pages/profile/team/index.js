@@ -4,7 +4,7 @@ import Header from "../../../components/common/Header";
 import PageLayout from "../../../layouts/PageLayout";
 import PagesLayout from "../../../layouts/PagesLayout";
 import Footer from "../../../components/common/Footer";
-import Team from "../../../components/profile/executor/Team";
+import Team from "../../../components/profile/Team/Team";
 
 export default function TeamPage() {
   return (

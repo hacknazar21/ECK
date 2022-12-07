@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 function HeaderProfileMenu(props) {
   const [active, setActive] = useState(false);
   const router = useRouter();
-  const { logout } = useContext(AuthContext);
+  const { logout, userData } = useContext(AuthContext);
   function exitClickHandler() {
     logout();
   }
@@ -44,7 +44,10 @@ function HeaderProfileMenu(props) {
           mountOnEnter
           unmountOnExit
         >
-          <div className="header__accountMenu">
+          <div className="header__accountMenu header-accountMenu">
+            <header className="header-accountMenu__header">
+              {userData.full_name}
+            </header>
             <ul className="header-accountMenu__list accountMenu-list">
               <li className="accountMenu-list__item">
                 <Link href="/profile/my-profile">

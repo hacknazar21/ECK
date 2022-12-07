@@ -1,14 +1,9 @@
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-import Select from "../../common/Select/Select";
 import Loading from "../../common/Loading";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import useForm from "../../../hooks/hooks.form";
-import { AuthContext } from "../../../context/AuthContext";
-import Popup from "../../common/Popup";
 import File from "../../common/File";
-import useHttp from "../../../hooks/hooks.http";
 import FieldsOfActivities from "../../common/FieldsOfActivities";
 
 const animationAuth = {
@@ -25,20 +20,10 @@ export default function ExecutorUrReg() {
   const router = useRouter();
   const { formChangeHandler, formSubmitHandler, loading, form } =
     useForm(onSuccessReg);
-  const { request } = useHttp();
 
   async function onSuccessReg(response) {
     await router.push("/");
   }
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await request("/api/fields_of_activity/", "GET");
-        setActivities(data);
-      } catch (e) {}
-    })();
-  }, []);
 
   return (
     <motion.section

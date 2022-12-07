@@ -3,3 +3,8 @@ sudo rm -rf ./next
 sudo git pull
 sudo yarn build
 pm2 restart front
+
+IP-адрес сервера: 78.40.109.192
+IPv6-адрес сервера: 2a00:5da0:1000:1::24bf
+Пользователь: ubuntu
+Пароль: Sqocktpst(m9

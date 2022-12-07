@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Avatar from "../../../../src/img/avatars/02.png";
-import Popup from "../../../common/Popup";
+import Avatar from "../../../../../src/img/avatars/02.png";
+import Popup from "../../../../common/Popup";
 
 function Solutions(props) {
   const [active, setActive] = useState(false);

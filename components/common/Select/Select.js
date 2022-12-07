@@ -115,7 +115,6 @@ export default function Select({
       </div>
       <ul ref={wrapper} className="select__list">
         {selectEls?.map((selectEl, id) => {
-          console.log(defaultValue, parseInt(selectEl.value));
           return (
             <li
               key={id}
@@ -130,14 +129,17 @@ export default function Select({
                   : "")
               }
             >
-              {multiply ? (
+              {multiply && (
                 <div className={"select__checkbox"}>
                   <span></span>
                 </div>
-              ) : (
-                ""
               )}
-              {selectEl.name}
+              {selectEl.icon && (
+                <div className="single-team-search__result-icon">
+                  <img src={selectEl.icon} alt="" />
+                </div>
+              )}
+              <p>{selectEl.name}</p>
             </li>
           );
         })}

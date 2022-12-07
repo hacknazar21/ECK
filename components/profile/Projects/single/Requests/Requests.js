@@ -1,5 +1,5 @@
 import React from "react";
-import Avatar from "../../../../src/img/avatars/02.png";
+import Avatar from "../../../../../src/img/avatars/02.png";
 function Requests(props) {
   return (
     <div className="customer-requests">
