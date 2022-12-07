@@ -28,7 +28,7 @@ function Message({
               <div key={attachment.id || id} className="message__attachment">
                 <a
                   target={"_blank"}
-                  referrerPolicy={"no-referrer"}
+                  rel="noreferrer"
                   href={attachment.file}
                   className="message__attachment-link"
                 >
