@@ -20,7 +20,7 @@ function Chat({ chat_id, setter }) {
   const [status, setStatus] = useState("");
   const ws = useRef(null);
   const { request } = useHttp();
-  const { token } = useContext(AuthContext);
+  const { token, userData } = useContext(AuthContext);
   const router = useRouter();
 
   useEffect(() => {
@@ -74,7 +74,7 @@ function Chat({ chat_id, setter }) {
         {messages.map((message) => (
           <Message
             key={message.id}
-            isMe={message.is_mine}
+            isMe={message.sender.id === userData.id}
             name={message.sender.display_name}
             icon={message.sender.avatar}
             datetime={new Date(message.update_at)}
