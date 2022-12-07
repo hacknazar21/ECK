@@ -24,8 +24,8 @@ function Message({
         {children}
         {attachments.length !== 0 && (
           <div className="message__attachments">
-            {attachments.map((attachment) => (
-              <div className="message__attachment">
+            {attachments.map((attachment, id) => (
+              <div key={attachment.id || id} className="message__attachment">
                 <a href={attachment.file} className="message__attachment-link">
                   <svg
                     width="21"
