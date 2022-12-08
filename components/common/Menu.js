@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image3 from "../../src/img/menu/3.png";
 import Image5 from "../../src/img/menu/5.png";
 import Image7 from "../../src/img/menu/7.png";
@@ -9,106 +9,48 @@ import Cat4 from "../../src/img/home/categories/4.png";
 import Cat7 from "../../src/img/home/categories/7.png";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import useHttp from "../../hooks/hooks.http";
+import { AuthContext } from "../../context/AuthContext";
 
 function Menu(props) {
   const router = useRouter();
+  const { request } = useHttp();
+  const { token } = useContext(AuthContext);
+  const [urls, setUrls] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await request("/api/content/url-cards/", "GET", null, {
+          Authorization: `Bearer ${token}`,
+        });
+        if (data) setUrls([...data]);
+      } catch (e) {}
+    })();
+  }, [token, router]);
+
   return (
     <menu className="under-header__menu under-header-menu">
       <ul className="under-header-menu__list">
-        <li
-          className={
-            "under-header-menu__item" +
-            " " +
-            (router.route.indexOf("/announcements") !== -1 ? "active" : "")
-          }
-        >
-          <Link href="/announcements/">
-            <a className="under-header-menu__link">
-              Объявления
-              <span>
-                <img src={Cat3.src} alt="" />
-              </span>
-            </a>
-          </Link>
-        </li>
-        <li
-          className={
-            "under-header-menu__item" +
-            " " +
-            (router.route.indexOf("/team") !== -1 ? "active" : "")
-          }
-        >
-          <Link href="/team/">
-            <a className="under-header-menu__link">
-              Команда
-              <span>
-                <img src={Cat2.src} alt="" />
-              </span>
-            </a>
-          </Link>
-        </li>
-        <li
-          className={
-            "under-header-menu__item" +
-            " " +
-            (router.route.indexOf("/projects") !== -1 ? "active" : "")
-          }
-        >
-          <Link href="/projects/">
-            <a href="" className="under-header-menu__link">
-              Проекты
-              <span>
-                <img src={Image3.src} alt="" />
-              </span>
-            </a>
-          </Link>
-        </li>
-        <li
-          className={
-            "under-header-menu__item" +
-            " " +
-            (router.route.indexOf("/geography") !== -1 ? "active" : "")
-          }
-        >
-          <a href="" className={"under-header-menu__link"}>
-            География
-            <span>
-              <img src={Cat4.src} alt="" />
-            </span>
-          </a>
-        </li>
-        <li className="under-header-menu__item">
-          <a href="" className="under-header-menu__link">
-            Аналитика
-            <span>
-              <img src={Image5.src} alt="" />
-            </span>
-          </a>
-        </li>
-        <li className="under-header-menu__item">
-          <a href="" className="under-header-menu__link">
-            Библиотека
-            <span>
-              <img src={Cat7.src} alt="" />
-            </span>
-          </a>
-        </li>
-        <li className="under-header-menu__item">
-          <a href="" className="under-header-menu__link">
-            Обучение
-            <span>
-              <img src={Image7.src} alt="" />
-            </span>
-          </a>
-        </li>
-        <li className="under-header-menu__item">
-          <a href="" className="under-header-menu__link">
-            Научный совет
-            <span>
-              <img src={Image8.src} alt="" />
-            </span>
-          </a>
-        </li>
+        {urls.map((url, id) => (
+          <li
+            key={id}
+            className={
+              "under-header-menu__item" +
+              " " +
+              (router.route.indexOf(url.link) !== -1 ? "active" : "")
+            }
+          >
+            <Link href={url.link}>
+              <a className="under-header-menu__link">
+                {url.name}
+                <span>
+                  <img src={url.image} alt="" />
+                </span>
+              </a>
+            </Link>
+          </li>
+        ))}
       </ul>
     </menu>
   );

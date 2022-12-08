@@ -73,6 +73,26 @@ function STContent({ team }) {
               </div>
             </div>
           )}
+          {team.certificates?.length > 0 && (
+            <div className="single-team-page-info__block">
+              <h2 className="single-team-page-info__title">
+                Сертификаты команды:
+              </h2>
+              <div className="single-team-page-info__docs">
+                {team.certificates?.map((certificate, id) => (
+                  <a
+                    key={id}
+                    href={certificate.file}
+                    target={"_blank"}
+                    rel="noreferrer"
+                    className="single-team-page-info__doc"
+                  >
+                    <img src={certificate.file} alt="" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </TabBarItem>
         <TabBarItem className={"profile-block"} label={"Участники"}>
           <STMembersContent members={team.members || []} />

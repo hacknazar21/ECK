@@ -5,12 +5,13 @@ import TabBarItem from "../../common/TabBar/TabBarItem";
 import TabBar from "../../common/TabBar/TabBar";
 import useHttp from "../../../hooks/hooks.http";
 import { AuthContext } from "../../../context/AuthContext";
+import { useRouter } from "next/router";
 
 function TContent(props) {
   const [teams, setTeams] = useState([]);
   const { request } = useHttp();
   const { token } = useContext(AuthContext);
-
+  const router = useRouter();
   useEffect(() => {
     (async () => {
       try {
@@ -21,7 +22,7 @@ function TContent(props) {
         console.log(data);
       } catch (e) {}
     })();
-  }, [token]);
+  }, [token, router]);
 
   return (
     <section className="page__team-content team-content profile-content">

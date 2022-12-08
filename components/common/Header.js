@@ -61,7 +61,11 @@ export default function Header() {
                   </Link>
                 </li>
                 <li className="menu__item">
-                  <a target="_blank" href="" className="menu__link">
+                  <a
+                    target="_blank"
+                    href="https://eprof.kz/media/public/upload/ContentFile/instruction.pdf"
+                    className="menu__link"
+                  >
                     Инструкция
                   </a>
                 </li>

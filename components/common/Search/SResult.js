@@ -1,14 +1,33 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
+import useHttp from "../../../hooks/hooks.http";
+import Loading from "../Loading";
+import Link from "next/link";
 
 function SResult() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [results, setResults] = useState({});
+  const { loading, request } = useHttp();
+  const ref = useRef();
+  async function searchSubmitHandler(e) {
+    e.preventDefault();
+    if (search !== "")
+      try {
+        const data = await request("/api/search/?search=" + search);
+        setResults({ ...data });
+      } catch (e) {
+        console.log(e.message);
+      }
+  }
+
   return (
-    <>
+    <form ref={ref} onSubmit={searchSubmitHandler}>
       <button
         onClick={() => {
-          setIsSearchOpen((prevState) => !prevState);
+          setIsSearchOpen(true);
         }}
+        type={"submit"}
         className="header__search-button"
       >
         <svg
@@ -36,24 +55,78 @@ function SResult() {
             <input
               type="text"
               name="search"
+              onInput={(e) => {
+                setSearch(e.target.value);
+                e.target.value === "" ? setResults({}) : null;
+              }}
               placeholder="Введите то что вы искали"
               className="search-box__input"
             />
           </div>
           <div className="search-box__results search-results">
-            <div className="search-results__item">
-              <a href="">Такой результат</a>
-            </div>
-            <div className="search-results__item">
-              <a href="">Такой результат</a>
-            </div>
-            <div className="search-results__item">
-              <a href="">Такой результат</a>
-            </div>
+            {loading && <Loading />}
+            {results.teams && results.teams?.length !== 0 && (
+              <h2 className="search-results__section">Команды</h2>
+            )}
+            {results.teams &&
+              results.teams?.map((team) => (
+                <div className="search-results__item">
+                  <div className="search-results__item-image">
+                    <img src={team.image} alt="" />
+                  </div>
+                  <h3 className="search-results__item-name">
+                    <Link href="/team/[link]" as={"/team/" + team.id}>
+                      <a>{team.name}</a>
+                    </Link>
+                  </h3>
+                </div>
+              ))}
+            {results.users && results.users?.length !== 0 && (
+              <h2 className="search-results__section">Пользователи</h2>
+            )}
+            {results.users &&
+              results.users?.map((user) => (
+                <div className="search-results__item">
+                  <div className="search-results__item-image">
+                    <img src={user.avatar} alt="" />
+                  </div>
+                  <h3 className="search-results__item-name">
+                    <Link href="/user/[link]" as={"/user/" + user.id}>
+                      <a>{user.display_name}</a>
+                    </Link>
+                  </h3>
+                </div>
+              ))}
+            {results.projects && results.projects?.length !== 0 && (
+              <h2 className="search-results__section">Проекты</h2>
+            )}
+            {results.projects &&
+              results.projects?.map((project) => (
+                <div className="search-results__item">
+                  <h3 className="search-results__item-name">
+                    <Link
+                      href={
+                        project.status === "APPLICATION" ||
+                        project.status === "DECLARED"
+                          ? "/announcements/"
+                          : "/projects/"
+                      }
+                      as={
+                        project.status === "APPLICATION" ||
+                        project.status === "DECLARED"
+                          ? "/announcements/#" + project.number
+                          : "/projects/#" + project.number
+                      }
+                    >
+                      <a>{project.title}</a>
+                    </Link>
+                  </h3>
+                </div>
+              ))}
           </div>
         </div>
       </CSSTransition>
-    </>
+    </form>
   );
 }
 

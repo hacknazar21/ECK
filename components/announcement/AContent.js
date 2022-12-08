@@ -8,6 +8,7 @@ import useHttp from "../../hooks/hooks.http";
 import { AuthContext } from "../../context/AuthContext";
 import ProgressDate from "../common/Project/ProgressDate";
 import Info from "../profile/Projects/single/Info";
+import { useRouter } from "next/router";
 
 function AContent(props) {
   const [active, setActive] = useState(false);
@@ -17,7 +18,7 @@ function AContent(props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { token, userData } = useContext(AuthContext);
   const [fields, setFields] = useState({});
-
+  const router = useRouter();
   function openPopupClickHandler(e) {
     setProject(projects.filter((project) => project.id === this?.project)[0]);
     setActive(true);
@@ -73,6 +74,17 @@ function AContent(props) {
       }
     })();
   }, [token]);
+  useEffect(() => {
+    if (window.location.hash && projects.length) {
+      console.log(projects[0].number, window.location.hash);
+      setProject(
+        projects.filter(
+          (project) => project.number === window.location.hash.replace("#", "")
+        )[0]
+      );
+      setActive(true);
+    }
+  }, [router, projects]);
 
   function changeModalClickHandler(e) {
     e.stopPropagation();

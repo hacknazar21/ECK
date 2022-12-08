@@ -7,6 +7,11 @@ import TabBarItem from "../../common/TabBar/TabBarItem";
 import TabBar from "../../common/TabBar/TabBar";
 import useHttp from "../../../hooks/hooks.http";
 import { AuthContext } from "../../../context/AuthContext";
+const STATUS = {
+  PENDING: "Отправлено",
+  ACCEPTED: "Принято",
+  REJECTED: "Отклонено",
+};
 function STContent(props) {
   const router = useRouter();
   const { request } = useHttp();
@@ -19,10 +24,12 @@ function STContent(props) {
   const [teamInfo, setTeamInfo] = useState({});
   const [members, setMembers] = useState([]);
   const [requests, setRequests] = useState([]);
+  const [invites, setInvites] = useState([]);
 
   const [searchMemberValue, setSearchMemberValue] = useState("");
   const [searchedMembers, setSearchedMembers] = useState([]);
   const [membersToInvite, setMembersToInvite] = useState([]);
+
   async function searchSubmitHandler(e) {
     e.preventDefault();
     setMembersToInvite([]);
@@ -103,6 +110,7 @@ function STContent(props) {
       await router.push("/profile/team/");
     }
   }
+
   useEffect(() => {
     (async () => {
       try {
@@ -120,8 +128,17 @@ function STContent(props) {
           }
         );
         setMembers([...dataMembers.results]);
-        const dataRequests = await request(
+        const dataInvites = await request(
           "/api/teams/invites/?team=" + data.id,
+          "GET",
+          null,
+          {
+            Authorization: `Bearer ${token}`,
+          }
+        );
+        setInvites([...dataInvites.results]);
+        const dataRequests = await request(
+          "/api/teams/requests/?team=" + data.id,
           "GET",
           null,
           {
@@ -131,7 +148,7 @@ function STContent(props) {
         setRequests([...dataRequests.results]);
       } catch (e) {}
     })();
-  }, [token]);
+  }, [token, link]);
 
   return (
     <section className="single-team__content single-team-content profile-content">
@@ -232,7 +249,7 @@ function STContent(props) {
           </div>
         </TabBarItem>
         {teamInfo.is_team_owner && (
-          <TabBarItem className={"profile-block"} label={"Заявки"}>
+          <TabBarItem className={"profile-block"} label={"Входящие заявки"}>
             {requests.map((request) => (
               <article
                 key={request.id}
@@ -265,6 +282,43 @@ function STContent(props) {
               </article>
             ))}
             {requests.length === 0 && "Заявок пока нет"}
+          </TabBarItem>
+        )}
+        {teamInfo.is_team_owner && (
+          <TabBarItem className={"profile-block"} label={"Исходящие заявки"}>
+            {invites.map((invite) => (
+              <article
+                key={invite.id}
+                className="single-team-members__member single-team-member"
+              >
+                <div className="single-team-member__info">
+                  <div className="single-team-member__icon">
+                    <img src={invite.user?.avatar} alt="" />
+                  </div>
+                  <div className="single-team-member__name-box">
+                    <Link href="/user/[link]" as={"/user/" + invite.user?.id}>
+                      <a className="single-team-member__name">
+                        {invite.user?.display_name}
+                      </a>
+                    </Link>
+                    <a
+                      href={"mailto:" + invite.user?.email}
+                      className="single-team-member__email"
+                    >
+                      {invite.user?.email}
+                    </a>
+                  </div>
+                </div>
+                <div className="single-team-member__actions">
+                  <div
+                    className={"single-team-member__status _" + invite.status}
+                  >
+                    {STATUS[invite.status]}
+                  </div>
+                </div>
+              </article>
+            ))}
+            {invites.length === 0 && "Заявок пока нет"}
           </TabBarItem>
         )}
       </TabBar>

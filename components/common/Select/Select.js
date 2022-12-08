@@ -9,6 +9,7 @@ export default function Select({
   multiply = false,
   saveHead = false,
   defaultValue = [],
+  setFields = (e) => {},
 }) {
   const [open, setOpen] = useState(false);
   const [height, setHeight] = useState(0);
@@ -16,6 +17,7 @@ export default function Select({
   const [checkedEls, setCheckedEls] = useState(defaultValue || []);
   const wrapper = useRef();
   const head = useRef();
+
   useEffect(() => {
     if (items && items.length) setSelectEls(items);
   }, [JSON.stringify(items)]);
@@ -62,12 +64,17 @@ export default function Select({
         if (event.target.classList.contains("checked")) {
           setCheckedEls((prevState) => {
             if (prevState.indexOf(event.target.innerText) === -1 && !saveHead) {
-              prevState.push(event.target.innerText); // push checked els
+              prevState.push(event.target.innerText);
             } else if (
               prevState.indexOf(event.target.dataset.value) === -1 &&
               saveHead
-            )
-              prevState.push(event.target.dataset.value); // push checked els
+            ) {
+              prevState.push(event.target.dataset.value);
+              setFields((prevState) => [
+                ...prevState,
+                event.target.dataset.valueName,
+              ]);
+            }
             if (!saveHead) head.current.innerText = prevState.join(", ");
             onSelect({
               target: {
@@ -86,11 +93,18 @@ export default function Select({
             else if (
               prevState.indexOf(parseInt(event.target.dataset.value)) !== -1 &&
               saveHead
-            )
+            ) {
               prevState.splice(
                 prevState.indexOf(parseInt(event.target.dataset.value)),
                 1
-              ); // push checked els
+              );
+              setFields((prevState) =>
+                prevState.splice(
+                  prevState.indexOf(event.target.dataset.valueName),
+                  1
+                )
+              );
+            } // push checked els
             if (prevState.length && !saveHead)
               head.current.innerText = prevState.join(", ");
             else head.current.innerText = title;
@@ -108,6 +122,7 @@ export default function Select({
       } else onSelect(ev);
     }
   }
+
   return (
     <div className={"select" + " " + selectClass} id={"select-" + name}>
       <div ref={head} onClick={clickHandler} className="select__head">
@@ -119,6 +134,7 @@ export default function Select({
             <li
               key={id}
               onClick={selectHandler}
+              data-valuename={selectEl.name}
               data-name={name}
               data-value={selectEl.value}
               className={

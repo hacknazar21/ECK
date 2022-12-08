@@ -1,20 +1,19 @@
 import React, { useEffect, useState, useContext } from "react";
-import Avatar from "../../src/img/avatars/01.png";
 import Popup from "../common/Popup";
-import Link from "next/link";
 import useHttp from "../../hooks/hooks.http";
 import { AuthContext } from "../../context/AuthContext";
-import ProgressDate from "../common/Project/ProgressDate";
 import Info from "../profile/Projects/single/Info";
+import { useRouter } from "next/router";
 
 function PContent() {
   const [active, setActive] = useState(false);
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [fields, setFields] = useState({});
   const { request } = useHttp();
   const { token } = useContext(AuthContext);
+  const router = useRouter();
+
   useEffect(() => {
     (async () => {
       try {
@@ -27,44 +26,22 @@ function PContent() {
       }
     })();
   }, [token]);
-  function openPopupClickHandler(e) {
-    setProject(projects.filter((project) => project.id === this?.project)[0]);
-    setActive(true);
-  }
-  useEffect(() => {
-    const parents = [];
-    for (const project1 of projects) {
-      const arr = project1?.fields_of_activity?.map((field_of_activity, id) => {
-        const same = project1.fields_of_activity.filter(
-          (field_of_activity_f) =>
-            field_of_activity_f.parent_field.name ===
-            field_of_activity.parent_field.name
-        );
-        if (parents.indexOf(same[0].parent_field) === -1) {
-          parents.push(same[0].parent_field);
-          return {
-            image: same[0].parent_field.image,
-            parent_field: same[0].parent_field,
-            name: same.map((sameItem) => sameItem.name),
-          };
-        }
-        return null;
-      });
-
-      setFields((prevState) => ({
-        ...prevState,
-        ...{
-          [project1.id]: [...arr.filter((item) => item !== null)],
-        },
-      }));
-    }
-  }, [projects]);
   useEffect(() => {
     const currentIndex = projects.indexOf(project);
     if (currentIndex !== -1) {
       setCurrentIndex(currentIndex);
     }
   }, [project]);
+  useEffect(() => {
+    if (window.location.hash && projects.length) {
+      setProject(
+        projects.filter(
+          (project) => project.number === window.location.hash.replace("#", "")
+        )[0]
+      );
+      setActive(true);
+    }
+  }, [router, projects]);
 
   function changeModalClickHandler(e) {
     e.stopPropagation();
@@ -82,9 +59,12 @@ function PContent() {
           break;
         }
         setProject(projects[nextIndex]);
-        console.log("next");
         break;
     }
+  }
+  function openPopupClickHandler(e) {
+    setProject(projects.filter((project) => project.id === this?.project)[0]);
+    setActive(true);
   }
 
   return (

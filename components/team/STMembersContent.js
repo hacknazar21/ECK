@@ -21,10 +21,12 @@ function STMembersContent({ members }) {
                 href={"mailto:" + member.email}
                 className="single-team-member__email"
               >
-                member.email
+                {member.email}
               </a>
             </div>
-            <div className="single-team-member__role">Администратор</div>
+            {member.is_admin && (
+              <div className="single-team-member__role">Администратор</div>
+            )}
           </div>
           <div className="single-team-member__actions">
             <Link href="/user/[link]" as={"/user/" + member.id}>

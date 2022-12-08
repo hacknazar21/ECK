@@ -17,12 +17,12 @@ import useHttp from "../../hooks/hooks.http";
 import { AuthContext } from "../../context/AuthContext";
 
 function SingleTeam() {
-  const { query } = useRouter();
+  const router = useRouter();
   const [team, setTeam] = useState({});
   const { request } = useHttp();
   const { token } = useContext(AuthContext);
   useEffect(() => {
-    const { link } = query;
+    const { link } = router.query;
     (async () => {
       try {
         const data = await request("/api/teams/" + link + "/", "GET", null, {
@@ -31,7 +31,7 @@ function SingleTeam() {
         setTeam(data);
       } catch (e) {}
     })();
-  }, []);
+  }, [token, router]);
 
   return (
     <section className="page__my-profile team-page">

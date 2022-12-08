@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Select from "./Select/Select";
 import Popup from "./Popup";
 import useHttp from "../../hooks/hooks.http";
+import ActivitiesSelect from "./Select/ActivitiesSelect";
+import { AuthContext } from "../../context/AuthContext";
 
-function FieldsOfActivities({
-  formChangeHandler,
-  form,
-  defaultValues = [],
-  disabled = false,
-}) {
+function FieldsOfActivities({ formChangeHandler, form, disabled = false }) {
   const [activities, setActivities] = useState([]);
   const [activitiesModal, setActivitiesModal] = useState(false);
   const { request } = useHttp();
+  const [fields, setFields] = useState([]);
+  const { userData, token } = useContext(AuthContext);
+  const [selectedFields, setSelectedFields] = useState({});
   useEffect(() => {
     (async () => {
       try {
@@ -20,6 +20,29 @@ function FieldsOfActivities({
       } catch (e) {}
     })();
   }, []);
+  useEffect(() => {
+    if (token && userData && userData.fields_of_activity)
+      setFields([...userData?.fields_of_activity]);
+  }, [token, userData]);
+  useEffect(() => {
+    const newFields = [];
+    for (const selectedFieldKey in selectedFields) {
+      for (const field_id of selectedFields[selectedFieldKey]) {
+        for (const activity of activities) {
+          for (const child_field of activity.child_fields) {
+            if (field_id === child_field.id)
+              newFields.push({
+                name: child_field.name,
+                id: child_field.id,
+                parent_field: { id: activity.id },
+              });
+          }
+        }
+      }
+    }
+    if (newFields) setFields([...newFields]);
+  }, [form]);
+
   return (
     <>
       <div className="auth__input-box button">
@@ -37,19 +60,13 @@ function FieldsOfActivities({
           className="auth__input"
         />
         <label htmlFor="fields_of_activity_list" className="auth__input-label">
-          {form["select-checkboxes"]?.fields_of_activity_list?.length > 0 ||
-          defaultValues?.length > 0
-            ? "Выбрано"
-            : "Сфера деятельности"}
+          {selectedFields?.length > 0 ? "Выбрано" : "Сфера деятельности"}
         </label>
         <ul className="auth__input-list-default">
-          {defaultValues?.length > 0 &&
-            defaultValues?.map((defaultValue) => (
-              <li
-                key={defaultValue.id}
-                className="auth__input-list-item-default"
-              >
-                {defaultValue.name}
+          {fields?.length > 0 &&
+            fields?.map((field) => (
+              <li key={field.id} className="auth__input-list-item-default">
+                {field.name}
               </li>
             ))}
         </ul>
@@ -63,19 +80,27 @@ function FieldsOfActivities({
         <div className="activities">
           {activities.map((activity, id) => {
             return (
-              <Select
-                defaultValue={
-                  form["select-checkboxes"]?.fields_of_activity_list ||
-                  defaultValues.map((defaultValue) => defaultValue.id)
-                }
-                saveHead={true}
+              <ActivitiesSelect
+                defaultValues={fields
+                  .filter((field) => field?.parent_field.id === activity.id)
+                  .map((field) => ({ id: field.id, name: field.name }))}
                 key={id}
                 name={"fields_of_activity_list"}
-                onSelect={formChangeHandler}
+                onSelect={(fields_ids) => {
+                  setSelectedFields((prevState) => {
+                    prevState[activity.id] = [...fields_ids];
+                    return prevState;
+                  });
+                }}
                 title={activity.name}
-                multiply={true}
                 items={activity.child_fields.map((child_field) => {
-                  return { name: child_field.name, value: child_field.id };
+                  return {
+                    name: child_field.name,
+                    id: child_field.id,
+                    checked:
+                      fields.filter((field) => field.id === child_field.id)
+                        .length > 0,
+                  };
                 })}
               />
             );
@@ -85,6 +110,19 @@ function FieldsOfActivities({
           onClick={(event) => {
             event.preventDefault();
             setActivitiesModal(false);
+            const fields = [];
+            for (const selectedFieldsKey in selectedFields) {
+              for (const selectedField of selectedFields[selectedFieldsKey]) {
+                fields.push(selectedField);
+              }
+            }
+            formChangeHandler({
+              target: {
+                name: "fields_of_activity_list",
+                value: [...fields],
+                type: "select-checkboxes",
+              },
+            });
           }}
           className="add-btn"
         >

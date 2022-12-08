@@ -66,9 +66,11 @@ function Info({ project }) {
           <div className="projects-card__image profile-card__image">
             <img src={project.created_by?.avatar} alt="" />
           </div>
-          <div className="projects-card__name profile-card__name">
-            {project.created_by?.full_name}
-          </div>
+          <Link href="/user/[link]" as={"/user/" + project.created_by?.id}>
+            <a className="projects-card__name profile-card__name">
+              {project.created_by?.full_name}
+            </a>
+          </Link>
         </div>
         <div className="project-modal__info">
           <h2 className="project-modal__info-title">{project.title}</h2>
@@ -91,7 +93,8 @@ function Info({ project }) {
           <InviteTeam project_number={project.number} project_id={project.id} />
         )}
         {project.project_type === "CONTEST" &&
-          userData.user_type === "EXECUTOR" && (
+          userData.user_type === "EXECUTOR" &&
+          project.status === "APPLICATION" && (
             <div className="project-modal-team__button project-modal-team__button_margin">
               <Link
                 href="/projects/[link]/join"

@@ -65,6 +65,7 @@
   &__info {
     display: flex;
     align-items: center;
+    flex: 1 1 auto;
   }
 
   &__icon {
@@ -91,7 +92,7 @@
     font-weight: 600;
     font-size: rem(16);
     line-height: math.div(20,16);
-    
+    display: block;
     color: #000000;
   }
 
@@ -111,6 +112,7 @@
     padding: rem(1) rem(7);
     background-color: #E1B030;
     border-radius: 5px;
+    margin-left: rem(10);
   }
 
   &__actions {
@@ -118,7 +120,27 @@
     align-items: center;
     column-gap: rem(10);
   }
-
+  &__status{
+    padding: rem(10) 0;
+    width: rem(150);
+    text-align: center;
+    border-radius: 1000px;
+    background-color: #BCBCBC;
+    font-weight: 500;
+    font-size: rem(14);
+    line-height: math.div(16,14);
+    
+    color: #FFFFFF;
+    &._PENDING{
+      background-color: #BCBCBC;
+    }
+    &._ACCEPTED{
+      background-color: #8BC85F;
+    }
+    &._REJECTED{
+      background-color: #E22D38;
+    }
+  }
   &__button-delete {
   }
 }

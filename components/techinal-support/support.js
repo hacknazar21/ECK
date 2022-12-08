@@ -4,6 +4,7 @@ import Loading from "../common/Loading";
 import { motion, AnimatePresence } from "framer-motion";
 import Message from "../common/Message";
 import SuccessIcon from "../../src/img/message/success.svg";
+import useForm from "../../hooks/hooks.form";
 const animationAuth = {
   in: {
     x: -200,
@@ -21,8 +22,10 @@ const animationAuth = {
 export default function Support() {
   const router = useRouter();
   const [isSubmit, setIsSubmit] = useState(false);
+  const { formSubmitHandler, formChangeHandler, loading } =
+    useForm(submitSupportHandler);
 
-  function submitSupportHandler(event) {
+  function submitSupportHandler() {
     setIsSubmit(true);
   }
 
@@ -50,24 +53,33 @@ export default function Support() {
                   </button>
                   <h1 className="auth__title">Техподдержка</h1>
                 </div>
-                <div className="auth__form">
+                <form
+                  onSubmit={formSubmitHandler}
+                  action={"/api/support_requests/"}
+                  data-method={"POST"}
+                  className="auth__form"
+                >
                   <div className="auth__inputs">
                     <div className="auth__input-box">
                       <input
                         type="text"
-                        id={"email"}
+                        id={"name"}
+                        name={"name"}
+                        onInput={formChangeHandler}
                         required={true}
                         placeholder=" "
                         className="auth__input"
                       />
-                      <label htmlFor="email" className="auth__input-label">
+                      <label htmlFor="name" className="auth__input-label">
                         ФИО
                       </label>
                     </div>
                     <div className="auth__input-box">
                       <input
-                        type="text"
+                        type="email"
                         id={"email"}
+                        onInput={formChangeHandler}
+                        name={"email"}
                         required={true}
                         placeholder=" "
                         className="auth__input"
@@ -78,26 +90,26 @@ export default function Support() {
                     </div>
                     <div className="auth__input-box">
                       <textarea
-                        id={"password"}
+                        id={"text"}
+                        name={"text"}
+                        onInput={formChangeHandler}
                         required={true}
                         placeholder=" "
                         className="auth__input"
                       />
-                      <label htmlFor="password" className="auth__input-label">
+                      <label htmlFor="text" className="auth__input-label">
                         Комментарий
                       </label>
                     </div>
+                    <div className="auth__actions">
+                      <button type={"submit"} className="auth__submit-button">
+                        Отправить
+                      </button>
+                      {loading && <Loading />}
+                    </div>
                   </div>
-                </div>
-                <div className="auth__actions">
-                  <button
-                    onClick={submitSupportHandler}
-                    className="auth__submit-button"
-                  >
-                    Отправить
-                  </button>
-                  <Loading />
-                </div>
+                </form>
+
                 <div className="auth__info">
                   <p>
                     Нажимая кнопку «Отправить», я соглашаюсь с Публичной офертой

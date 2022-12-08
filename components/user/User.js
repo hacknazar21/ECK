@@ -24,8 +24,8 @@ function User() {
   const [user, setUser] = useState({});
   const { request } = useHttp();
   const router = useRouter();
+  const USER_TYPE = { EXECUTOR: "Исполнитель", CUSTOMER: "Заказчик" };
   useEffect(() => {
-    console.log(router.query);
     const { link } = router.query;
     (async () => {
       try {
@@ -40,7 +40,7 @@ function User() {
         setUser(data);
       } catch (e) {}
     })();
-  }, [token]);
+  }, [token, router]);
 
   return (
     <section className="page__my-profile team-page">
@@ -122,7 +122,7 @@ function User() {
                   <div className="auth__inputs">
                     <div className="auth__input-box">
                       <input
-                        defaultValue={user.full_name}
+                        defaultValue={USER_TYPE[user.user_type]}
                         disabled={true}
                         placeholder=" "
                         className="auth__input"
@@ -130,7 +130,17 @@ function User() {
                     </div>
                     <div className="auth__input-box">
                       <input
-                        defaultValue={user.full_name}
+                        defaultValue={user.full_name || user.company_name}
+                        disabled={true}
+                        placeholder=" "
+                        className="auth__input"
+                      />
+                    </div>
+                    <div className="auth__input-box">
+                      <textarea
+                        defaultValue={user?.fields_of_activity
+                          ?.map((field_of_activity) => field_of_activity.name)
+                          .join(" ,")}
                         disabled={true}
                         placeholder=" "
                         className="auth__input"
@@ -138,7 +148,7 @@ function User() {
                     </div>
                     <div className="auth__input-box">
                       <input
-                        defaultValue={user.full_name}
+                        defaultValue={user.job_title}
                         disabled={true}
                         placeholder=" "
                         className="auth__input"
@@ -146,7 +156,15 @@ function User() {
                     </div>
                     <div className="auth__input-box">
                       <input
-                        defaultValue={user.full_name}
+                        defaultValue={user.director}
+                        disabled={true}
+                        placeholder=" "
+                        className="auth__input"
+                      />
+                    </div>
+                    <div className="auth__input-box">
+                      <input
+                        defaultValue={user.email}
                         disabled={true}
                         placeholder=" "
                         className="auth__input"

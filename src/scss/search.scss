@@ -28,24 +28,48 @@
   }
 
   &__results {
+    max-height: rem(400);
+    overflow: auto;
   }
 }
-
 .search-results {
+  &__section {
+    font-weight: 600;
+    font-size: rem(14);
+    line-height: math.div(16,14);
+    /* identical to box height, or 114% */
+    padding: 0 rem(20);
+    color: #C2C2C2;
+  }
+
   &__item {
     padding: 0 rem(20) ;
-    
+    display: flex;
+    align-items: center;
+    column-gap: rem(10);
     a{
       display: block;
     }
-    a:last-child{
-      padding:  rem(20) 0;
+  }
+
+  &__item-image {
+    position: relative;
+    padding-bottom: rem(40);
+
+    flex: 0 0 rem(40);
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
-    &:not(:last-child){
-      a {
-        padding:  rem(20) 0;
-        border-bottom: 1px solid #E5E7EB;
-      }
-    }
+  }
+
+  &__item-name {
+    padding:  rem(20) 0;
   }
 }

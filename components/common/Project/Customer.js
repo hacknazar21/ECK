@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 function Customer({ customer, documents }) {
   return (
@@ -6,9 +7,9 @@ function Customer({ customer, documents }) {
       <div className="project-modal__section-box">
         <div className="project-modal__section-sub-box">
           <div className="project-modal__section-title">Заказчик</div>
-          <div className="project-modal__section-text">
-            {customer?.full_name}
-          </div>
+          <Link href="/user/[link]" as={"/user/" + customer?.id}>
+            <a className="project-modal__section-text">{customer?.full_name}</a>
+          </Link>
         </div>
         {customer?.email && (
           <div className="project-modal__section-sub-box">
