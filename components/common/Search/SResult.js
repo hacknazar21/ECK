@@ -69,8 +69,8 @@ function SResult() {
               <h2 className="search-results__section">Команды</h2>
             )}
             {results.teams &&
-              results.teams?.map((team) => (
-                <div className="search-results__item">
+              results.teams?.map((team, id) => (
+                <div key={id} className="search-results__item">
                   <div className="search-results__item-image">
                     <img src={team.image} alt="" />
                   </div>
@@ -85,8 +85,8 @@ function SResult() {
               <h2 className="search-results__section">Пользователи</h2>
             )}
             {results.users &&
-              results.users?.map((user) => (
-                <div className="search-results__item">
+              results.users?.map((user, id) => (
+                <div key={id} className="search-results__item">
                   <div className="search-results__item-image">
                     <img src={user.avatar} alt="" />
                   </div>
@@ -101,8 +101,8 @@ function SResult() {
               <h2 className="search-results__section">Проекты</h2>
             )}
             {results.projects &&
-              results.projects?.map((project) => (
-                <div className="search-results__item">
+              results.projects?.map((project, id) => (
+                <div key={id} className="search-results__item">
                   <h3 className="search-results__item-name">
                     <Link
                       href={
