@@ -10,4 +10,10 @@ export const AuthContext = createContext({
   isAuth: false,
   userData: null,
   setUserData: noop1,
+  changeFormHandler: noop1,
+  addChildrenActivity: noop1,
+  childrenActivity: [],
+  formFilter: {},
+  submitFormHandler: noop1,
+  clearForm: noop(),
 });

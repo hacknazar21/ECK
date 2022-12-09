@@ -132,3 +132,8 @@
     }
   }
 }
+.single-project-content-block{
+  &__header{
+    @include adaptiveValue("width", 800, 320);
+  }
+}

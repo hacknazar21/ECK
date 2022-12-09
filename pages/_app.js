@@ -8,13 +8,23 @@ import useHttp from "../hooks/hooks.http";
 import { AuthContext } from "/context/AuthContext";
 import { useRouter, Router } from "next/router";
 import FourOhOne from "./401";
+import useFilter from "../hooks/hooks.filter";
 
 function MyApp({ Component, pageProps }) {
   const { token, userId, login, logout, refreshToken } = useAuth();
+  const {
+    changeFormHandler,
+    addChildrenActivity,
+    childrenActivity,
+    formFilter,
+    submitFormHandler,
+    clearForm,
+  } = useFilter(token);
   const isAuth = !!token;
   const [userData, setUserData] = useState({});
   const { request } = useHttp();
   const router = useRouter();
+  const [isPermission, setIsPermission] = useState(true);
   useEffect(() => {
     (async () => {
       if (isAuth) {
@@ -54,7 +64,6 @@ function MyApp({ Component, pageProps }) {
       }
     })();
   }, [token, router.pathname]);
-
   useEffect(() => {
     if (!isAuth)
       if (
@@ -62,7 +71,8 @@ function MyApp({ Component, pageProps }) {
         router.pathname.indexOf("announcements") !== -1 ||
         router.pathname.indexOf("profile") !== -1
       ) {
-        router.push("/");
+        setIsPermission(false);
+        return;
       }
     if (token && !userData?.is_validated)
       if (
@@ -70,9 +80,12 @@ function MyApp({ Component, pageProps }) {
         router.pathname.indexOf("announcements") !== -1 ||
         router.pathname.indexOf("profile") !== -1
       ) {
-        router.push("/");
+        setIsPermission(false);
+        return;
       }
-  }, [router.pathname, token]);
+    setIsPermission(true);
+  }, [token, router.pathname, userData]);
+
   return (
     <>
       <Head>
@@ -83,6 +96,7 @@ function MyApp({ Component, pageProps }) {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <title>Загрузка...</title>
       </Head>
       <NextNProgress />
       <AnimatePresence>
@@ -97,9 +111,16 @@ function MyApp({ Component, pageProps }) {
             setUserData: (data) => {
               setUserData(data);
             },
+            changeFormHandler,
+            addChildrenActivity,
+            childrenActivity,
+            formFilter,
+            submitFormHandler,
+            clearForm,
           }}
         >
-          <Component {...pageProps} />
+          {isPermission && <Component {...pageProps} />}
+          {!isPermission && <FourOhOne />}
         </AuthContext.Provider>
       </AnimatePresence>
     </>

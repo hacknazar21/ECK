@@ -77,10 +77,14 @@
   }
 }
 .notifications-filter {
+  position: relative;
   &__side {
     display: flex;
     align-items: center;
     column-gap: rem(15);
+    row-gap: rem(20);
+    width: 100%;
+    flex-wrap: wrap;
     @media(max-width:$tablet){
       width: 100%;
     }

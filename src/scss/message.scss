@@ -6,6 +6,8 @@
   gap: rem(15);
 
   &__icon {
+    border-radius: 50%;
+    overflow: hidden;
   }
 
   &__title {

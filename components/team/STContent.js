@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Avatar from "../../src/img/avatars/01.png";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -6,10 +6,32 @@ import TabBarItem from "../common/TabBar/TabBarItem";
 import TabBar from "../common/TabBar/TabBar";
 import STMembersContent from "./STMembersContent";
 import STProjectsContent from "./STProjectsContent";
+import useHttp from "../../hooks/hooks.http";
+import { AuthContext } from "../../context/AuthContext";
 
 function STContent({ team }) {
   const router = useRouter();
-  const { link } = router.query;
+  const [projects, setProjects] = useState([]);
+  const { request } = useHttp();
+  const { token } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (team && team.slug) {
+      (async () => {
+        try {
+          const data = await request(
+            "/api/teams/" + team.slug + "/projects/",
+            "GET",
+            null,
+            {
+              Authorization: `Bearer ${token}`,
+            }
+          );
+          if (data && data.results) setProjects([...data.results]);
+        } catch (e) {}
+      })();
+    }
+  }, [team]);
   return (
     <section className="single-team-page__content profile-content">
       <TabBar
@@ -97,8 +119,8 @@ function STContent({ team }) {
         <TabBarItem className={"profile-block"} label={"Участники"}>
           <STMembersContent members={team.members || []} />
         </TabBarItem>
-        <TabBarItem label={"Проекты (10)"}>
-          <STProjectsContent />
+        <TabBarItem label={"Проекты (" + projects.length + ")"}>
+          <STProjectsContent projects={projects} />
         </TabBarItem>
       </TabBar>
     </section>

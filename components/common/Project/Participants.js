@@ -50,13 +50,27 @@ function Participants({ participants }) {
                 </div>
               </>
             )}
-            <div className="project-modal-team__button">
-              <Link href="">
-                <a className="window-notification__button window-notification__button_active">
-                  Смотреть профиль
-                </a>
-              </Link>
-            </div>
+            {participant.user && (
+              <div className="project-modal-team__button">
+                <Link href="/user/[link]" as={"/user/" + participant.user?.id}>
+                  <a className="window-notification__button window-notification__button_active">
+                    Смотреть профиль
+                  </a>
+                </Link>
+              </div>
+            )}
+            {participant.team && (
+              <div className="project-modal-team__button">
+                <Link
+                  href="/team/[link]"
+                  as={"/team/" + participant.team?.slug}
+                >
+                  <a className="window-notification__button window-notification__button_active">
+                    Смотреть профиль
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
           {participant.consortium && (
             <div className="project-modal-team__info">

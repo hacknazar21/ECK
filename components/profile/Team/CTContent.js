@@ -32,7 +32,7 @@ function CTContent(props) {
         </h1>
         <form
           onSubmit={formSubmitHandler}
-          action="/components/profile/Team/CTContent"
+          action="/api/teams/"
           data-method="POST"
           className="my-profile-content__form my-profile-form"
         >

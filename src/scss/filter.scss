@@ -20,6 +20,13 @@
     align-self: flex-start;
     padding-top: rem(15);
   }
+  &__buttons{
+    margin-top: rem(15);
+    display: flex;
+    justify-content: flex-start;
+    max-width: rem(100);
+    gap: rem(15);
+  }
 }
 
 

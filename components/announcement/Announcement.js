@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProfilePageLayout from "../../layouts/ProfilePageLayout";
 import Aside from "../common/Aside/Aside";
 import Img1 from "../../src/img/aside/01.png";
@@ -13,65 +13,48 @@ import Img9 from "../../src/img/aside/09.png";
 import Img10 from "../../src/img/aside/10.png";
 import TContent from "../team/TContent";
 import AContent from "./AContent";
+import ActivitiesMenu from "../common/ActivitiesMenu";
+import useHttp from "../../hooks/hooks.http";
+import { AuthContext } from "../../context/AuthContext";
 
 function Announcement(props) {
+  const [projects, setProjects] = useState([]);
+  const { request } = useHttp();
+  const { token } = useContext(AuthContext);
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await request(
+          "/api/projects/announcements/",
+          "GET",
+          null,
+          {
+            Authorization: `Bearer ${token}`,
+          }
+        );
+        setProjects([...data.results]);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, [token]);
   return (
     <section className="page__my-profile announcement">
       <div className="announcement__container">
         <ProfilePageLayout>
-          <Aside modificationMenu={"aside-menu__list_columns"}>
-            <li className={"aside-menu__item active"}>
-              <button className="aside-menu__link">
-                <img src={Img1.src} alt="" />
-              </button>
-            </li>
-            <li className={"aside-menu__item"}>
-              <button className="aside-menu__link">
-                <img src={Img2.src} alt="" />
-              </button>
-            </li>
-            <li className={"aside-menu__item"}>
-              <button className="aside-menu__link">
-                <img src={Img3.src} alt="" />
-              </button>
-            </li>
-            <li className={"aside-menu__item"}>
-              <button className="aside-menu__link">
-                <img src={Img4.src} alt="" />
-              </button>
-            </li>
-            <li className={"aside-menu__item"}>
-              <button className="aside-menu__link">
-                <img src={Img5.src} alt="" />
-              </button>
-            </li>
-            <li className={"aside-menu__item"}>
-              <button className="aside-menu__link">
-                <img src={Img6.src} alt="" />
-              </button>
-            </li>
-            <li className={"aside-menu__item"}>
-              <button className="aside-menu__link">
-                <img src={Img7.src} alt="" />
-              </button>
-            </li>
-            <li className={"aside-menu__item"}>
-              <button className="aside-menu__link">
-                <img src={Img8.src} alt="" />
-              </button>
-            </li>
-            <li className={"aside-menu__item"}>
-              <button className="aside-menu__link">
-                <img src={Img9.src} alt="" />
-              </button>
-            </li>
-            <li className={"aside-menu__item"}>
-              <button className="aside-menu__link">
-                <img src={Img10.src} alt="" />
-              </button>
-            </li>
-          </Aside>
-          <AContent />
+          <ActivitiesMenu
+            setter={(data) => {
+              setProjects([...data]);
+            }}
+            url={"/api/projects/announcements/"}
+          />
+          <AContent
+            projects={projects}
+            setter={(data) => {
+              setProjects([...data]);
+            }}
+            url={"/api/projects/announcements/"}
+          />
         </ProfilePageLayout>
       </div>
     </section>

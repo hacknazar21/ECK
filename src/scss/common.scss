@@ -100,6 +100,10 @@
   column-gap: rem(10);
   &.team-actions__add-btn{
     margin-left: auto;
+    flex: 0 0 auto;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
   & > span{
     flex: 0 0 rem(16);
