@@ -15,6 +15,7 @@ function STContent({ projects = [] }) {
     <div className="profile-cards">
       {projects.map((project) => (
         <article
+          key={project.id}
           className={
             "projects-cards__card projects-card profile-cards__card profile-card" +
             " " +
