@@ -4,9 +4,6 @@ import Marker from "./Marker";
 
 function GeographyMap({ markers = [] }) {
   const containerRef = useRef(null);
-  useEffect(() => {
-    console.log(markers);
-  }, [markers]);
   return (
     <div ref={containerRef} className="maps__container">
       {markers.map((marker, id) => (

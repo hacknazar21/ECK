@@ -38,6 +38,14 @@ const NOTIFICATION_TYPES = {
       />
     );
   },
+  PROJECT_INVITE_ACCEPTED: (updateNotifications, notification) => {
+    return (
+      <SimpleMessage
+        updateNotifications={updateNotifications}
+        notification={notification}
+      />
+    );
+  },
   PROJECT_INVITE_REJECTED: (updateNotifications, notification) => {
     return (
       <NewContestJoinRequest
@@ -183,10 +191,11 @@ function Notification({ notification, updateNotifications }) {
         (!notification.is_viewed ? " notification-item_important" : "")
       }
     >
-      {NOTIFICATION_TYPES[notification.notification_type](
-        updateNotifications,
-        notification
-      )}
+      {NOTIFICATION_TYPES[notification.notification_type] &&
+        NOTIFICATION_TYPES[notification.notification_type](
+          updateNotifications,
+          notification
+        )}
     </article>
   );
 }

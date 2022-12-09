@@ -21,11 +21,6 @@ const useHttp = () => {
         const response = await fetch(url, { method, body, headers });
         setRespCode(response.status);
 
-        if (!response.ok) {
-          throw new Error("Что-то пошло не так");
-        } else {
-          setIsOk(true);
-        }
         const data = await response.json();
         if (data.success) {
           setSuccess(data.success);

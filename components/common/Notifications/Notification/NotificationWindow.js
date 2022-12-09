@@ -71,7 +71,7 @@ function NotificationWindow({ notification, updateNotifications }) {
         ></h3>
         {!notification.is_visited && (
           <ActionButtons
-            notification={notification}
+              notification={notification}
             updateNotifications={updateNotifications}
           />
         )}

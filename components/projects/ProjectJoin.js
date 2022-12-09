@@ -430,6 +430,7 @@ function ProjectJoin({ project }) {
                 {loading && <Loading />}
               </div>
             </div>
+            <input type={"hidden"} name="non_field_errors" />
           </form>
         </div>
       </motion.div>

@@ -53,12 +53,17 @@ export default function Create() {
     router.push("/announcements");
   }
   function pickDateHandler(date) {
+    console.log();
     this?.set(date);
     formChangeHandler({
       target: {
         type: "text",
         name: this?.name,
-        value: date.toISOString().slice(0, 10),
+        value: `${new Date(date).getFullYear()}-${
+          new Date(date).getMonth() + 1 < 10
+            ? "0" + new Date(date).getMonth() + 1
+            : new Date(date).getMonth() + 1
+        }-${new Date(date).getDate()}`,
       },
     });
   }

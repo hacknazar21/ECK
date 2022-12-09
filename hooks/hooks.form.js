@@ -70,14 +70,17 @@ const useForm = (onSuccess = (response) => {}, defaultForm = {}) => {
       const response = await request(action, method, formData, headers, true);
       onSuccess(response);
     } catch (e) {
-      console.log(e.message);
       try {
         const errorsResp = JSON.parse(e.message);
         const errors = [];
         for (const errorsKey in errorsResp) {
+          console.log(errorsResp[errorsKey]);
           errors.push({
             name: errorsKey,
-            value: errorsResp[errorsKey],
+            value:
+              typeof errorsResp[errorsKey] === "object"
+                ? errorsResp[errorsKey].join()
+                : errorsResp[errorsKey],
           });
         }
         setError(errors);

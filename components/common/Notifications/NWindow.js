@@ -59,7 +59,12 @@ function NWindow(props) {
       <button onClick={openWindowHandler} className="header__search-button">
         {notifications.filter((notification) => !notification.is_viewed)
           .length !== 0 && (
-          <span className="notifications-count">{notifications.length}</span>
+          <span className="notifications-count">
+            {
+              notifications.filter((notification) => !notification.is_viewed)
+                .length
+            }
+          </span>
         )}
         <svg
           xmlns="http://www.w3.org/2000/svg"

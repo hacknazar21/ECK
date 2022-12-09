@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useHttp from "../../../../hooks/hooks.http";
 import { AuthContext } from "../../../../context/AuthContext";
 
 function ActionButtons({ updateNotifications, notification }) {
   const { request } = useHttp();
   const { token } = useContext(AuthContext);
-
   async function joinClickHandler(e) {
     e.stopPropagation();
     let method = "POST";
@@ -27,7 +26,7 @@ function ActionButtons({ updateNotifications, notification }) {
         }
       );
       await request(
-        `/api/notifications/${this.id}/mark_visited/`,
+        `/api/notifications/${notification.id}/mark_visited/`,
         "POST",
         {},
         {
@@ -47,6 +46,7 @@ function ActionButtons({ updateNotifications, notification }) {
       updateNotifications();
     }
   }
+
   return (
     <div className="window-notification__actions">
       <button
@@ -62,6 +62,7 @@ function ActionButtons({ updateNotifications, notification }) {
         onClick={joinClickHandler.bind({
           type: "reject_url",
           link: notification.reject_url,
+          id: notification.id,
         })}
         className="window-notification__button window-notification__button_no-active"
       >

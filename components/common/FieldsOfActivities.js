@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Select from "./Select/Select";
 import Popup from "./Popup";
 import useHttp from "../../hooks/hooks.http";
 import ActivitiesSelect from "./Select/ActivitiesSelect";
@@ -21,28 +20,33 @@ function FieldsOfActivities({ formChangeHandler, form, disabled = false }) {
     })();
   }, []);
   useEffect(() => {
-    if (token && userData && userData.fields_of_activity)
+    if (token && userData && userData.fields_of_activity) {
       setFields([...userData?.fields_of_activity]);
+    }
   }, [token, userData]);
   useEffect(() => {
-    const newFields = [];
-    for (const selectedFieldKey in selectedFields) {
-      for (const field_id of selectedFields[selectedFieldKey]) {
-        for (const activity of activities) {
-          for (const child_field of activity.child_fields) {
-            if (field_id === child_field.id)
-              newFields.push({
-                name: child_field.name,
-                id: child_field.id,
-                parent_field: { id: activity.id },
-              });
+    if (form["select-checkboxes"]) {
+      const newFields = [];
+      for (const selectedFieldKey in selectedFields) {
+        for (const field_id of selectedFields[selectedFieldKey]) {
+          for (const activity of activities) {
+            for (const child_field of activity.child_fields) {
+              if (field_id === child_field.id)
+                newFields.push({
+                  name: child_field.name,
+                  id: child_field.id,
+                  parent_field: { id: activity.id },
+                });
+            }
           }
         }
       }
+      if (newFields) setFields([...newFields]);
     }
-    if (newFields) setFields([...newFields]);
   }, [form]);
-
+  // useEffect(() => {
+  //   console.log(fields);
+  // }, [fields]);
   return (
     <>
       <div className="auth__input-box button">
