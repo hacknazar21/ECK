@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import ProfilePageLayout from "../../../../layouts/ProfilePageLayout";
 import Aside from "../../../common/Aside/Aside";
@@ -11,10 +11,12 @@ import Requests from "./Requests/Requests";
 import Solutions from "./Solutions/Solutions";
 import Info from "./Info";
 import Chats from "../../../common/Chat/Chats";
+import { AuthContext } from "../../../../context/AuthContext";
 
 function Project({ project, chats }) {
   const router = useRouter();
   const [chat_id, setChatId] = useState(null);
+  const { userData } = useContext(AuthContext);
   return (
     <section className="page__my-profile projects">
       <div className="projects__container">
@@ -63,21 +65,31 @@ function Project({ project, chats }) {
                   />
                 )}
               </TabBarItem>
-              <TabBarItem
-                className={"profile-block"}
-                label={"Отправленные заявки"}
-              >
-                <Requests />
-              </TabBarItem>
-              <TabBarItem className={"profile-block"} label={"Поданые решения"}>
-                <Solutions />
-              </TabBarItem>
-              <TabBarItem
-                className={"profile-block"}
-                label={"Отчет об исполнении"}
-              >
-                <Report />
-              </TabBarItem>
+              {userData?.user_type === "CUSTOMER" &&
+                project?.project_type === "CONTEST" && (
+                  <TabBarItem
+                    className={"profile-block"}
+                    label={"Отправленные заявки"}
+                  >
+                    <Requests />
+                  </TabBarItem>
+                )}
+              {userData?.user_type === "CUSTOMER" && (
+                <TabBarItem
+                  className={"profile-block"}
+                  label={"Поданные решения"}
+                >
+                  <Solutions project={project} />
+                </TabBarItem>
+              )}
+              {userData?.user_type === "EXECUTOR" && (
+                <TabBarItem
+                  className={"profile-block"}
+                  label={"Отчет об исполнении"}
+                >
+                  <Report project={project} />
+                </TabBarItem>
+              )}
             </TabBar>
           </section>
         </ProfilePageLayout>

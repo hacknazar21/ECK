@@ -41,7 +41,7 @@ function ProfileMenu({ onClick = () => {} }) {
               <li
                 key={id + menuItem.link}
                 className={
-                  "aside-menu__item " +
+                  "aside-menu__item no-center " +
                   (pathname.indexOf(menuItem.link) !== -1 ? "active" : "")
                 }
               >

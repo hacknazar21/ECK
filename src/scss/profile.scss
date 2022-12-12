@@ -204,6 +204,7 @@
 .profile-tabs {
   &__buttons{
     display: flex;
+    position: relative;
     @media(max-width:$tablet){
         flex-wrap: wrap;
     }

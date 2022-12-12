@@ -54,13 +54,14 @@ function ActivitiesMenu({ url, setter }) {
   return (
     <Aside modificationMenu={"aside-menu__list_columns"}>
       {activities.map((activity) => (
-        <li key={activity.id} className={"aside-menu__item"}>
+        <li key={activity.id} className="aside-menu__item no-center">
           <button
             onClick={activityClickHandler.bind({ id: activity.id })}
             className="aside-menu__link"
           >
             <img src={activity.image} alt="" />
           </button>
+          <p>{activity.name}</p>
         </li>
       ))}
     </Aside>

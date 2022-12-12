@@ -27,16 +27,19 @@ function MyApp({ Component, pageProps }) {
   const [isPermission, setIsPermission] = useState(true);
   useEffect(() => {
     (async () => {
+      console.log(isAuth);
       if (isAuth) {
         try {
           const data = await request("/api/profile/", "GET", null, {
             Authorization: `Bearer ${token}`,
           });
+
           if (data) {
             setUserData(data);
           }
         } catch (e) {
           const error = JSON.parse(e.message);
+
           if (error?.code === "token_not_valid") {
             try {
               const data = await request(

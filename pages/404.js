@@ -16,7 +16,7 @@ export default function FourOhFour() {
       </Head>
       <HFLayout>
         <Header />
-        <PagesLayout>
+        <PagesLayout no_header={true}>
           <PageLayout>
             <section className="page__404 four-oh-four">
               <div className="four-oh-four__image">

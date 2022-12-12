@@ -1,26 +1,41 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import useHttp from "../../../hooks/hooks.http";
 import Loading from "../Loading";
 import Link from "next/link";
+import { AuthContext } from "../../../context/AuthContext";
+import { useRouter } from "next/router";
 
 function SResult() {
+  const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [results, setResults] = useState({});
   const { loading, request } = useHttp();
+  const { token } = useContext(AuthContext);
   const ref = useRef();
   async function searchSubmitHandler(e) {
     e.preventDefault();
     if (search !== "")
       try {
-        const data = await request("/api/search/?search=" + search);
+        const headers = {};
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+        console.log(headers);
+        const data = await request(
+          "/api/search/?search=" + search,
+          "GET",
+          null,
+          headers
+        );
         setResults({ ...data });
       } catch (e) {
         console.log(e.message);
       }
   }
-
+  useEffect(() => {
+    setIsSearchOpen(false);
+    setResults([]);
+  }, [router]);
   return (
     <form ref={ref} onSubmit={searchSubmitHandler}>
       <button
@@ -51,6 +66,13 @@ function SResult() {
         unmountOnExit
       >
         <div className={"search-box"}>
+          <div
+            onClick={() => {
+              setIsSearchOpen(false);
+              setResults([]);
+            }}
+            className="search-box__close"
+          ></div>
           <div className="search-box__input-box">
             <input
               type="text"
@@ -75,7 +97,7 @@ function SResult() {
                     <img src={team.image} alt="" />
                   </div>
                   <h3 className="search-results__item-name">
-                    <Link href="/team/[link]" as={"/team/" + team.id}>
+                    <Link href="/team/[link]" as={"/team/" + team.slug}>
                       <a>{team.name}</a>
                     </Link>
                   </h3>

@@ -72,6 +72,7 @@ function STContent(props) {
       const src = card.querySelector(".single-team-member__icon img")?.src;
       if (name && email && src) {
         setRemoveInfo({
+          id: this.id,
           name,
           email,
           src,
@@ -150,6 +151,39 @@ function STContent(props) {
     })();
   }, [token, link]);
 
+  async function removeMemberClickHandler() {
+    try {
+      await request(
+        `/api/teams/${teamInfo.slug}/remove_member/`,
+        "POST",
+        {
+          member: removeInfo.id,
+        },
+        {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        }
+      );
+      const data = await request("/api/teams/" + link, "GET", null, {
+        Authorization: `Bearer ${token}`,
+      });
+      setTeamInfo({ ...data });
+      const dataMembers = await request(
+        "/api/teams/" + link + "/members/",
+        "GET",
+        null,
+        {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        }
+      );
+      setMembers([...dataMembers.results]);
+      setActive(false);
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+
   return (
     <section className="single-team__content single-team-content profile-content">
       <TabBar
@@ -196,7 +230,7 @@ function STContent(props) {
               {teamInfo.is_team_owner && !member.is_admin && (
                 <div className="single-team-member__actions">
                   <button
-                    onClick={removeMemberHandler}
+                    onClick={removeMemberHandler.bind({ id: member.id })}
                     className="button-delete single-team-member__button-delete"
                   >
                     <span>
@@ -444,7 +478,10 @@ function STContent(props) {
           >
             Нет
           </button>
-          <button className="window-notification__button window-notification__button_active">
+          <button
+            onClick={removeMemberClickHandler}
+            className="window-notification__button window-notification__button_active"
+          >
             Да
           </button>
         </div>

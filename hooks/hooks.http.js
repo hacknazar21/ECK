@@ -22,12 +22,16 @@ const useHttp = () => {
         setRespCode(response.status);
 
         const data = await response.json();
+        if (!response.ok) {
+          throw new Error(JSON.stringify(data));
+        }
         if (data.success) {
           setSuccess(data.success);
         }
         setLoading(false);
         return data;
       } catch (e) {
+        console.log(e);
         setLoading(false);
         throw e;
       }

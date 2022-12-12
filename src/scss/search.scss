@@ -18,8 +18,23 @@
   &.open-enter-active, &.open-enter-done{
     transform: scale(1);
   }
+  &__close{
+    position: absolute;
+    top: -100%;
+    left: -200%;
+    width: 200vw;
+    height: 200vh;
+    z-index: 1000;
+    @media(any-hover: hover){
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
   &__input-box {
     padding: rem(20);
+    position: relative;
+    z-index: 1001;
   }
 
   &__input {
@@ -30,6 +45,8 @@
   &__results {
     max-height: rem(400);
     overflow: auto;
+    position: relative;
+    z-index: 1001;
   }
 }
 .search-results {

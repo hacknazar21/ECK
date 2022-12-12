@@ -59,11 +59,13 @@ function HeaderProfileMenu(props) {
                   <a className="accountMenu-list__link">Уведомления</a>
                 </Link>
               </li>
-              <li className="accountMenu-list__item">
-                <Link href="/profile/team">
-                  <a className="accountMenu-list__link">Команды</a>
-                </Link>
-              </li>
+              {userData.user_type === "EXECUTOR" && (
+                <li className="accountMenu-list__item">
+                  <Link href="/profile/team">
+                    <a className="accountMenu-list__link">Команды</a>
+                  </Link>
+                </li>
+              )}
               <li className="accountMenu-list__item">
                 <Link href="/profile/projects">
                   <a className="accountMenu-list__link">Мои проекты</a>

@@ -1,6 +1,6 @@
 import React from "react";
 import Avatar from "../../../../../src/img/avatars/02.png";
-function Requests(props) {
+function Requests({ project_number }) {
   return (
     <div className="customer-requests">
       <div className="customer-requests__request customer-request">

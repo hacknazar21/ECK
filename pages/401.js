@@ -19,7 +19,7 @@ export default function FourOhOne() {
       </Head>
       <HFLayout>
         <Header />
-        <PagesLayout>
+        <PagesLayout no_header={true}>
           <PageLayout>
             <section className="page__404 four-oh-four">
               <div className="four-oh-four__image">
@@ -27,7 +27,7 @@ export default function FourOhOne() {
               </div>
               <h1 className="four-oh-four__title">
                 Вы не можете посещать данный раздел. Для просмотра необходимо
-                зарегистрироваться или дождаться подтверждения регистрации.я
+                зарегистрироваться или дождаться подтверждения регистрации.
               </h1>
               <Link href="/auth/login">
                 <a

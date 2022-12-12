@@ -81,6 +81,8 @@
     position: relative;
     padding-bottom: rem(40);
     flex: 0 0 rem(40);
+    border-radius: 50%;
+    overflow: hidden;
     img {
         position: absolute;
         top: 0;
