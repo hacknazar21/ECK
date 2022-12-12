@@ -1,3 +1,10 @@
+git add .
+git commit -m ''
+git push origin HEAD:main
+
+ssh ubuntu@78.40.109.192
+Sqocktpst(m9
+
 cd /var/www/html/
 sudo rm -rf ./next
 sudo rm -rf yarn.lock

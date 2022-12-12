@@ -59,7 +59,7 @@ function ActivitiesMenu({ url, setter }) {
             onClick={activityClickHandler.bind({ id: activity.id })}
             className="aside-menu__link"
           >
-            <img src={activity.image} alt="" />
+            <img src={activity.image} alt={activity.name} />
           </button>
           <p>{activity.name}</p>
         </li>
