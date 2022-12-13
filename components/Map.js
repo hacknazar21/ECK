@@ -17,5 +17,5 @@ const Map = React.forwardRef((props, ref) => {
     </>
   );
 });
-
+Map.displayName = "Map";
 export default Map;
