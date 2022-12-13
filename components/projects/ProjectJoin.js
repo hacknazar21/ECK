@@ -26,14 +26,17 @@ function ProjectJoin({ project }) {
   const { request } = useHttp();
   const [executor, setExecutor] = useState(null);
   const [myTeam, setMyTeam] = useState(null);
+  const [createdByTeam, setCreatedByTeam] = useState(null);
   const [teams, setTeams] = useState([]);
   const [consortiumTeams, setConsortiumTeams] = useState([]);
-  const { formChangeHandler, formSubmitHandler, loading, form } =
-    useForm(onSuccessJoin);
+  const [isConsortium, setIsConsortium] = useState(false);
 
+  const { formChangeHandler, formSubmitHandler, loading, form, dropForm } =
+    useForm(onSuccessJoin);
   async function onSuccessJoin(response) {
     await router.push("/announcements");
   }
+
   useEffect(() => {
     if (userData) {
       setExecutor(userData.id);
@@ -54,13 +57,17 @@ function ProjectJoin({ project }) {
     }
   }, [userData, project]);
   useEffect(() => {
-    if (userData)
+    if (userData && project)
       (async () => {
         try {
           const headers = {};
           headers["Authorization"] = `Bearer ${token}`;
+          const fields =
+            project?.fields_of_activity.map(
+              (field) => "fields_of_activity=" + field.parent_field.id
+            ) || [];
           const data = await request(
-            `/api/projects/${project.number}/invitable_teams/`,
+            `/api/teams/?created_by=${userData.id}&${fields.join("&")}`,
             "GET",
             null,
             headers
@@ -72,7 +79,7 @@ function ProjectJoin({ project }) {
       })();
   }, [userData, project]);
   useEffect(() => {
-    if (consortiumTeams && consortiumTeams.length) {
+    if (consortiumTeams) {
       formChangeHandler({
         target: {
           name: "teams_to_invite",
@@ -80,19 +87,47 @@ function ProjectJoin({ project }) {
           value: consortiumTeams,
         },
       });
-      formChangeHandler({
-        target: {
-          name: "created_by_team",
-          type: "select",
-          value: executor,
-        },
-      });
     }
   }, [JSON.stringify(consortiumTeams)]);
   useEffect(() => {
     console.log(form);
   }, [form]);
-
+  useEffect(() => {
+    if (createdByTeam)
+      formChangeHandler({
+        target: {
+          name: "created_by_team",
+          type: "select",
+          value: createdByTeam,
+        },
+      });
+  }, [createdByTeam]);
+  useEffect(() => {
+    if (isConsortium) {
+      formChangeHandler({
+        target: {
+          name: "executor",
+          type: "select",
+          value: null,
+        },
+      });
+    } else {
+      formChangeHandler({
+        target: {
+          name: "executor",
+          type: "select",
+          value: executor,
+        },
+      });
+      formChangeHandler({
+        target: {
+          name: "teams_to_invite",
+          type: "select-checkboxes",
+          value: [],
+        },
+      });
+    }
+  }, [isConsortium]);
   async function teamsSearchHandler(e) {
     e.preventDefault();
     try {
@@ -149,27 +184,6 @@ function ProjectJoin({ project }) {
             className="auth__form"
           >
             <div className="auth__inputs">
-              <input
-                onChange={formChangeHandler}
-                onInput={formChangeHandler}
-                type={"hidden"}
-                name="project"
-                defaultValue={project?.id}
-              />
-              <input
-                onChange={formChangeHandler}
-                onInput={formChangeHandler}
-                type={"hidden"}
-                name="executor"
-                defaultValue={executor}
-              />
-              <input
-                type={"hidden"}
-                onChange={formChangeHandler}
-                onInput={formChangeHandler}
-                name="created_by_team"
-                defaultValue={myTeam}
-              />
               <div className="auth__input-box">
                 <input
                   id={"company_name"}
@@ -197,7 +211,6 @@ function ProjectJoin({ project }) {
                 form={form}
                 disabled={true}
                 defaultValues={userData.fields_of_activity}
-                formChangeHandler={formChangeHandler}
               />
               <File
                 isInput={true}
@@ -205,7 +218,6 @@ function ProjectJoin({ project }) {
                 label={
                   "Лицензии/Сертификат/Разрешительные документы (необязательно)"
                 }
-                onChange={formChangeHandler}
                 append={
                   <div className="files">
                     <h3 className="files__title">Загруженные документы</h3>
@@ -240,7 +252,6 @@ function ProjectJoin({ project }) {
                 isInput={true}
                 name={"technical_base_files"}
                 label={"Наличие мат-тех базы"}
-                onChange={formChangeHandler}
                 append={
                   <div className="files">
                     <h3 className="files__title">Загруженные документы</h3>
@@ -261,7 +272,6 @@ function ProjectJoin({ project }) {
               <div className="auth__input-box">
                 <input
                   id={"responsible_person"}
-                  onInput={formChangeHandler}
                   placeholder=" "
                   name={"responsible_person"}
                   className="auth__input"
@@ -278,7 +288,6 @@ function ProjectJoin({ project }) {
               <div className="auth__input-box">
                 <input
                   id={"job_title"}
-                  onInput={formChangeHandler}
                   placeholder=" "
                   name={"job_title"}
                   className="auth__input"
@@ -292,7 +301,6 @@ function ProjectJoin({ project }) {
               <div className="auth__input-box">
                 <input
                   id={"contacts"}
-                  onInput={formChangeHandler}
                   placeholder=" "
                   name={"contacts"}
                   className="auth__input"
@@ -332,6 +340,7 @@ function ProjectJoin({ project }) {
               <Select
                 name={"executor"}
                 onSelect={(e) => {
+                  setCreatedByTeam(e.target.value);
                   formChangeHandler({ ...e });
                 }}
                 title={"Выбрать команду"}
@@ -354,14 +363,9 @@ function ProjectJoin({ project }) {
                   id={"consortium"}
                   type={"checkbox"}
                   onChange={(e) => {
-                    formChangeHandler({
-                      target: {
-                        type: "checkbox",
-                        value: e.target.checked,
-                        name: "consortium",
-                      },
-                    });
+                    setIsConsortium(e.target.checked);
                   }}
+                  disabled={!createdByTeam}
                   placeholder=" "
                   name={"consortium"}
                 />
@@ -369,7 +373,7 @@ function ProjectJoin({ project }) {
                   Консорциум
                 </label>
               </div>
-              {form?.checkbox?.consortium && (
+              {isConsortium && (
                 <>
                   <div className="single-team__search-box single-team-search">
                     <button

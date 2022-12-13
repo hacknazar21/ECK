@@ -17,20 +17,7 @@ const useForm = (onSuccess = (response) => {}, defaultForm = {}) => {
         prevState[event.target.type] = {
           [event.target.name]: event.target.value,
         };
-      else if (
-        event.target.type === "select-checkboxes" &&
-        prevState[event.target.type][event.target.name]
-      ) {
-        for (const valueElement of event.target.value) {
-          if (
-            prevState[event.target.type][event.target.name].indexOf(
-              valueElement
-            ) === -1
-          )
-            prevState[event.target.type][event.target.name].push(valueElement);
-        }
-      } else
-        prevState[event.target.type][event.target.name] = event.target.value;
+      else prevState[event.target.type][event.target.name] = event.target.value;
       validateValue(event.target);
       return { ...prevState };
     });
@@ -59,7 +46,8 @@ const useForm = (onSuccess = (response) => {}, defaultForm = {}) => {
           break;
         default:
           for (const formName in form[formType]) {
-            formData.append(formName, form[formType][formName]);
+            if (form[formType][formName])
+              formData.append(formName, form[formType][formName]);
           }
       }
     }

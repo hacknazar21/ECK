@@ -43,7 +43,8 @@
 		background: #FFFFFF;
 		border: 1px solid rgba(77, 151, 193, 0.2);
 		border-radius: 0px 0px 5px 5px;
-
+		max-height: 270px;
+		overflow-y: scroll;
 		border-bottom-width: 0px;
 		border-top: none;
 	}

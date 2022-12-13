@@ -1,10 +1,11 @@
 import { useState, useCallback, useEffect } from "react";
+import { useRouter } from "next/router";
 
 const storageName = "eckUserData";
 const useAuth = () => {
   const [token, setToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
-
+  const router = useRouter();
   const login = useCallback(async (jwtToken, refresh) => {
     await setToken(jwtToken);
     await setRefreshToken(refresh);
@@ -18,6 +19,8 @@ const useAuth = () => {
     setToken(null);
     setRefreshToken(null);
     localStorage.removeItem(storageName);
+    router.push("/");
+    router.reload();
   }, []);
 
   useEffect(() => {

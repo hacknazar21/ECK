@@ -39,14 +39,15 @@ function NWindow(props) {
   async function readAllClickHandler() {
     try {
       for (const notification of notifications) {
-        await request(
-          `/api/notifications/${notification.id}/mark_viewed/`,
-          "POST",
-          {},
-          {
-            Authorization: `Bearer ${token}`,
-          }
-        );
+        if (!notification.is_viewed)
+          await request(
+            `/api/notifications/${notification.id}/mark_viewed/`,
+            "POST",
+            {},
+            {
+              Authorization: `Bearer ${token}`,
+            }
+          );
       }
       await updateNotifications();
     } catch (e) {

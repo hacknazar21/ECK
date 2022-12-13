@@ -28,6 +28,7 @@ function MyApp({ Component, pageProps }) {
   const { request, loading } = useHttp();
   const router = useRouter();
   const [isPermission, setIsPermission] = useState(true);
+
   useEffect(() => {
     (async () => {
       if (isAuth && !userData.id) {
@@ -88,7 +89,7 @@ function MyApp({ Component, pageProps }) {
         return;
       }
     setIsPermission(true);
-  }, [loading, userData]);
+  }, [token, userData]);
 
   return (
     <>
