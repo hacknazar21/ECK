@@ -13,8 +13,8 @@ function STContent({ team }) {
   const router = useRouter();
   const [projects, setProjects] = useState([]);
   const { request } = useHttp();
-  const { token } = useContext(AuthContext);
-
+  const { token, userData } = useContext(AuthContext);
+  const [reqStatus, setReqStatus] = useState(null);
   useEffect(() => {
     if (team && team.slug) {
       (async () => {
@@ -32,6 +32,28 @@ function STContent({ team }) {
       })();
     }
   }, [team]);
+
+  function teamJoinClickHandler() {
+    if (team && team.id) {
+      (async () => {
+        try {
+          const data = await request(
+            "/api/teams/requests/",
+            "POST",
+            {
+              team: team.id,
+            },
+            {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            }
+          );
+          setReqStatus(data.status);
+        } catch (e) {}
+      })();
+    }
+  }
+
   return (
     <section className="single-team-page__content profile-content">
       <TabBar
@@ -114,6 +136,21 @@ function STContent({ team }) {
                 ))}
               </div>
             </div>
+          )}
+          {!team.is_team_owner &&
+            userData.user_type === "EXECUTOR" &&
+            !reqStatus && (
+              <button
+                onClick={teamJoinClickHandler}
+                className="window-notification__button window-notification__button_active"
+              >
+                Вступить в команду
+              </button>
+            )}
+          {!team.is_team_owner && reqStatus && (
+            <button className="window-notification__button window-notification__button_no-active">
+              {reqStatus}
+            </button>
           )}
         </TabBarItem>
         <TabBarItem className={"profile-block"} label={"Участники"}>

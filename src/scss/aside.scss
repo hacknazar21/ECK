@@ -8,6 +8,7 @@
     padding: rem(10);
     background-color: #FFFFFF;
     border-radius: 5px;
+    z-index: 1;
     @media(max-width:$tablet){
       padding: 0;
       background: none;
@@ -56,32 +57,7 @@
     }
 
     position: relative;
-    display: flex;
-    align-items: center;
-    &:not(.no-center){
-      justify-content: center;
-    }
-    gap: rem(10);
-    @media(min-width:$tablet){
-      &>p{
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translate(100%, -50%);
-        padding: rem(10);
-        display: none;
-      }
-      @media(any-hover: hover){
-        &:hover{
-          &>p{
-            display: block;
-            background-color: rgba(0, 0, 0, 0.75);
-            z-index: 1;
-            color: #fff;
-          }
-        }
-      }
-    }
+
 
     border-left: 2px solid rgba(0,0,0,0);
     cursor: pointer;
@@ -94,26 +70,39 @@
           border: 1px solid #30A1E1;
           border-radius: 10px;
           text-align: center;
-          div{
-            font-weight: 600;
-            font-size: rem(16);
-            line-height: math.div(16,16);
-            color: #278BE8;
-            display: flex;
-            column-gap: rem(10);
-            align-items: center;
-            justify-content: center;
-            padding: rem(8) 0;
+          height: 38px;
 
-            &:after{
-              content: "";
-              width: rem(10);
-              height: rem(6);
-              clip-path: polygon(0 0, 13% 0, 50% 67%, 87% 0, 100% 0, 50% 100%);
-              background-color: #278BE8;
-            }
+        }
+    }
+  }
+  &__button{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: rem(10);
+    p{
+      text-align: left;
+    }
+    @media(min-width:$tablet){
+      &>p{
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(100%, -50%);
+        padding: rem(10);
+        display: none;
+
+      }
+      @media(any-hover: hover){
+        &:hover{
+          &>p{
+            display: block;
+            background-color: rgba(0, 0, 0, 0.75);
+            z-index: 1;
+            color: #fff;
           }
         }
+      }
     }
   }
   &__link {
@@ -123,7 +112,9 @@
       }
     }
     display: block;
-    flex: 1 1 auto;
+
+
+
     padding: rem(12) rem(15);
     .aside-menu__list_columns &{
       position: relative;
@@ -145,4 +136,7 @@
       }
     }
   }
+}
+a.aside-menu__link{
+  flex: 1 1 auto;
 }

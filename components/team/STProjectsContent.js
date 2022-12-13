@@ -22,9 +22,24 @@ function STContent({ projects = [] }) {
             (dayscount(project.deadline) <= 3 ? "red-card" : "green-card")
           }
         >
-          <h2 className="projects-card__title profile-card__title">
-            {project.title}
-          </h2>
+          {project.status === "APPLICATION" || project.status === "DECLARED" ? (
+            <Link href={"/announcements/#" + project.number}>
+              <a>
+                <h2 className="projects-card__title profile-card__title">
+                  {project.title}
+                </h2>
+              </a>
+            </Link>
+          ) : (
+            <Link href={"/projects/#" + project.number}>
+              <a>
+                <h2 className="projects-card__title profile-card__title">
+                  {project.title}
+                </h2>
+              </a>
+            </Link>
+          )}
+
           <div className="projects-card__text profile-card__text">
             <p>{project.description}</p>
           </div>

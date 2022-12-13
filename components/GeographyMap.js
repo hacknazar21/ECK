@@ -5,11 +5,11 @@ import Marker from "./Marker";
 function GeographyMap({ markers = [] }) {
   const containerRef = useRef(null);
   return (
-    <div ref={containerRef} className="maps__container">
+    <div className="maps__container">
       {markers.map((marker, id) => (
         <Marker key={id} marker={marker} container={containerRef.current} />
       ))}
-      <Map />
+      <Map ref={containerRef} />
     </div>
   );
 }

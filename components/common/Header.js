@@ -71,8 +71,9 @@ export default function Header() {
                   </a>
                 </li>
               </ul>
-              {isAuth && (
-                <ul className="menu__list menu__list_device_mobile">
+
+              <ul className="menu__list menu__list_device_mobile">
+                {isAuth && (
                   <li className="menu__item">
                     <Link href="/profile/my-profile">
                       <a className="menu__link">
@@ -83,8 +84,15 @@ export default function Header() {
                       </a>
                     </Link>
                   </li>
-                </ul>
-              )}
+                )}
+                {!isAuth && (
+                  <li className="menu__item">
+                    <Link href="/auth/login/">
+                      <a className="menu__link">Войти в аккаунт</a>
+                    </Link>
+                  </li>
+                )}
+              </ul>
             </menu>
             <div className="header__actions">
               <div className="header__search">

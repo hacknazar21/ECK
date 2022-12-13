@@ -10,7 +10,7 @@ import Link from "next/link";
 
 function Info({ project }) {
   const [fields, setFields] = useState({});
-  const { userData } = useContext(AuthContext);
+  const { userData, isAuth } = useContext(AuthContext);
   useEffect(() => {
     if (project && project?.fields_of_activity) {
       const parents = [];
@@ -46,6 +46,11 @@ function Info({ project }) {
         </h3>
       </header>
       <div className="projects-content__modal project-modal">
+        {!isAuth && (
+          <div className="project-modal__demo">
+            <p>Демо-режим просмотра</p>
+          </div>
+        )}
         {fields[project.id]?.map((field_of_activity, id) => (
           <div key={id} className="project-modal__type">
             {field_of_activity.image && (

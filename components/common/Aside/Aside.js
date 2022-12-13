@@ -3,22 +3,28 @@ import AsideLayout from "../../../layouts/AsideLayout";
 
 function Aside({ children, modificationMenu = "" }) {
   const menu = useRef();
-  const [maxHeight, setMaxHeight] = useState(false);
+  const [maxHeight, setMaxHeight] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
   const toggleMenu = (e) => {
     e.preventDefault();
     menu.current.classList.toggle("open");
   };
+
   useEffect(() => {
     if (menu.current && !maxHeight) {
-      menu.current.style = "max-height: 100%;";
-      setMaxHeight(true);
+      setMaxHeight(menu.current.children.length * 60);
     }
-  }, [menu]);
+  }, [menu.current?.childElementCount]);
+
   useEffect(() => {
     if (maxHeight) {
-      menu.current.style = "--max-height: " + menu.current.clientHeight + "px";
+      menu.current.style = "--max-height: " + maxHeight + "px";
     }
   }, [maxHeight]);
+
+  useEffect(() => {
+    if (window.innerWidth <= 992) setIsMobile(true);
+  }, []);
   return (
     <AsideLayout>
       <menu className="aside__menu aside-menu">

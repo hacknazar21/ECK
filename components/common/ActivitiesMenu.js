@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { cloneElement, useContext, useEffect, useState } from "react";
 import Aside from "./Aside/Aside";
 import useHttp from "../../hooks/hooks.http";
 import { AuthContext } from "../../context/AuthContext";
@@ -14,12 +14,23 @@ function ActivitiesMenu({ url, setter }) {
     formFilter,
   } = useContext(AuthContext);
   async function activityClickHandler(e) {
-    const current = e.target.parentElement.parentElement;
-    const prev =
-      e.target.parentElement.parentElement.parentElement.querySelector(
-        ".aside-menu__item.active"
-      );
-    if (prev) prev.classList.remove("active");
+    const current = e.target.closest(".aside-menu__item");
+    const prev = e.target
+      .closest(".aside-menu__list_columns")
+      .querySelector(".aside-menu__item.active");
+    if (prev) {
+      if (window.innerWidth <= 992 && !current.classList.contains("active")) {
+        const parentNode = e.target.closest(".aside-menu__list_columns");
+        const cloned = current.cloneNode();
+        const clonedIndex = Array.prototype.indexOf.call(
+          parentNode.children,
+          cloned
+        );
+        const replacedNode = parentNode.replaceChild(current, prev);
+        parentNode.insertBefore(replacedNode, parentNode.children[clonedIndex]);
+      }
+      prev.classList.remove("active");
+    }
     current.classList.add("active");
     const parent = activities.filter((activity) => activity.id === this.id)[0];
     if (parent) {
@@ -57,11 +68,13 @@ function ActivitiesMenu({ url, setter }) {
         <li key={activity.id} className="aside-menu__item no-center">
           <button
             onClick={activityClickHandler.bind({ id: activity.id })}
-            className="aside-menu__link"
+            className="aside-menu__button"
           >
-            <img src={activity.image} alt={activity.name} />
+            <div className={"aside-menu__link"}>
+              <img src={activity.image} alt={activity.name} />
+            </div>
+            <p>{activity.name}</p>
           </button>
-          <p>{activity.name}</p>
         </li>
       ))}
     </Aside>

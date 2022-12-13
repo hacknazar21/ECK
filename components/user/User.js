@@ -58,53 +58,55 @@ function User() {
                   <div className="auth__inputs">
                     <div className="auth__input-box">
                       <input
-                        defaultValue={USER_TYPE[user.user_type]}
                         disabled={true}
                         placeholder=" "
                         className="auth__input"
                       />
+                      <label>{USER_TYPE[user.user_type]}</label>
                     </div>
                     <div className="auth__input-box">
                       <input
-                        defaultValue={user.full_name || user.company_name}
                         disabled={true}
                         placeholder=" "
                         className="auth__input"
                       />
+                      <label>{user.full_name || user.company_name}</label>
                     </div>
                     <div className="auth__input-box">
-                      <textarea
-                        defaultValue={user?.fields_of_activity
+                      <input
+                        disabled={true}
+                        placeholder=" "
+                        className="auth__input"
+                      />
+                      <label>
+                        {user?.fields_of_activity
                           ?.map((field_of_activity) => field_of_activity.name)
                           .join(" ,")}
-                        disabled={true}
-                        placeholder=" "
-                        className="auth__input"
-                      />
+                      </label>
                     </div>
                     <div className="auth__input-box">
                       <input
-                        defaultValue={user.job_title}
                         disabled={true}
                         placeholder=" "
                         className="auth__input"
                       />
+                      <label>{user.job_title}</label>
                     </div>
                     <div className="auth__input-box">
                       <input
-                        defaultValue={user.director}
                         disabled={true}
                         placeholder=" "
                         className="auth__input"
                       />
+                      <label>{user.director}</label>
                     </div>
                     <div className="auth__input-box">
                       <input
-                        defaultValue={user.email}
                         disabled={true}
                         placeholder=" "
                         className="auth__input"
                       />
+                      <label>{user.email}</label>
                     </div>
                   </div>
                 </div>

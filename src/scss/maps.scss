@@ -2,6 +2,13 @@
   &__container{
     margin-top: rem(20);
     position: relative;
+    @media(max-width:$tablet){
+      height: 500px;
+      overflow-x: scroll;
+      svg{
+        height: 100%;
+      }
+    }
   }
 }
 .marker {

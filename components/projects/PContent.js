@@ -19,13 +19,14 @@ function PContent({ projects, url, setter }) {
     }
   }, [project]);
   useEffect(() => {
-    if (window.location.hash && projects.length) {
-      setProject(
-        projects.filter(
-          (project) => project.number === window.location.hash.replace("#", "")
-        )[0]
-      );
-      setActive(true);
+    if (window.location.hash && projects && projects.length) {
+      const prj = projects.filter(
+        (project) => project?.number === window.location.hash.replace("#", "")
+      )[0];
+      if (prj) {
+        setProject({ ...prj });
+        setActive(true);
+      }
     }
   }, [router, projects]);
 

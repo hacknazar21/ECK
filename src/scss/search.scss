@@ -20,10 +20,10 @@
   }
   &__close{
     position: absolute;
-    top: -100%;
-    left: -200%;
-    width: 200vw;
-    height: 200vh;
+    top: -200%;
+    left: -500%;
+    width: 1000vw;
+    height: 1000vh;
     z-index: 1000;
     @media(any-hover: hover){
       &:hover{

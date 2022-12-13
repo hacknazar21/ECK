@@ -31,7 +31,6 @@ function Projects() {
           <ActivitiesMenu
             url={"/api/projects/"}
             setter={(data) => {
-              console.log(data);
               setProjects([...data]);
             }}
           />
@@ -39,7 +38,6 @@ function Projects() {
             projects={projects}
             url={"/api/projects/"}
             setter={(data) => {
-              console.log(data);
               setProjects([...data]);
             }}
           />

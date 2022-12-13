@@ -64,6 +64,9 @@
   &__block {
     font-size: rem(14);
     line-height: math.div(20,14);
+    &:not(:last-child){
+      margin-bottom: rem(10);
+    }
   }
 
   &__title {
@@ -80,6 +83,9 @@
   &__docs {
     display: flex;
     gap: rem(5);
+    @media(max-width:$tablet){
+      flex-wrap: wrap;
+    }
   }
 
   &__doc {
@@ -89,9 +95,7 @@
     height: rem(150);
     border-radius: 5px;
     flex: 0 0 rem(150);
-    @media(max-width:$tablet){
-      flex: 0 0 rem(100);
-    }
+
     z-index: 2;
     transition: border-color 0.3s ease;
     &:hover{

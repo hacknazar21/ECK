@@ -5,6 +5,17 @@
 }
 
 .project-modal {
+  &__demo{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #424141;
+    text-align: center;
+    background: #CFDCE4;
+    border-radius: 5px;
+    padding: rem(10) 0;
+    margin-bottom: rem(20);
+  }
   &__buttons {
     position: absolute;
     display: flex;
