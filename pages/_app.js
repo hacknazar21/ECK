@@ -9,9 +9,11 @@ import { AuthContext } from "/context/AuthContext";
 import { useRouter, Router } from "next/router";
 import FourOhOne from "./401";
 import useFilter from "../hooks/hooks.filter";
+import Load from "../components/Load";
 
 function MyApp({ Component, pageProps }) {
   const { token, userId, login, logout, refreshToken } = useAuth();
+
   const {
     changeFormHandler,
     addChildrenActivity,
@@ -20,26 +22,24 @@ function MyApp({ Component, pageProps }) {
     submitFormHandler,
     clearForm,
   } = useFilter(token);
+
   const isAuth = !!token;
   const [userData, setUserData] = useState({});
-  const { request } = useHttp();
+  const { request, loading } = useHttp();
   const router = useRouter();
   const [isPermission, setIsPermission] = useState(true);
   useEffect(() => {
     (async () => {
-      console.log(isAuth);
-      if (isAuth) {
+      if (isAuth && !userData.id) {
         try {
           const data = await request("/api/profile/", "GET", null, {
             Authorization: `Bearer ${token}`,
           });
-
           if (data) {
             setUserData(data);
           }
         } catch (e) {
           const error = JSON.parse(e.message);
-
           if (error?.code === "token_not_valid") {
             try {
               const data = await request(
@@ -68,7 +68,7 @@ function MyApp({ Component, pageProps }) {
     })();
   }, [token, router.pathname]);
   useEffect(() => {
-    if (!isAuth)
+    if (!isAuth && !loading) {
       if (
         router.pathname.indexOf("team") !== -1 ||
         router.pathname.indexOf("announcements") !== -1 ||
@@ -77,7 +77,8 @@ function MyApp({ Component, pageProps }) {
         setIsPermission(false);
         return;
       }
-    if (token && !userData?.is_validated)
+    }
+    if (token && !userData?.is_validated && !loading)
       if (
         router.pathname.indexOf("team") !== -1 ||
         router.pathname.indexOf("announcements") !== -1 ||
@@ -87,7 +88,7 @@ function MyApp({ Component, pageProps }) {
         return;
       }
     setIsPermission(true);
-  }, [token, router.pathname, userData]);
+  }, [loading, userData]);
 
   return (
     <>
@@ -122,8 +123,9 @@ function MyApp({ Component, pageProps }) {
             clearForm,
           }}
         >
-          {isPermission && <Component {...pageProps} />}
-          {!isPermission && <FourOhOne />}
+          {!!isPermission && !loading && <Component {...pageProps} />}
+          {!!!isPermission && !loading && <FourOhOne />}
+          {loading && <Load />}
         </AuthContext.Provider>
       </AnimatePresence>
     </>

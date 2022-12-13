@@ -20,7 +20,14 @@ const useHttp = () => {
         }
         const response = await fetch(url, { method, body, headers });
         setRespCode(response.status);
-
+        if (!response.ok && response.status === 413) {
+          throw new Error(
+            JSON.stringify({
+              detail: "Файл слишком большой",
+              non_field_errors: ["Файл слишком большой"],
+            })
+          );
+        }
         const data = await response.json();
         if (!response.ok) {
           throw new Error(JSON.stringify(data));

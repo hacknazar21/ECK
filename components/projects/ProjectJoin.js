@@ -30,6 +30,7 @@ function ProjectJoin({ project }) {
   const [consortiumTeams, setConsortiumTeams] = useState([]);
   const { formChangeHandler, formSubmitHandler, loading, form } =
     useForm(onSuccessJoin);
+
   async function onSuccessJoin(response) {
     await router.push("/announcements");
   }
@@ -59,7 +60,7 @@ function ProjectJoin({ project }) {
           const headers = {};
           headers["Authorization"] = `Bearer ${token}`;
           const data = await request(
-            `/api/teams/?created_by=${userData.id}`,
+            `/api/projects/${project.number}/invitable_teams/`,
             "GET",
             null,
             headers
@@ -69,7 +70,7 @@ function ProjectJoin({ project }) {
           console.log(e);
         }
       })();
-  }, [userData]);
+  }, [userData, project]);
   useEffect(() => {
     if (consortiumTeams && consortiumTeams.length) {
       formChangeHandler({
@@ -79,11 +80,19 @@ function ProjectJoin({ project }) {
           value: consortiumTeams,
         },
       });
+      formChangeHandler({
+        target: {
+          name: "created_by_team",
+          type: "select",
+          value: executor,
+        },
+      });
     }
   }, [JSON.stringify(consortiumTeams)]);
   useEffect(() => {
     console.log(form);
   }, [form]);
+
   async function teamsSearchHandler(e) {
     e.preventDefault();
     try {
@@ -135,7 +144,7 @@ function ProjectJoin({ project }) {
           </div>
           <form
             onSubmit={formSubmitHandler}
-            action={"/api/projects/join"}
+            action={"/api/projects/join/"}
             data-method={"POST"}
             className="auth__form"
           >
@@ -321,7 +330,7 @@ function ProjectJoin({ project }) {
                 </label>
               </div>
               <Select
-                name={"created_by_team"}
+                name={"executor"}
                 onSelect={(e) => {
                   formChangeHandler({ ...e });
                 }}

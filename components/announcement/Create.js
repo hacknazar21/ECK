@@ -101,9 +101,6 @@ export default function Create() {
             >
               <div className="auth__inputs">
                 <div className="auth__input-box">
-                  <input type={"hidden"} name={"detail"} />
-                </div>
-                <div className="auth__input-box">
                   <Select
                     title={"Тип обьявления"}
                     onSelect={formChangeHandler}
@@ -200,6 +197,9 @@ export default function Create() {
                     Прикрепить документы
                   </label>
                   <File name={"documents"} onChange={formChangeHandler} />
+                </div>
+                <div className="auth__input-box">
+                  <input type={"hidden"} name={"detail"} />
                 </div>
                 <div className="auth__actions">
                   <button className="auth__submit-button">

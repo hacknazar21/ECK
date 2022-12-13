@@ -35,7 +35,7 @@ function STContent(props) {
     setMembersToInvite([]);
     try {
       const data = await request(
-        "/api/auth/users/?search=" + searchMemberValue,
+        "/api/auth/users/?user_type=EXECUTOR&search=" + searchMemberValue,
         "GET",
         null,
         {
