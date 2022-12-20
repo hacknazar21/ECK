@@ -7,6 +7,7 @@ import TabBarItem from "../../common/TabBar/TabBarItem";
 import TabBar from "../../common/TabBar/TabBar";
 import useHttp from "../../../hooks/hooks.http";
 import { AuthContext } from "../../../context/AuthContext";
+import ButtonWithDangerous from "../../common/ButtonWithDangerous";
 const STATUS = {
   PENDING: "Отправлено",
   ACCEPTED: "Принято",
@@ -265,12 +266,13 @@ function STContent(props) {
               </button>
             )}
             {teamInfo.is_team_owner && (
-              <button
-                onClick={archiveClickHandler}
+              <ButtonWithDangerous
                 className="window-notification__button window-notification__button_no-active"
-              >
-                Архивировать команду
-              </button>
+                onClick={archiveClickHandler}
+                buttonText={"Архивировать команду"}
+                title={"Архивировать команду"}
+                description={"Вы уверены что хотите архивировать команду?"}
+              />
             )}
             {!teamInfo.is_team_owner && (
               <button
