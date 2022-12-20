@@ -28,7 +28,9 @@ function Menu(props) {
       } catch (e) {}
     })();
   }, [token, router]);
-
+  useEffect(() => {
+    console.log(router.route);
+  }, []);
   return (
     <menu className="under-header__menu under-header-menu">
       <ul className="under-header-menu__list">
@@ -38,7 +40,9 @@ function Menu(props) {
             className={
               "under-header-menu__item" +
               " " +
-              (router.route.indexOf(url.link) !== -1 ? "active" : "")
+              (router.route.indexOf(url.link.replaceAll("/", "")) !== -1
+                ? "active"
+                : "")
             }
           >
             <Link href={url.link}>

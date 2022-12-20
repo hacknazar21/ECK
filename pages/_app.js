@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }) {
           if (error?.code === "token_not_valid") {
             try {
               const data = await request(
-                "/api/auth/token/refresh",
+                "/api/auth/token/refresh/",
                 "POST",
                 {
                   refresh: refreshToken,
@@ -89,7 +89,7 @@ function MyApp({ Component, pageProps }) {
         return;
       }
     setIsPermission(true);
-  }, [token, userData]);
+  }, [token, router.pathname, userData]);
 
   return (
     <>

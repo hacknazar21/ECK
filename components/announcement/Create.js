@@ -33,27 +33,13 @@ export default function Create() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [projectEndDate, setProjectEndDate] = useState(null);
-  const [activitiesModal, setActivitiesModal] = useState(false);
-  const [activities, setActivities] = useState([]);
   const { formChangeHandler, formSubmitHandler, loading, form } =
     useForm(submitAfterHandler);
-  const { userData } = useContext(AuthContext);
-  const { request } = useHttp();
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await request("/api/fields_of_activity/", "GET");
-
-        setActivities(data);
-      } catch (e) {}
-    })();
-  }, []);
   function submitAfterHandler(data) {
     router.push("/announcements");
   }
   function pickDateHandler(date) {
-    console.log();
     this?.set(date);
     formChangeHandler({
       target: {
@@ -67,6 +53,9 @@ export default function Create() {
       },
     });
   }
+  useEffect(() => {
+    console.log(form);
+  }, [form]);
   return (
     <AnimatePresence>
       <motion.section
@@ -143,42 +132,46 @@ export default function Create() {
                   form={form}
                   formChangeHandler={formChangeHandler}
                 />
-                <div className="auth__input-box">
-                  <DatePicker
-                    locale="ru"
-                    selected={startDate}
-                    name={"application_start_date"}
-                    onChange={pickDateHandler.bind({
-                      name: "application_start_date",
-                      set: setStartDate,
-                    })}
-                    placeholderText="Начало приема заявок"
-                  />
-                </div>
-                <div className="auth__input-box">
-                  <DatePicker
-                    locale="ru"
-                    selected={endDate}
-                    onChange={pickDateHandler.bind({
-                      name: "application_end_date",
-                      set: setEndDate,
-                    })}
-                    name={"application_end_date"}
-                    placeholderText="Конечный срок приема заявок"
-                  />
-                </div>
-                <div className="auth__input-box">
-                  <DatePicker
-                    locale="ru"
-                    selected={projectEndDate}
-                    onChange={pickDateHandler.bind({
-                      name: "deadline",
-                      set: setProjectEndDate,
-                    })}
-                    name={"deadline"}
-                    placeholderText="Конечный срок работы над проектом"
-                  />
-                </div>
+                {form?.select?.project_type === "CONTEST" && (
+                  <>
+                    <div className="auth__input-box">
+                      <DatePicker
+                        locale="ru"
+                        selected={startDate}
+                        name={"application_start_date"}
+                        onChange={pickDateHandler.bind({
+                          name: "application_start_date",
+                          set: setStartDate,
+                        })}
+                        placeholderText="Начало приема заявок"
+                      />
+                    </div>
+                    <div className="auth__input-box">
+                      <DatePicker
+                        locale="ru"
+                        selected={endDate}
+                        onChange={pickDateHandler.bind({
+                          name: "application_end_date",
+                          set: setEndDate,
+                        })}
+                        name={"application_end_date"}
+                        placeholderText="Конечный срок приема заявок"
+                      />
+                    </div>
+                    <div className="auth__input-box">
+                      <DatePicker
+                        locale="ru"
+                        selected={projectEndDate}
+                        onChange={pickDateHandler.bind({
+                          name: "deadline",
+                          set: setProjectEndDate,
+                        })}
+                        name={"deadline"}
+                        placeholderText="Конечный срок работы над проектом"
+                      />
+                    </div>
+                  </>
+                )}
                 <div className="auth__input-box">
                   <textarea
                     id={"requirements"}

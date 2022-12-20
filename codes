@@ -1,8 +1,8 @@
 git add .
-git commit -m ''
+git commit -m 'fixes bugs'
 git push origin HEAD:main
 
-ssh ubuntu@78.40.109.192
+ssh ubuntu@eprof.kz
 Sqocktpst(m9
 
 cd /var/www/html/

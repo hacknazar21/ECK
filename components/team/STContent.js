@@ -9,14 +9,22 @@ import STProjectsContent from "./STProjectsContent";
 import useHttp from "../../hooks/hooks.http";
 import { AuthContext } from "../../context/AuthContext";
 
+const STATUS_JOIN = {
+  PENDING: "Отправлено",
+  ACCEPTED: "Принято",
+  REJECTED: "Отклонено",
+};
+
 function STContent({ team }) {
   const router = useRouter();
   const [projects, setProjects] = useState([]);
   const { request } = useHttp();
   const { token, userData } = useContext(AuthContext);
   const [reqStatus, setReqStatus] = useState(null);
+  const [reqStatusFormat, setReqStatusFormat] = useState("Отправлено");
   useEffect(() => {
     if (team && team.slug) {
+      setReqStatus(team.request_status);
       (async () => {
         try {
           const data = await request(
@@ -32,7 +40,13 @@ function STContent({ team }) {
       })();
     }
   }, [team]);
-
+  useEffect(() => {
+    if (reqStatus) {
+      if (STATUS_JOIN[reqStatus]) {
+        setReqStatusFormat(STATUS_JOIN[reqStatus]);
+      }
+    }
+  }, [reqStatus]);
   function teamJoinClickHandler() {
     if (team && team.id) {
       (async () => {
@@ -149,7 +163,7 @@ function STContent({ team }) {
             )}
           {!team.is_team_owner && reqStatus && (
             <button className="window-notification__button window-notification__button_no-active">
-              {reqStatus}
+              {reqStatusFormat}
             </button>
           )}
         </TabBarItem>

@@ -8,6 +8,7 @@ import Chat from "../../../common/Chat/Chat";
 import Report from "./Report";
 import ProfileMenu from "../../ProfileMenu";
 import Requests from "./Requests/Requests";
+import Invites from "./Invites/Invites";
 import Solutions from "./Solutions/Solutions";
 import Info from "./Info";
 import Chats from "../../../common/Chat/Chats";
@@ -66,12 +67,21 @@ function Project({ project, chats }) {
                 )}
               </TabBarItem>
               {userData?.user_type === "CUSTOMER" &&
-                project?.project_type === "CONTEST" && (
+                project?.project_type === "CHOICE" && (
                   <TabBarItem
                     className={"profile-block"}
                     label={"Отправленные заявки"}
                   >
-                    <Requests />
+                    <Invites project={project} />
+                  </TabBarItem>
+                )}
+              {userData?.user_type === "CUSTOMER" &&
+                project?.project_type === "CONTEST" && (
+                  <TabBarItem
+                    className={"profile-block"}
+                    label={"Заявки на участие"}
+                  >
+                    <Requests project={project} />
                   </TabBarItem>
                 )}
               {userData?.user_type === "CUSTOMER" && (
