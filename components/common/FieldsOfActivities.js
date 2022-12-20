@@ -6,11 +6,12 @@ import { AuthContext } from "../../context/AuthContext";
 
 function FieldsOfActivities({ formChangeHandler, form, disabled = false }) {
   const [activities, setActivities] = useState([]);
-  const [activitiesModal, setActivitiesModal] = useState(false);
+  const [activitiesModal, setActivitiesModal] = useState(null);
   const { request } = useHttp();
   const [fields, setFields] = useState([]);
   const { userData, token } = useContext(AuthContext);
   const [selectedFields, setSelectedFields] = useState({});
+
   useEffect(() => {
     (async () => {
       try {
@@ -21,11 +22,23 @@ function FieldsOfActivities({ formChangeHandler, form, disabled = false }) {
   }, []);
   useEffect(() => {
     if (token && userData && userData.fields_of_activity) {
+      if (formChangeHandler)
+        formChangeHandler({
+          target: {
+            name: "fields_of_activity_list",
+            value: [...userData?.fields_of_activity.map((field) => field.id)],
+            type: "select-checkboxes",
+          },
+        });
       setFields([...userData?.fields_of_activity]);
     }
   }, [token, userData]);
   useEffect(() => {
-    if (form["select-checkboxes"]) {
+    if (
+      form["select-checkboxes"] &&
+      activitiesModal !== null &&
+      !activitiesModal
+    ) {
       const newFields = [];
       for (const selectedFieldKey in selectedFields) {
         for (const field_id of selectedFields[selectedFieldKey]) {
@@ -43,10 +56,8 @@ function FieldsOfActivities({ formChangeHandler, form, disabled = false }) {
       }
       if (newFields) setFields([...newFields]);
     }
-  }, [form]);
-  // useEffect(() => {
-  //   console.log(fields);
-  // }, [fields]);
+  }, [activitiesModal]);
+
   return (
     <>
       <div className="auth__input-box button">

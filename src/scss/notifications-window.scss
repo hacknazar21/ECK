@@ -157,7 +157,12 @@
     }
     column-gap: rem(8);
   }
-
+  &__buttons{
+    display: flex;
+    column-gap: rem(10);
+    align-items: center;
+    margin-top: rem(20);
+  }
   &__button{
     text-align: center;
     padding: rem(10) rem(40);
@@ -185,6 +190,15 @@
       border-radius: 5px;
       font-weight: 600;
       color: #C2C2C2;
+    }
+    &_dangerous{
+      background-color: rgba(200, 95, 95, 0.2);
+      border-radius: 5px;
+      font-weight: 500;
+      font-size: rem(14);
+      line-height: math.div(16,14);
+      color: #E22D38;
+
     }
   }
 

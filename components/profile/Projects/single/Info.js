@@ -7,6 +7,7 @@ import Customer from "../../../common/Project/Customer";
 import Participants from "../../../common/Project/Participants";
 import { AuthContext } from "../../../../context/AuthContext";
 import Link from "next/link";
+import StartProject from "../../../common/Project/StartProject";
 
 function Info({ project }) {
   const [fields, setFields] = useState({});
@@ -83,20 +84,31 @@ function Info({ project }) {
             <p>{project.description}</p>
           </div>
         </div>
-        <ProgressDate
-          application_end={project.application_end_date}
-          application_start={project.application_start_date}
-          status={project.status}
-          deadline={project.deadline}
-          review_end={project.review_end_date}
-          end={project.end_date}
-        />
+        {project?.project_type === "CONTEST" && (
+          <ProgressDate
+            application_end={project.application_end_date}
+            application_start={project.application_start_date}
+            status={project.status}
+            deadline={project.deadline}
+            review_end={project.review_end_date}
+            end={project.end_date}
+          />
+        )}
         <Method project_type={project.project_type} />
         <Requirements requirements={project.requirements} />
         <Customer customer={project.created_by} documents={project.documents} />
-        {project.project_type === "CHOICE" && project.is_project_creator && (
-          <InviteTeam project_number={project.number} project_id={project.id} />
-        )}
+        {project.project_type === "CHOICE" &&
+          project.status === "DECLARED" &&
+          project.is_project_creator && (
+            <>
+              <InviteTeam
+                project_number={project.number}
+                project_id={project.id}
+              />
+              <StartProject project={project} />
+            </>
+          )}
+
         {project.project_type === "CONTEST" &&
           userData.user_type === "EXECUTOR" &&
           project.status === "APPLICATION" && (

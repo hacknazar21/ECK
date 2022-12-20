@@ -53,9 +53,7 @@ export default function Create() {
       },
     });
   }
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
+
   return (
     <AnimatePresence>
       <motion.section

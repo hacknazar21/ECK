@@ -4,6 +4,7 @@ import useHttp from "../../../../../hooks/hooks.http";
 import { AuthContext } from "../../../../../context/AuthContext";
 import Link from "next/link";
 import Loading from "../../../../common/Loading";
+import ButtonWithDangerous from "../../../../common/ButtonWithDangerous";
 function Requests({ project }) {
   const { request, loading } = useHttp();
   const { token } = useContext(AuthContext);
@@ -131,9 +132,49 @@ function Requests({ project }) {
                 </div>
               </div>
             );
+          } else if (request.executor.consortium) {
+            return (
+              <div
+                key={request.executor.consortium.id}
+                className="customer-requests__request customer-request"
+              >
+                <div className="customer-request__info">
+                  <div className="customer-request__icon">
+                    <img
+                      src={request.executor.consortium.created_by.image}
+                      alt=""
+                    />
+                  </div>
+                  <div className="customer-request__name">
+                    Консорциум {request.executor.consortium.created_by.name}
+                  </div>
+                </div>
+                <div className="window-notification__actions">
+                  <button
+                    onClick={actionsClickHandler.bind({
+                      type: "accept",
+                      request_id: request.id,
+                    })}
+                    className="window-notification__button window-notification__button_active"
+                  >
+                    Принять
+                  </button>
+                  <ButtonWithDangerous
+                    className="window-notification__button window-notification__button_no-active"
+                    onClick={actionsClickHandler.bind({
+                      type: "reject",
+                      request_id: request.id,
+                    })}
+                    buttonText={"Отклонить"}
+                    title={"Отклонение запроса"}
+                    description={"Вы уверены что хотите отклонить запрос?"}
+                  />
+                </div>
+              </div>
+            );
           }
         })}
-      {requests.filter((request) => request.status === "PENDING").length ===
+      {requests?.filter((request) => request.status === "PENDING").length ===
         0 && "Заявок нет"}
     </div>
   );
