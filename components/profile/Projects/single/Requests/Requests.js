@@ -51,14 +51,17 @@ function Requests({ project }) {
         .map((request) => {
           if (request.executor.user) {
             return (
-              <div className="customer-requests__request customer-request">
+              <div
+                key={request.executor.user.id}
+                className="customer-requests__request customer-request"
+              >
                 <div className="customer-request__info">
                   <div className="customer-request__icon">
-                    <img src={request.executor?.user?.avatar} alt="" />
+                    <img src={request.executor.user.avatar} alt="" />
                   </div>
                   <Link
                     href={"/user/[link]"}
-                    as={"/user/" + request.executor?.user?.id}
+                    as={"/user/" + request.executor.user.id}
                   >
                     <a className="customer-request__name">
                       {request.executor?.user?.display_name}
@@ -89,7 +92,10 @@ function Requests({ project }) {
             );
           } else if (request.executor.team) {
             return (
-              <div className="customer-requests__request customer-request">
+              <div
+                key={request.executor.team.id}
+                className="customer-requests__request customer-request"
+              >
                 <div className="customer-request__info">
                   <div className="customer-request__icon">
                     <img src={request.executor.team.image} alt="" />

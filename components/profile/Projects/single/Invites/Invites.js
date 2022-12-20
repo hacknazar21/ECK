@@ -41,8 +41,11 @@ function Invites({ project }) {
   }, [project]);
   return (
     <div className="customer-requests">
-      {invites.map((invite) => (
-        <div className="customer-requests__request customer-request">
+      {invites.map((invite, id) => (
+        <div
+          key={invite.id + id}
+          className="customer-requests__request customer-request"
+        >
           <div className="customer-request__info">
             <div className="customer-request__icon">
               <img
