@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 function Marker({ marker, container }) {
   const [open, setOpen] = useState(false);
   const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [classes, setClasses] = useState(["marker"]);
   function degrees_pixels(lat, lng, mapWidth, mapHeight) {
     const x = (lng + 165) * (mapWidth / 360);
     const latRad = (lat * Math.PI) / 180;
@@ -21,7 +22,6 @@ function Marker({ marker, container }) {
         container.clientWidth - 20,
         container.clientHeight
       );
-      console.log(x, y);
       setCoords({ x, y });
     }
   }, [container]);
@@ -38,37 +38,50 @@ function Marker({ marker, container }) {
       });
     }
   }, []);
+  useEffect(() => {
+    console.log(Math.abs(coords.x) + 428 - window.innerWidth / 2);
+    if (Math.abs(coords.x) + 214 - window.innerWidth / 2 < 0) {
+      if (classes.indexOf("over-screen") === -1)
+        setClasses((prevState) => [...prevState, "over-screen"]);
+    } else {
+      setClasses(["marker"]);
+    }
+  }, [coords]);
   return (
-    <div
-      style={{
-        transform: `translate(${coords.x - 4.5}px, ${coords.y - 4.5}px)`,
-      }}
-      className="marker"
-    >
-      <button
-        onClick={() => {
-          setOpen((prevState) => !prevState);
-        }}
-        className="marker__tooltip"
-      ></button>
+    <>
       {open && (
-        <div className="marker__info">
-          <div
-            onClick={() => {
-              setOpen(false);
-            }}
-            className="marker__info-close"
-          ></div>
-          <h2 className="marker__info-header">
-            {marker.country_translated}, {marker.region_translated},{" "}
-            {marker.city_translated}
-          </h2>
-          <div className="marker__info-projects">
-            всего проектов: <span>{marker.count}</span>
-          </div>
-        </div>
+        <div
+          onClick={() => {
+            setOpen(false);
+          }}
+          className="marker__info-close"
+        ></div>
       )}
-    </div>
+      <div
+        style={{
+          transform: `translate(${coords.x - 4.5}px, ${coords.y - 4.5}px)`,
+        }}
+        className={classes.join(" ") + (open ? " active" : "")}
+      >
+        <button
+          onClick={() => {
+            setOpen((prevState) => !prevState);
+          }}
+          className="marker__tooltip"
+        ></button>
+        {open && (
+          <div className="marker__info">
+            <h2 className="marker__info-header">
+              {marker.country_translated}, {marker.region_translated},{" "}
+              {marker.city_translated}
+            </h2>
+            <div className="marker__info-projects">
+              всего проектов: <span>{marker.count}</span>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 

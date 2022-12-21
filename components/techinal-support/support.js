@@ -133,7 +133,7 @@ export default function Support() {
             <div className="auth__box auth__box_message">
               <Message
                 message={
-                  "Спасибо за ваше обращение, мы ответим в течении 24 часов"
+                  "Спасибо за ваше обращение, мы ответим в течение 24 часов"
                 }
                 icon={SuccessIcon.src}
               />

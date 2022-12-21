@@ -73,7 +73,8 @@ function MyApp({ Component, pageProps }) {
       if (
         router.pathname.indexOf("team") !== -1 ||
         router.pathname.indexOf("announcements") !== -1 ||
-        router.pathname.indexOf("profile") !== -1
+        router.pathname.indexOf("profile") !== -1 ||
+        router.pathname.indexOf("geography") !== -1
       ) {
         setIsPermission(false);
         return;
@@ -83,7 +84,8 @@ function MyApp({ Component, pageProps }) {
       if (
         router.pathname.indexOf("team") !== -1 ||
         router.pathname.indexOf("announcements") !== -1 ||
-        router.pathname.indexOf("profile") !== -1
+        router.pathname.indexOf("profile") !== -1 ||
+        router.pathname.indexOf("geography") !== -1
       ) {
         setIsPermission(false);
         return;

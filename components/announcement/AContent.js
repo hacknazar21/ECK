@@ -95,7 +95,20 @@ function AContent({ projects, setter, url }) {
       <div className="team-page-content__block profile-block team-page-block">
         <h1 className="team-page-content__title profile-title">Объявления</h1>
         <div className="team-page-block__actions  team-page-actions">
-          <Filter setter={setter} url={url}>
+          <Filter
+            setter={setter}
+            url={url}
+            status={[
+              {
+                name: "Объявлено",
+                value: "DECLARED",
+              },
+              {
+                name: "Прием заявок",
+                value: "APPLICATION",
+              },
+            ]}
+          >
             {userData.user_type === "CUSTOMER" && (
               <Link href="/announcements/create">
                 <a className="team-actions__add-btn add-btn">

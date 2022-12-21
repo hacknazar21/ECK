@@ -59,7 +59,7 @@ a {
 }
 body {
   // Скролл заблокирован
-  overflow: hidden !important;
+
   .lock & {
     touch-action: none !important;
   }

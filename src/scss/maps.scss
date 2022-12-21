@@ -18,6 +18,10 @@
   align-items: center;
   flex-direction: row-reverse;
   column-gap: rem(13);
+  z-index: 1;
+  &.active{
+    z-index: 2;
+  }
   &__tooltip {
     background: #278BE8;
     border: 1px solid #FFFFFF;
@@ -40,6 +44,12 @@
     backdrop-filter: blur(9px);
     position: absolute;
     right: rem(13);
+    z-index: 2;
+    max-width: rem(428);
+    .over-screen &{
+      left: rem(13);
+      right: initial;
+    }
     @include adaptiveValue("width", 428, 300);
     @media(max-width:$mobile){
         top: rem(13);
@@ -48,16 +58,18 @@
     }
   }
   &__info-close{
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1;
+    position: fixed;
+    width: 200vw;
+    height: 200vh;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
   }
   &__info-header {
     font-weight: 600;
     font-size: rem(18);
     line-height: math.div(22,18);
-    
     color: #000000;
   }
 

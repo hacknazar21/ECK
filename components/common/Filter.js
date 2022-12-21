@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Select from "./Select/Select";
 import { AuthContext } from "../../context/AuthContext";
 
-function Filter({ setter, url, children }) {
+function Filter({ setter, url, children, status = [] }) {
   const [showFilter, setShowFilter] = useState(false);
   const { childrenActivity, changeFormHandler, submitFormHandler, clearForm } =
     useContext(AuthContext);
@@ -86,16 +86,7 @@ function Filter({ setter, url, children }) {
                   selectClass={"filter__select"}
                   onSelect={changeFormHandler} // Callback on select...
                   name={"status"} // The name of the select...
-                  items={[
-                    {
-                      name: "Конкурс",
-                      value: "CONTEST",
-                    },
-                    {
-                      name: "Выбор исполнителя",
-                      value: "CHOICE",
-                    },
-                  ]} // Array of the select's els in format {name: "", value: ""}...
+                  items={status} // Array of the select's els in format {name: "", value: ""}...
                 />
                 {childrenActivity && childrenActivity.length > 0 && (
                   <Select

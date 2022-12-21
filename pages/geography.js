@@ -14,17 +14,17 @@ export default function GeographyPage() {
   const [markers, setMarkers] = useState([]);
   const { request } = useHttp();
   useEffect(() => {
-    (async () => {
-      try {
-        const data = await request("/api/geography/projects/", "GET", null, {
-          Authorization: `Bearer ${token}`,
-        });
-
-        setMarkers([...data]);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
+    if (token)
+      (async () => {
+        try {
+          const data = await request("/api/geography/projects/", "GET", null, {
+            Authorization: `Bearer ${token}`,
+          });
+          setMarkers([...data]);
+        } catch (e) {
+          console.log(e);
+        }
+      })();
   }, [token]);
   return (
     <>

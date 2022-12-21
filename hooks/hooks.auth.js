@@ -19,7 +19,7 @@ const useAuth = () => {
     setToken(null);
     setRefreshToken(null);
     localStorage.removeItem(storageName);
-    router.push("/");
+    window.location.replace("/");
     router.reload();
   }, []);
 

@@ -8,6 +8,11 @@ import TabBar from "../../common/TabBar/TabBar";
 import useHttp from "../../../hooks/hooks.http";
 import { AuthContext } from "../../../context/AuthContext";
 import ButtonWithDangerous from "../../common/ButtonWithDangerous";
+import ImageFile from "../../common/ImageFile";
+import FieldsOfActivities from "../../common/FieldsOfActivities";
+import File from "../../common/File";
+import Loading from "../../common/Loading";
+import useForm from "../../../hooks/hooks.form";
 const STATUS = {
   PENDING: "Отправлено",
   ACCEPTED: "Принято",
@@ -30,7 +35,11 @@ function STContent(props) {
   const [searchMemberValue, setSearchMemberValue] = useState("");
   const [searchedMembers, setSearchedMembers] = useState([]);
   const [membersToInvite, setMembersToInvite] = useState([]);
-
+  const { formSubmitHandler, formChangeHandler, form, loading } =
+    useForm(createTeamHandler);
+  function createTeamHandler(data) {
+    router.back();
+  }
   async function searchSubmitHandler(e) {
     e.preventDefault();
     setMembersToInvite([]);
@@ -355,6 +364,125 @@ function STContent(props) {
               </article>
             ))}
             {invites.length === 0 && "Заявок пока нет"}
+          </TabBarItem>
+        )}
+        {teamInfo.is_team_owner && (
+          <TabBarItem className={"profile-block"} label={"Настройки"}>
+            <form
+              onSubmit={formSubmitHandler}
+              action={"/api/teams/" + teamInfo.slug}
+              data-method="PATCH"
+              className="my-profile-content__form my-profile-form"
+            >
+              <div className="auth__inputs">
+                <ImageFile
+                  onChange={formChangeHandler}
+                  classNames={["auth__input-box image-file"]}
+                  name={"image"}
+                  defaultValue={teamInfo.image}
+                />
+                <div className="auth__input-box">
+                  <input
+                    type="text"
+                    id={"name"}
+                    name={"name"}
+                    defaultValue={teamInfo.name}
+                    onInput={formChangeHandler}
+                    required={true}
+                    placeholder=" "
+                    className="auth__input"
+                  />
+                  <label htmlFor="name" className="auth__input-label">
+                    Название команды
+                  </label>
+                </div>
+                <div className="auth__input-box">
+                  <input
+                    type="text"
+                    id={"description"}
+                    name={"description"}
+                    defaultValue={teamInfo.description}
+                    onInput={formChangeHandler}
+                    required={true}
+                    placeholder=" "
+                    className="auth__input"
+                  />
+                  <label htmlFor="description" className="auth__input-label">
+                    Описание
+                  </label>
+                </div>
+                <FieldsOfActivities
+                  form={form}
+                  formChangeHandler={formChangeHandler}
+                  defaultValue={teamInfo.fields_of_activity || []}
+                />
+                <File
+                  isInput={true}
+                  name={"certificates"}
+                  label={"Лицензии/Сертификаты"}
+                  onChange={formChangeHandler}
+                  append={
+                    <div className="files">
+                      <h3 className="files__title">Загруженные документы</h3>
+                      {teamInfo?.certificates?.map((file, id) => {
+                        return (
+                          <a
+                            href={file.file}
+                            key={file.id}
+                            className="file__item"
+                          >
+                            {id + 1}. {file.uploaded_name}
+                          </a>
+                        );
+                      })}
+                      {teamInfo?.documents?.map((file, id) => {
+                        return (
+                          <a
+                            href={file.file}
+                            key={file.id}
+                            className="file__item"
+                          >
+                            {id + 1}. {file.uploaded_name}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  }
+                />
+                <div className="auth__input-box">
+                  <input
+                    id={"email"}
+                    required={true}
+                    defaultValue={teamInfo.email}
+                    onInput={formChangeHandler}
+                    placeholder=" "
+                    name={"email"}
+                    className="auth__input"
+                  />
+                  <label htmlFor="email" className="auth__input-label">
+                    Эл. почта
+                  </label>
+                </div>
+                <div className="auth__actions">
+                  <button
+                    type={"submit"}
+                    className="window-notification__button window-notification__button_active"
+                  >
+                    Сохранить изменения
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      router.push("/profile/teams/");
+                    }}
+                    className="window-notification__button window-notification__button_no-active"
+                  >
+                    Отменить изменения
+                  </button>
+                  {loading && <Loading />}
+                </div>
+              </div>
+            </form>
           </TabBarItem>
         )}
       </TabBar>

@@ -4,7 +4,12 @@ import useHttp from "../../hooks/hooks.http";
 import ActivitiesSelect from "./Select/ActivitiesSelect";
 import { AuthContext } from "../../context/AuthContext";
 
-function FieldsOfActivities({ formChangeHandler, form, disabled = false }) {
+function FieldsOfActivities({
+  formChangeHandler,
+  form,
+  disabled = false,
+  defaultValue = null,
+}) {
   const [activities, setActivities] = useState([]);
   const [activitiesModal, setActivitiesModal] = useState(null);
   const { request } = useHttp();
@@ -21,7 +26,16 @@ function FieldsOfActivities({ formChangeHandler, form, disabled = false }) {
     })();
   }, []);
   useEffect(() => {
-    if (token && userData && userData.fields_of_activity) {
+    if (defaultValue && formChangeHandler) {
+      formChangeHandler({
+        target: {
+          name: "fields_of_activity_list",
+          value: [...defaultValue.map((field) => field.id)],
+          type: "select-checkboxes",
+        },
+      });
+      setFields([...defaultValue]);
+    } else if (token && userData && userData.fields_of_activity) {
       if (formChangeHandler)
         formChangeHandler({
           target: {
@@ -32,7 +46,7 @@ function FieldsOfActivities({ formChangeHandler, form, disabled = false }) {
         });
       setFields([...userData?.fields_of_activity]);
     }
-  }, [token, userData]);
+  }, [token, userData, defaultValue]);
   useEffect(() => {
     if (
       form["select-checkboxes"] &&

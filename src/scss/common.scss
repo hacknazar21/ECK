@@ -43,15 +43,13 @@
   height: 100%;
 }
 .pages-layout{
-  &.home  {
-    max-height: calc(100vh - 120px);
-  }
-  max-height: calc(100vh - 205px);
-  @media(max-width:$tablet){
-    max-height: calc(100vh - 120px);
-  }
   overflow-y: scroll;
   overflow-x: hidden;
+  padding-top: rem(170);
+  &.home{
+    padding-top: rem(81);
+  }
+  padding-bottom: rem(40);
 }
 .section-title{
   font-weight: 600;

@@ -124,7 +124,8 @@ export default function Header() {
         {router.pathname !== "/" &&
         router.pathname !== "/about" &&
         router.pathname !== "/contacts" &&
-        router.pathname.indexOf("/news/") === -1 ? (
+        router.pathname.indexOf("/news/") === -1 &&
+        router.pathname.indexOf("/auth/") === -1 ? (
           <Menu />
         ) : (
           ""

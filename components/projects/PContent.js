@@ -59,7 +59,28 @@ function PContent({ projects, url, setter }) {
       <div className="projects-content__block profile-block projects-block">
         <h1 className="projects-content__title profile-title">Проекты</h1>
         <div className="projects-block__actions projects-actions">
-          <Filter url={url} setter={setter} />
+          <Filter
+            url={url}
+            setter={setter}
+            status={[
+              {
+                name: "В работе",
+                value: "IN_PROGRESS",
+              },
+              {
+                name: "Просмотр решений",
+                value: "REVIEW",
+              },
+              {
+                name: "Завершено",
+                value: "FINISHED",
+              },
+              {
+                name: "Не состоявшийся",
+                value: "FAILED",
+              },
+            ]}
+          />
         </div>
       </div>
       <div className="projects-cards profile-cards">
