@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import File from "../../../common/File";
 import useForm from "../../../../hooks/hooks.form";
 import { AuthContext } from "../../../../context/AuthContext";
+import ButtonWithDangerous from "../../../common/ButtonWithDangerous";
 
 function Report({ project }) {
   const { userData } = useContext(AuthContext);
@@ -35,12 +36,6 @@ function Report({ project }) {
         name={"files"}
         classNames={["report__file"]}
       />
-      <button
-        type="submit"
-        className="window-notification__button window-notification__button_active"
-      >
-        Завершить работу над проектом
-      </button>
     </form>
   );
 }

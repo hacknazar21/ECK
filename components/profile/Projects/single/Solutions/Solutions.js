@@ -149,18 +149,6 @@ function Solutions({ project }) {
         </button>
       )}
       {solutions.length === 0 && <p>Решения пока никто не подавал</p>}
-      {project.project_type === "CHOICE" && (
-        <div className="window-notification__buttons">
-          <ButtonWithDangerous
-            className="window-notification__button window-notification__button_dangerous"
-            buttonText={"Завершить работу над проектом"}
-            description={"Вы точно хотите завершить работу над проектом?"}
-            onClick={() => {}}
-            title={"Завершить работу над проектом?"}
-            jsxElement={null}
-          />
-        </div>
-      )}
     </div>
   );
 }

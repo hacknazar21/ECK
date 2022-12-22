@@ -13,6 +13,7 @@ import Solutions from "./Solutions/Solutions";
 import Info from "./Info";
 import Chats from "../../../common/Chat/Chats";
 import { AuthContext } from "../../../../context/AuthContext";
+import Control from "./Control";
 
 function Project({ project, chats }) {
   const router = useRouter();
@@ -98,6 +99,11 @@ function Project({ project, chats }) {
                   label={"Отчет об исполнении"}
                 >
                   <Report project={project} />
+                </TabBarItem>
+              )}
+              {userData?.user_type === "CUSTOMER" && (
+                <TabBarItem className={"profile-block"} label={"Управление"}>
+                  <Control project={project} />
                 </TabBarItem>
               )}
             </TabBar>

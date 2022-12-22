@@ -67,7 +67,7 @@ function ProjectJoin({ project }) {
               (field) => "fields_of_activity=" + field.parent_field.id
             ) || [];
           const data = await request(
-            `/api/teams/?created_by=${userData.id}&${fields.join("&")}`,
+            `/api/projects/${project?.number}/my_invitable_teams/`,
             "GET",
             null,
             headers

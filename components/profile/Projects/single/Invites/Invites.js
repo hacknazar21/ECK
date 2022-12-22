@@ -69,6 +69,7 @@ function Invites({ project }) {
           </div>
         </div>
       ))}
+      {!invites.length && <p>Нет отправленных заявок</p>}
     </div>
   );
 }

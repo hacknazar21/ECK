@@ -8,6 +8,7 @@ function ButtonWithDangerous({
   title,
   description,
   className,
+  buttonIcon,
 }) {
   const [active, setActive] = useState(false);
   return (
@@ -18,6 +19,7 @@ function ButtonWithDangerous({
         }}
         className={className}
       >
+        {buttonIcon}
         {buttonText}
       </button>
       <Popup active={active} setActive={setActive}>

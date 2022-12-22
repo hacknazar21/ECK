@@ -271,8 +271,16 @@
   &__button {
     display: flex;
     max-width: fit-content;
+    position: relative;
     &_margin{
       margin-bottom: rem(20);
+    }
+    .error{
+      position: absolute;
+      bottom: 0;
+      width: 200%;
+      color: red;
+      transform: translateY(calc(100% + 10px));
     }
   }
 

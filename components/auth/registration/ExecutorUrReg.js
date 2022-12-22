@@ -91,7 +91,6 @@ export default function ExecutorUrReg() {
               <div className="auth__input-box">
                 <input
                   id={"work_experience"}
-                  required={true}
                   onInput={formChangeHandler}
                   placeholder=" "
                   name={"work_experience"}

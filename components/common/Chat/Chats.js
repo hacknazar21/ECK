@@ -33,6 +33,7 @@ function Chats({ chats, setter }) {
             {!chat.last_message && "Нет сообщений..."}
           </div>
         ))}
+        {!chats?.length && <p>Нет чатов</p>}
       </div>
     </section>
   );

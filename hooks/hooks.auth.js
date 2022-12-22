@@ -15,12 +15,11 @@ const useAuth = () => {
     );
   }, []);
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
     setToken(null);
     setRefreshToken(null);
     localStorage.removeItem(storageName);
-    window.location.replace("/");
-    router.reload();
+    await router.push("/");
   }, []);
 
   useEffect(() => {
