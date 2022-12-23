@@ -49,6 +49,9 @@
   &.home{
     padding-top: rem(81);
   }
+  @media(max-width:$tablet){
+    padding-top: rem(81);
+  }
   padding-bottom: rem(40);
 }
 .section-title{
@@ -165,6 +168,9 @@
   span:last-child{
     transform: rotate(45deg) translateY(-2.1px);
   }
+}
+.mb-30{
+  margin-bottom: rem(30);
 }
 @import "message";
 @import "profile";

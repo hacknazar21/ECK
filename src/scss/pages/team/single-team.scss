@@ -91,15 +91,13 @@
   &__doc {
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(0,0,0,0);
+    border: 1px solid #4D97C1;
     height: rem(150);
     border-radius: 5px;
     flex: 0 0 rem(150);
-
     z-index: 2;
     transition: border-color 0.3s ease;
     &:hover{
-      border-color: #4D97C1;
      &:before{
         opacity: 1;
       }

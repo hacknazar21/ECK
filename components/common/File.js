@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import useHttp from "../../hooks/hooks.http";
+import { AuthContext } from "../../context/AuthContext";
 
 function File({
   classNames = [],
@@ -6,12 +8,15 @@ function File({
   onChange = (event) => {},
   label = "",
   name = "",
-  append = null,
+  defaultValues = null,
   disabled = false,
   required = false,
 }) {
   const classes = ["file", ...classNames];
   const [files, setFiles] = useState([]);
+  const { request } = useHttp();
+  const [defaultFiles, setDefaultFiles] = useState(defaultValues || []);
+  const { token } = useContext(AuthContext);
   function filesChangeHandler(e) {
     const filesCurrent = Array.from(e.target.files);
     setFiles((prevState) => [...prevState, ...filesCurrent]);
@@ -22,6 +27,24 @@ function File({
     setFiles((prevState) =>
       prevState.filter((file, id) => id !== parseInt(fileID))
     );
+  }
+  async function deleteFileFromServerHandler(e) {
+    e.preventDefault();
+    try {
+      setDefaultFiles((prevState) =>
+        prevState.filter((defaultFile) => defaultFile.id !== this.file_id)
+      );
+      const headers = {};
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+      await request(
+        `/api/profile/${name}/${this.file_id}/`,
+        "DELETE",
+        null,
+        headers
+      );
+    } catch (e) {
+      console.log(e.message);
+    }
   }
   useEffect(() => {
     onChange({
@@ -69,7 +92,31 @@ function File({
               })}
             </div>
           )}
-          {append}
+          {!!defaultFiles.length && (
+            <div className="files">
+              <h3 className="files__title">Загруженные документы</h3>
+              {defaultFiles?.map((file, id) => {
+                return (
+                  <div className="file__item">
+                    <a href={file.file} key={file.id} className="file__link">
+                      {id + 1}. {file.uploaded_name}
+                    </a>
+                    {!disabled && (
+                      <button
+                        onClick={deleteFileFromServerHandler.bind({
+                          file_id: file.id,
+                        })}
+                        className="file__button"
+                      >
+                        <span></span>
+                        <span></span>
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
       {!isInput && (

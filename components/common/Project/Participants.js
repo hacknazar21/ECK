@@ -30,7 +30,7 @@ function Participants({ participants }) {
                     <img src={participant.user?.avatar} alt="" />
                   </div>
                   <div className="project-modal-team__name profile-card__name profile-card__name_team">
-                    {participant.user?.full_name}
+                    {participant.user?.display_name}
                   </div>
                 </div>
               </>
@@ -42,7 +42,7 @@ function Participants({ participants }) {
                     <img src={participant.team?.image} alt="" />
                   </div>
                   <div className="project-modal-team__name profile-card__name profile-card__name_team">
-                    {participant.team?.name}
+                    {participant?.display_name}
                   </div>
                 </div>
                 <div className="project-modal-team__text">
@@ -52,7 +52,7 @@ function Participants({ participants }) {
             )}
             {participant.user && (
               <div className="project-modal-team__button">
-                <Link href="/user/[link]" as={"/user/" + participant.user?.id}>
+                <Link href="/user/[link]" as={"/user/" + participant?.id}>
                   <a className="window-notification__button window-notification__button_active">
                     Смотреть профиль
                   </a>

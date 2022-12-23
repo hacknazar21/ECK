@@ -88,6 +88,7 @@ export default function ExecutorUrReg() {
                   onInput={formChangeHandler}
                   placeholder=" "
                   name={"iin"}
+                  maxLength={12}
                   className="auth__input"
                 />
                 <label htmlFor="iin" className="auth__input-label">

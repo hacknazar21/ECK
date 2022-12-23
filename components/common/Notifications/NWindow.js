@@ -17,7 +17,7 @@ function NWindow(props) {
   useEffect(() => {
     (async () => {
       try {
-        const data = await request("/api/notifications/", "GET", null, {
+        const data = await request("/api/notifications/recent/", "GET", null, {
           Authorization: `Bearer ${token}`,
         });
         setNotifications([...data.results]);
@@ -28,7 +28,7 @@ function NWindow(props) {
   }, [token]);
   async function updateNotifications() {
     try {
-      const data = await request("/api/notifications/", "GET", null, {
+      const data = await request("/api/notifications/recent/", "GET", null, {
         Authorization: `Bearer ${token}`,
       });
       setNotifications([...data.results]);

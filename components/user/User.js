@@ -5,13 +5,16 @@ import { AuthContext } from "../../context/AuthContext";
 import { useRouter } from "next/router";
 import useHttp from "../../hooks/hooks.http";
 import ActivitiesMenu from "../common/ActivitiesMenu";
+import ProfileForm from "../common/ProfileForm";
+import File from "../common/File";
+import FieldsOfActivities from "../common/FieldsOfActivities";
+import Loading from "../common/Loading";
 
 function User() {
   const { token } = useContext(AuthContext);
-  const [user, setUser] = useState({});
+  const [userData, setUser] = useState({});
   const { request } = useHttp();
   const router = useRouter();
-  const USER_TYPE = { EXECUTOR: "Исполнитель", CUSTOMER: "Заказчик" };
   useEffect(() => {
     const { link } = router.query;
     (async () => {
@@ -52,63 +55,21 @@ function User() {
                 <div className="my-profile-content__form my-profile-form">
                   <div className="my-profile-form__upload-box">
                     <div className="my-profile-form__upload-input-box">
-                      <ImageFile disabled={true} defaultValue={user.avatar} />
+                      <ImageFile
+                        disabled={true}
+                        defaultValue={userData.avatar}
+                      />
                     </div>
                   </div>
-                  <div className="auth__inputs">
-                    <div className="auth__input-box">
-                      <input
-                        disabled={true}
-                        placeholder=" "
-                        className="auth__input"
-                      />
-                      <label>{USER_TYPE[user.user_type]}</label>
-                    </div>
-                    <div className="auth__input-box">
-                      <input
-                        disabled={true}
-                        placeholder=" "
-                        className="auth__input"
-                      />
-                      <label>{user.full_name || user.company_name}</label>
-                    </div>
-                    <div className="auth__input-box">
-                      <input
-                        disabled={true}
-                        placeholder=" "
-                        className="auth__input"
-                      />
-                      <label>
-                        {user?.fields_of_activity
-                          ?.map((field_of_activity) => field_of_activity.name)
-                          .join(" ,")}
-                      </label>
-                    </div>
-                    <div className="auth__input-box">
-                      <input
-                        disabled={true}
-                        placeholder=" "
-                        className="auth__input"
-                      />
-                      <label>{user.job_title}</label>
-                    </div>
-                    <div className="auth__input-box">
-                      <input
-                        disabled={true}
-                        placeholder=" "
-                        className="auth__input"
-                      />
-                      <label>{user.director}</label>
-                    </div>
-                    <div className="auth__input-box">
-                      <input
-                        disabled={true}
-                        placeholder=" "
-                        className="auth__input"
-                      />
-                      <label>{user.email}</label>
-                    </div>
-                  </div>
+
+                  <ProfileForm
+                    isChange={false}
+                    formChangeHandler={() => {}}
+                    form={{}}
+                    loading={false}
+                    userData={userData}
+                    setIsChange={() => {}}
+                  />
                 </div>
               </div>
             </div>
