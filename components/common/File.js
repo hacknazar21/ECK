@@ -79,15 +79,13 @@ function File({
               <h3 className="files__title">Добавленные документы</h3>
               {files.map((file, id) => {
                 return (
-                  <>
-                    <div key={file.name + id} className="file__item">
-                      {id + 1}. {file.name}
-                      <button data-id={id} onClick={deleteFileHandler}>
-                        <span></span>
-                        <span></span>
-                      </button>
-                    </div>
-                  </>
+                  <div key={file.name + id} className="file__item">
+                    {id + 1}. {file.name}
+                    <button data-id={id} onClick={deleteFileHandler}>
+                      <span></span>
+                      <span></span>
+                    </button>
+                  </div>
                 );
               })}
             </div>
