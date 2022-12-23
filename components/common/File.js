@@ -95,8 +95,8 @@ function File({
               <h3 className="files__title">Загруженные документы</h3>
               {defaultFiles?.map((file, id) => {
                 return (
-                  <div className="file__item">
-                    <a href={file.file} key={file.id} className="file__link">
+                  <div key={file.id} className="file__item">
+                    <a href={file.file} className="file__link">
                       {id + 1}. {file.uploaded_name}
                     </a>
                     {!disabled && (
