@@ -15,22 +15,24 @@ function User() {
   const [userData, setUser] = useState({});
   const { request } = useHttp();
   const router = useRouter();
+  const { link } = router.query;
+
   useEffect(() => {
-    const { link } = router.query;
-    (async () => {
-      try {
-        const data = await request(
-          "/api/auth/users/" + link + "/",
-          "GET",
-          null,
-          {
-            Authorization: `Bearer ${token}`,
-          }
-        );
-        setUser(data);
-      } catch (e) {}
-    })();
-  }, [token, router]);
+    if (!!token && !!link)
+      (async () => {
+        try {
+          const data = await request(
+            "/api/auth/users/" + link + "/",
+            "GET",
+            null,
+            {
+              Authorization: `Bearer ${token}`,
+            }
+          );
+          setUser(data);
+        } catch (e) {}
+      })();
+  }, [token, link]);
 
   return (
     <section className="page__my-profile team-page">
@@ -61,7 +63,6 @@ function User() {
                       />
                     </div>
                   </div>
-
                   <ProfileForm
                     isChange={false}
                     formChangeHandler={() => {}}

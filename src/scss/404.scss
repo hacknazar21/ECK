@@ -2,6 +2,7 @@
   &__404 {
     text-align: center;
     @include adaptiveValue("margin-top", 150, 50);
+    @include adaptiveValue("margin-bottom", 100, 50);
   }
 }
 

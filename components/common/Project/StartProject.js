@@ -28,15 +28,17 @@ function StartProject({ project }) {
   }
 
   return (
-    <div className="project-modal-team__button project-modal-team__button_margin">
+    <>
+      <div className="project-modal-team__button project-modal-team__button_margin">
+        <button
+          onClick={startProjectClickHandler}
+          className="window-notification__button window-notification__button_active"
+        >
+          Начать работу над проектом
+        </button>
+      </div>
       {!!error.length && <p className="error">{error.join(", ")}</p>}
-      <button
-        onClick={startProjectClickHandler}
-        className="window-notification__button window-notification__button_active"
-      >
-        Начать работу над проектом
-      </button>
-    </div>
+    </>
   );
 }
 

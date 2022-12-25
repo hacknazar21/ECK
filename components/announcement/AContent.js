@@ -59,13 +59,13 @@ function AContent({ projects, setter, url }) {
 
   useEffect(() => {
     if (window.location.hash && projects.length) {
-      console.log(projects[0].number, window.location.hash);
-      setProject(
-        projects.filter(
-          (project) => project.number === window.location.hash.replace("#", "")
-        )[0]
+      const projectHash = projects.filter(
+        (project) => project.number === window.location.hash.replace("#", "")
       );
-      setActive(true);
+      if (projectHash.length) {
+        setProject(projectHash[0]);
+        setActive(true);
+      }
     }
   }, [router, projects]);
 
@@ -142,6 +142,7 @@ function AContent({ projects, setter, url }) {
               </h2>
               <div className="projects-card__text profile-card__text">
                 <p>{project.description}</p>
+                {project.is_participating_as_user && <p>Заявка подана</p>}
               </div>
               <div className="projects-card__days-count profile-card__days-count">
                 Осталось:

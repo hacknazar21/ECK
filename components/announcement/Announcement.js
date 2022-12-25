@@ -22,21 +22,22 @@ function Announcement(props) {
   const { request } = useHttp();
   const { token } = useContext(AuthContext);
   useEffect(() => {
-    (async () => {
-      try {
-        const data = await request(
-          "/api/projects/announcements/",
-          "GET",
-          null,
-          {
-            Authorization: `Bearer ${token}`,
-          }
-        );
-        setProjects([...data.results]);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
+    if (!!token)
+      (async () => {
+        try {
+          const data = await request(
+            "/api/projects/announcements/",
+            "GET",
+            null,
+            {
+              Authorization: `Bearer ${token}`,
+            }
+          );
+          setProjects([...data.results]);
+        } catch (e) {
+          console.log(e);
+        }
+      })();
   }, [token]);
   return (
     <section className="page__my-profile announcement">

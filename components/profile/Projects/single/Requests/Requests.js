@@ -174,8 +174,10 @@ function Requests({ project }) {
             );
           }
         })}
-      {requests?.filter((request) => request.status === "PENDING").length ===
-        0 && "Заявок нет"}
+      {!loading &&
+        requests?.filter((request) => request.status === "PENDING").length ===
+          0 &&
+        "Заявок нет"}
     </div>
   );
 }

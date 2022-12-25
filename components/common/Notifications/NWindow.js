@@ -8,34 +8,13 @@ import NotificationWindow from "./Notification/NotificationWindow";
 
 function NWindow(props) {
   const [isWindowOpen, setIsWindowOpen] = useState(false);
-  const [notifications, setNotifications] = useState([]);
+
   const { request } = useHttp();
-  const { token } = useContext(AuthContext);
+  const { token, notifications, updateNotifications } = useContext(AuthContext);
   function openWindowHandler(event) {
     setIsWindowOpen((prevState) => !prevState);
   }
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await request("/api/notifications/recent/", "GET", null, {
-          Authorization: `Bearer ${token}`,
-        });
-        setNotifications([...data.results]);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  }, [token]);
-  async function updateNotifications() {
-    try {
-      const data = await request("/api/notifications/recent/", "GET", null, {
-        Authorization: `Bearer ${token}`,
-      });
-      setNotifications([...data.results]);
-    } catch (e) {
-      console.log(e);
-    }
-  }
+
   async function readAllClickHandler() {
     try {
       for (const notification of notifications) {
@@ -49,7 +28,11 @@ function NWindow(props) {
             }
           );
       }
-      await updateNotifications();
+      if (
+        notifications.filter((notification) => !notification.is_viewed).length >
+        0
+      )
+        await updateNotifications();
     } catch (e) {
       console.log(e);
     }

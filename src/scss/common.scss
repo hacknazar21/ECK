@@ -172,5 +172,9 @@
 .mb-30{
   margin-bottom: rem(30);
 }
+.error{
+  color: red;
+  margin-bottom: rem(10);
+}
 @import "message";
 @import "profile";

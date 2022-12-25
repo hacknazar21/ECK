@@ -101,11 +101,6 @@ function Project({ project, chats }) {
                   <Report project={project} />
                 </TabBarItem>
               )}
-              {userData?.user_type === "CUSTOMER" && (
-                <TabBarItem className={"profile-block"} label={"Управление"}>
-                  <Control project={project} />
-                </TabBarItem>
-              )}
             </TabBar>
           </section>
         </ProfilePageLayout>

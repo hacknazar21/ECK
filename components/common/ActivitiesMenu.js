@@ -4,14 +4,13 @@ import useHttp from "../../hooks/hooks.http";
 import { AuthContext } from "../../context/AuthContext";
 
 function ActivitiesMenu({ url, setter }) {
-  const [activities, setActivities] = useState([]);
-  const { request } = useHttp();
   const {
     addChildrenActivity,
     changeFormHandler,
     submitFormHandler,
     clearForm,
     formFilter,
+    activities,
   } = useContext(AuthContext);
   async function activityClickHandler(e) {
     const current = e.target.closest(".aside-menu__item");
@@ -51,16 +50,6 @@ function ActivitiesMenu({ url, setter }) {
         if (data) setter(data.results);
       })();
   }, [formFilter?.fields_of_activity]);
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await request("/api/fields_of_activity/", "GET");
-        setActivities([...data]);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  }, []);
 
   return (
     <Aside modificationMenu={"aside-menu__list_columns"}>

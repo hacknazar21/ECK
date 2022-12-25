@@ -6,27 +6,47 @@ import useHttp from "../../../hooks/hooks.http";
 import { AuthContext } from "../../../context/AuthContext";
 
 function NContent(props) {
-  const [notifications, setNotifications] = useState([]);
   const { request } = useHttp();
-  const { token } = useContext(AuthContext);
+  const { token, notifications, updateNotifications, setNotifications } =
+    useContext(AuthContext);
+  const DAY_IN_MS = 1000 * 60 * 60 * 24;
+  const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await request("/api/notifications/", "GET", null, {
-          Authorization: `Bearer ${token}`,
-        });
-        setNotifications([...data.results]);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  }, [token]);
-  async function updateNotifications() {
+  async function filterChangeHandler(e) {
+    if (e.target.value === "all") {
+      await updateNotifications();
+      return;
+    }
     try {
-      const data = await request("/api/notifications/", "GET", null, {
-        Authorization: `Bearer ${token}`,
-      });
+      const data = await request(
+        "/api/notifications/?created_at__gte=" + e.target.value,
+        "GET",
+        null,
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      setNotifications([...data.results]);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async function searchSubmitHandler(e) {
+    e.preventDefault();
+    if (search === "") {
+      await updateNotifications();
+      return;
+    }
+    setSearch("");
+    try {
+      const data = await request(
+        "/api/notifications/?search=" + search,
+        "GET",
+        null,
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
       setNotifications([...data.results]);
     } catch (e) {
       console.log(e);
@@ -43,9 +63,16 @@ function NContent(props) {
         component={
           <div className="notifications-actions__filter notifications-filter">
             <div className="notifications-filter__side">
-              <div className="notifications-filter__input-box">
+              <form
+                onSubmit={searchSubmitHandler}
+                className="notifications-filter__input-box"
+              >
                 <input
                   type="text"
+                  name={"search"}
+                  onInput={(e) => {
+                    setSearch(e.target.value);
+                  }}
                   className="notifications-filter__input"
                   placeholder={"Поиск"}
                 />
@@ -63,29 +90,58 @@ function NContent(props) {
                     />
                   </svg>
                 </button>
-              </div>
+              </form>
             </div>
             <div className="notifications-filter__days">
               <div className="notifications-filter__day-box">
                 <input
                   type="radio"
-                  name="day"
-                  id="today"
                   defaultChecked={true}
-                  value="today"
+                  onChange={filterChangeHandler}
+                  name="created_at__gte"
+                  id="all-days"
+                  defaultValue="all"
+                />
+                <label className="notifications-filter__day" htmlFor="all-days">
+                  Все
+                </label>
+              </div>
+              <div className="notifications-filter__day-box">
+                <input
+                  type="radio"
+                  name="created_at__gte"
+                  id="today"
+                  onChange={filterChangeHandler}
+                  defaultValue={new Date().toISOString()}
                 />
                 <label className="notifications-filter__day" htmlFor="today">
                   Сегодня
                 </label>
               </div>
               <div className="notifications-filter__day-box">
-                <input type="radio" name="day" id="week" value="week" />
+                <input
+                  type="radio"
+                  name="created_at__gte"
+                  id="week"
+                  onChange={filterChangeHandler}
+                  defaultValue={new Date(
+                    Date.now() - 7 * DAY_IN_MS
+                  ).toISOString()}
+                />
                 <label className="notifications-filter__day" htmlFor="week">
                   Неделя
                 </label>
               </div>
               <div className="notifications-filter__day-box">
-                <input type="radio" name="day" id="month" value="month" />
+                <input
+                  type="radio"
+                  name="created_at__gte"
+                  id="month"
+                  onChange={filterChangeHandler}
+                  defaultValue={new Date(
+                    Date.now() - 30 * DAY_IN_MS
+                  ).toISOString()}
+                />
                 <label className="notifications-filter__day" htmlFor="month">
                   Месяц
                 </label>

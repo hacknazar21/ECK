@@ -226,7 +226,6 @@
     border: 1px solid #CFDCE4;
     border-radius: 5px;
     display: flex;
-    justify-content: space-between;
     @media(max-width:$tablet){
         flex-direction: column-reverse;
     }
@@ -275,13 +274,7 @@
     &_margin{
       margin-bottom: rem(20);
     }
-    .error{
-      position: absolute;
-      bottom: 0;
-      width: 200%;
-      color: red;
-      transform: translateY(calc(100% + 10px));
-    }
+
   }
 
   &__info {
@@ -323,6 +316,7 @@
   &__icons {
     margin-left: auto;
     flex: 0 0 rem(115);
+    justify-content: flex-end;
   }
 
   &__icon {

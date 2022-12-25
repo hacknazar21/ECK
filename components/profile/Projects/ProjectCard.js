@@ -23,7 +23,10 @@ function ProjectCard({ project }) {
               {project.participants?.map((participant, id) => {
                 if (id < 5)
                   return (
-                    <div className="projects-card__icon profile-members__icon">
+                    <div
+                      key={id}
+                      className="projects-card__icon profile-members__icon"
+                    >
                       <img
                         src={
                           participant.team?.image || participant.user?.avatar

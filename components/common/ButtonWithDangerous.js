@@ -14,7 +14,8 @@ function ButtonWithDangerous({
   return (
     <>
       <button
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
           setActive(true);
         }}
         className={className}
@@ -32,7 +33,8 @@ function ButtonWithDangerous({
         {jsxElement}
         <div className="window-notification__actions single-team-content__main-actions">
           <button
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               setActive(false);
             }}
             className="window-notification__button window-notification__button_active"

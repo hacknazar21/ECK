@@ -1,16 +1,11 @@
 import Logo from "../../src/img/logo.svg";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import Link from "next/link";
-import { CSSTransition } from "react-transition-group";
-import { useRef } from "react";
 import Menu from "./Menu";
 import SResult from "./Search/SResult";
 import NWindow from "./Notifications/NWindow";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../context/AuthContext";
-import Popup from "./Popup";
-import ProfileMenu from "../profile/ProfileMenu";
-import Select from "./Select/Select";
 import HeaderProfileMenu from "./HeaderProfileMenu";
 
 export default function Header() {

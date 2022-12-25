@@ -54,7 +54,7 @@
     &:not(:last-child){
       margin-bottom: rem(30);
     }
-    position: relative;
+
     &_checkbox{
       input{
         position: absolute;
@@ -116,7 +116,7 @@
          position: relative;
          padding-bottom: rem(15);
          border-bottom: 1px solid #CFDCE4;
-
+         top: 0 !important;
          &:before {
            content: "";
            width: rem(16);
@@ -142,10 +142,17 @@
         }
       }
     }
+    &:not(.file,.button){
+      display: flex;
+      flex-direction: column-reverse;
+
+    }
+      position: relative;
   }
 
   &__input-label {
     width: 100%;
+    margin-bottom: rem(10);
   }
   &__input-list-default{
     margin-top: rem(10);
@@ -181,8 +188,6 @@
     transform-origin: center;
     width: 100%;
     & + label{
-      position: absolute;
-      left: 0;
       font-weight: 500;
       font-size: rem(14);
       line-height: math.div(16,14);
@@ -197,16 +202,13 @@
         color: #FF0000;
       }
     &:focus{
-      & + label{
-        display: none;
-      }
       border-bottom-color:  #4D97C1;
     }
-    &:not(:placeholder-shown) + label{
-      display: none;
+    &:placeholder-shown + label{
+      margin-bottom: rem(-20);
     }
-    &:not(:-ms-placeholder-shown) + label{
-      display: none;
+    &:-ms-placeholder-shown + label{
+      margin-bottom: rem(-20);
     }
   }
 

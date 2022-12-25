@@ -15,5 +15,10 @@ export const AuthContext = createContext({
   childrenActivity: [],
   formFilter: {},
   submitFormHandler: noop1,
-  clearForm: noop(),
+  clearForm: noop,
+  notifications: [],
+  updateNotifications: noop,
+  setNotifications: noop1,
+  urlCards: [],
+  activities: [],
 });

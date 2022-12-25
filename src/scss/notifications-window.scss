@@ -162,6 +162,9 @@
     row-gap: rem(10);
     align-items: flex-start;
     flex-direction: column;
+    &.mt-20{
+      margin-top: rem(20);
+    }
   }
   &__button{
     text-align: center;
@@ -216,7 +219,7 @@
     margin-bottom: rem(8);
   }
   &__title{
-    bold{
+    bold, a{
       font-weight: 600;
     }
     color: #1B1B1E;

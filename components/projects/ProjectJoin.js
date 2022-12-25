@@ -100,7 +100,7 @@ function ProjectJoin({ project }) {
           value: createdByTeam,
         },
       });
-  }, [createdByTeam]);
+  }, [createdByTeam, consortiumTeams]);
   useEffect(() => {
     if (isConsortium) {
       formChangeHandler({
@@ -127,6 +127,7 @@ function ProjectJoin({ project }) {
       });
     }
   }, [isConsortium]);
+
   async function teamsSearchHandler(e) {
     e.preventDefault();
     try {
@@ -211,6 +212,8 @@ function ProjectJoin({ project }) {
                     setIsTeam(e.target.checked);
                   }}
                   placeholder=" "
+                  disabled={project?.is_participating_as_user}
+                  defaultChecked={project?.is_participating_as_user}
                   name={"isteam"}
                 />
                 <label htmlFor="isteam" className="auth__input-label">
@@ -326,6 +329,7 @@ function ProjectJoin({ project }) {
               </div>
             </div>
             <input type={"hidden"} name="non_field_errors" />
+            <input type={"hidden"} name="executor" />
           </form>
         </div>
       </motion.div>

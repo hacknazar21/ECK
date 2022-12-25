@@ -8,7 +8,7 @@ function FieldsOfActivities({
   formChangeHandler,
   form,
   disabled = false,
-  defaultValue = null,
+  defaultValues: defaultValue = null,
 }) {
   const [activities, setActivities] = useState([]);
   const [activitiesModal, setActivitiesModal] = useState(null);
@@ -16,7 +16,6 @@ function FieldsOfActivities({
   const [fields, setFields] = useState([]);
   const { userData, token } = useContext(AuthContext);
   const [selectedFields, setSelectedFields] = useState({});
-
   useEffect(() => {
     (async () => {
       try {

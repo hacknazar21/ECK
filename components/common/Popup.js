@@ -1,9 +1,15 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
 function Popup({ active, setActive, children, buttons = null }) {
   const nodeRef = useRef(null);
-
+  useEffect(() => {
+    if (active) {
+      document.documentElement.classList.add("lock");
+    } else {
+      document.documentElement.classList.remove("lock");
+    }
+  }, [active]);
   return (
     <CSSTransition
       nodeRef={nodeRef}

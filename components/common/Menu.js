@@ -1,36 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import Image3 from "../../src/img/menu/3.png";
-import Image5 from "../../src/img/menu/5.png";
-import Image7 from "../../src/img/menu/7.png";
-import Image8 from "../../src/img/menu/8.png";
-import Cat2 from "../../src/img/home/categories/2.png";
-import Cat3 from "../../src/img/home/categories/3.png";
-import Cat4 from "../../src/img/home/categories/4.png";
-import Cat7 from "../../src/img/home/categories/7.png";
+import React, { useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import useHttp from "../../hooks/hooks.http";
 import { AuthContext } from "../../context/AuthContext";
 
 function Menu(props) {
   const router = useRouter();
-  const { request } = useHttp();
-  const { token } = useContext(AuthContext);
-  const [urls, setUrls] = useState([]);
+  const { urlCards: urls } = useContext(AuthContext);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await request("/api/content/url-cards/", "GET", null, {
-          Authorization: `Bearer ${token}`,
-        });
-        if (data) setUrls([...data]);
-      } catch (e) {}
-    })();
-  }, [token, router]);
-  useEffect(() => {
-    console.log(router.route);
-  }, []);
   return (
     <menu className="under-header__menu under-header-menu">
       <ul className="under-header-menu__list">

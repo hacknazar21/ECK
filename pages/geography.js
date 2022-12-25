@@ -14,7 +14,7 @@ export default function GeographyPage() {
   const [markers, setMarkers] = useState([]);
   const { request } = useHttp();
   useEffect(() => {
-    if (token)
+    if (!!token)
       (async () => {
         try {
           const data = await request("/api/geography/projects/", "GET", null, {

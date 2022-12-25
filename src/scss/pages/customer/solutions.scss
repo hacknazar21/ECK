@@ -14,14 +14,17 @@
 }
 
 .customer-solution {
+
   &__side{
     display: flex;
+    flex: 1 1 auto;
     @media(max-width:$tablet){
       margin-bottom: rem(15);
     }
   }
   &__radio {
     flex: 0 0 rem(20);
+    margin-right: rem(20);
   }
 
   &__button {

@@ -1,19 +1,20 @@
 import "../src/scss/style.scss";
 import NextNProgress from "nextjs-progressbar";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/hooks.auth";
 import useHttp from "../hooks/hooks.http";
 import { AuthContext } from "/context/AuthContext";
-import { useRouter, Router } from "next/router";
+import { useRouter } from "next/router";
 import FourOhOne from "./401";
 import useFilter from "../hooks/hooks.filter";
 import Load from "../components/Load";
+import { store } from "../store/store";
+import { Provider } from "react-redux";
 
 function MyApp({ Component, pageProps }) {
   const { token, userId, login, logout, refreshToken } = useAuth();
-
   const {
     changeFormHandler,
     addChildrenActivity,
@@ -22,16 +23,17 @@ function MyApp({ Component, pageProps }) {
     submitFormHandler,
     clearForm,
   } = useFilter(token);
-
   const isAuth = !!token;
   const [userData, setUserData] = useState({});
   const { request, loading } = useHttp();
   const router = useRouter();
+  const [notifications, setNotifications] = useState([]);
+  const [urlCards, setUrlCards] = useState([]);
+  const [activities, setActivities] = useState([]);
   const [isPermission, setIsPermission] = useState(true);
-
   useEffect(() => {
     (async () => {
-      if (isAuth && !userData.id) {
+      if (isAuth) {
         try {
           const data = await request("/api/profile/", "GET", null, {
             Authorization: `Bearer ${token}`,
@@ -57,12 +59,15 @@ function MyApp({ Component, pageProps }) {
                 await login(data.token, data.refresh);
               } else {
                 await logout();
+                await router.reload();
               }
             } catch (e) {
               await logout();
+              await router.reload();
             }
           } else if (error?.code === "user_not_found") {
             await logout();
+            await router.reload();
           }
         }
       }
@@ -92,7 +97,49 @@ function MyApp({ Component, pageProps }) {
       }
     setIsPermission(true);
   }, [token, router.pathname, userData]);
-
+  useEffect(() => {
+    if (!loading && !!token) {
+      updateNotifications();
+      updateUrlCards();
+    }
+  }, [token]);
+  useEffect(() => {
+    if (!loading) {
+      updateActivities();
+    }
+  }, []);
+  function updateNotifications() {
+    (async () => {
+      try {
+        const data = await request("/api/notifications/recent", "GET", null, {
+          Authorization: `Bearer ${token}`,
+        });
+        if (data) {
+          setNotifications(data.results);
+        }
+      } catch (e) {}
+    })();
+  }
+  function updateUrlCards() {
+    (async () => {
+      try {
+        const data = await request("/api/content/url-cards/", "GET", null, {
+          Authorization: `Bearer ${token}`,
+        });
+        if (data) setUrlCards([...data]);
+      } catch (e) {}
+    })();
+  }
+  function updateActivities() {
+    (async () => {
+      try {
+        const data = await request("/api/fields_of_activity/", "GET");
+        setActivities([...data]);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }
   return (
     <>
       <Head>
@@ -124,9 +171,18 @@ function MyApp({ Component, pageProps }) {
             formFilter,
             submitFormHandler,
             clearForm,
+            notifications,
+            updateNotifications,
+            setNotifications,
+            urlCards,
+            activities,
           }}
         >
-          {!!isPermission && !loading && <Component {...pageProps} />}
+          {!!isPermission && !loading && (
+            <Provider store={store}>
+              <Component {...pageProps} />
+            </Provider>
+          )}
           {!!!isPermission && !loading && <FourOhOne />}
           {loading && <Load />}
         </AuthContext.Provider>

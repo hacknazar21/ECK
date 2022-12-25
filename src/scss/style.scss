@@ -62,6 +62,7 @@ body {
 
   .lock & {
     touch-action: none !important;
+    overflow: hidden;
   }
   .menu-open & {
     overflow: hidden;

@@ -12,7 +12,7 @@ function NotificationWindow({ notification, updateNotifications }) {
 
   async function viewClickHandler() {
     try {
-      const data = await request(
+      await request(
         `/api/notifications/${this.id}/mark_viewed/`,
         "POST",
         {},
@@ -20,7 +20,6 @@ function NotificationWindow({ notification, updateNotifications }) {
           Authorization: `Bearer ${token}`,
         }
       );
-      console.log(data);
       updateNotifications();
     } catch (e) {
       console.log(e);
@@ -71,7 +70,7 @@ function NotificationWindow({ notification, updateNotifications }) {
         ></h3>
         {!notification.is_visited && (
           <ActionButtons
-              notification={notification}
+            notification={notification}
             updateNotifications={updateNotifications}
           />
         )}
