@@ -58,7 +58,7 @@ function ProjectJoin({ project }) {
       });
     }
     if (project) {
-      setIsTeam(project.is_participating_as_user);
+      setIsTeam(project.is_invited_as_user);
     }
   }, [userData, project]);
   useEffect(() => {
@@ -215,8 +215,8 @@ function ProjectJoin({ project }) {
                     setIsTeam(e.target.checked);
                   }}
                   placeholder=" "
-                  disabled={project?.is_participating_as_user}
-                  defaultChecked={project?.is_participating_as_user}
+                  disabled={project?.is_invited_as_user}
+                  defaultChecked={project?.is_invited_as_user}
                   name={"isteam"}
                 />
                 <label htmlFor="isteam" className="auth__input-label">

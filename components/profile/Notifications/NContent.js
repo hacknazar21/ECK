@@ -112,7 +112,9 @@ function NContent(props) {
                   name="created_at__gte"
                   id="today"
                   onChange={filterChangeHandler}
-                  defaultValue={new Date().toISOString()}
+                  defaultValue={new Date(
+                    new Date().setHours(0, 0, 0, 0)
+                  ).toISOString()}
                 />
                 <label className="notifications-filter__day" htmlFor="today">
                   Сегодня

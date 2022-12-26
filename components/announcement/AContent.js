@@ -142,7 +142,7 @@ function AContent({ projects, setter, url }) {
               </h2>
               <div className="projects-card__text profile-card__text">
                 <p>{project.description}</p>
-                {project.is_participating_as_user && <p>Заявка подана</p>}
+                {project.is_invited_as_user && <p>Заявка подана</p>}
               </div>
               <div className="projects-card__days-count profile-card__days-count">
                 Осталось:

@@ -88,6 +88,7 @@ export default function Create() {
             >
               <div className="auth__inputs">
                 <div className="auth__input-box">
+                  <input type="hidden" name={"project_type"} />
                   <Select
                     title={"Тип обьявления"}
                     onSelect={formChangeHandler}
@@ -136,6 +137,7 @@ export default function Create() {
                       <DatePicker
                         locale="ru"
                         selected={startDate}
+                        autocomplete={"off"}
                         name={"application_start_date"}
                         onChange={pickDateHandler.bind({
                           name: "application_start_date",
@@ -148,6 +150,7 @@ export default function Create() {
                       <DatePicker
                         locale="ru"
                         selected={endDate}
+                        autocomplete={"off"}
                         onChange={pickDateHandler.bind({
                           name: "application_end_date",
                           set: setEndDate,
@@ -159,6 +162,7 @@ export default function Create() {
                     <div className="auth__input-box">
                       <DatePicker
                         locale="ru"
+                        autocomplete={"off"}
                         selected={projectEndDate}
                         onChange={pickDateHandler.bind({
                           name: "deadline",
