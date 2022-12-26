@@ -57,6 +57,9 @@ function ProjectJoin({ project }) {
         },
       });
     }
+    if (project) {
+      setIsTeam(project.is_participating_as_user);
+    }
   }, [userData, project]);
   useEffect(() => {
     if (userData && project)

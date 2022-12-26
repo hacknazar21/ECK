@@ -34,7 +34,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@react-google-maps/api", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:2.17.0"],\
-            ["@reduxjs/toolkit", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:1.9.1"],\
             ["@types/node", "npm:18.11.9"],\
             ["@types/react", "npm:18.0.25"],\
             ["date-fns", "npm:2.29.3"],\
@@ -502,36 +501,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@react-google-maps-marker-clusterer-npm-2.16.1-202aacc135-2b65cbe34b.zip/node_modules/@react-google-maps/marker-clusterer/",\
           "packageDependencies": [\
             ["@react-google-maps/marker-clusterer", "npm:2.16.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@reduxjs/toolkit", [\
-        ["npm:1.9.1", {\
-          "packageLocation": "./.yarn/cache/@reduxjs-toolkit-npm-1.9.1-d51a310268-e6700a0d45.zip/node_modules/@reduxjs/toolkit/",\
-          "packageDependencies": [\
-            ["@reduxjs/toolkit", "npm:1.9.1"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:1.9.1", {\
-          "packageLocation": "./.yarn/__virtual__/@reduxjs-toolkit-virtual-408c49ca9c/0/cache/@reduxjs-toolkit-npm-1.9.1-d51a310268-e6700a0d45.zip/node_modules/@reduxjs/toolkit/",\
-          "packageDependencies": [\
-            ["@reduxjs/toolkit", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:1.9.1"],\
-            ["@types/react", "npm:18.0.25"],\
-            ["@types/react-redux", null],\
-            ["immer", "npm:9.0.16"],\
-            ["react", "npm:18.2.0"],\
-            ["react-redux", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:8.0.5"],\
-            ["redux", "npm:4.2.0"],\
-            ["redux-thunk", "virtual:408c49ca9c5c5247761cf2ea468846b74101d222ed9e9d637e276570e95543e3746c472e14c8f0dcb346737cd83d6322175b334349d80bc680be2282b36311e2#npm:2.4.2"],\
-            ["reselect", "npm:4.1.7"]\
-          ],\
-          "packagePeers": [\
-            "@types/react-redux",\
-            "@types/react",\
-            "react-redux",\
-            "react"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -1537,7 +1506,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["eck", "workspace:."],\
             ["@react-google-maps/api", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:2.17.0"],\
-            ["@reduxjs/toolkit", "virtual:0aa361acf1ecc863ac41d27822ba13628eeca3e297daa2789209c8e05a679973b646013c92291ec436ed045237464fc1684d90e7f36e20a43cd5fbf5f365e642#npm:1.9.1"],\
             ["@types/node", "npm:18.11.9"],\
             ["@types/react", "npm:18.0.25"],\
             ["date-fns", "npm:2.29.3"],\
@@ -2577,15 +2545,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/ignore-npm-5.2.0-fc4b58a4f3-6b1f926792.zip/node_modules/ignore/",\
           "packageDependencies": [\
             ["ignore", "npm:5.2.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["immer", [\
-        ["npm:9.0.16", {\
-          "packageLocation": "./.yarn/cache/immer-npm-9.0.16-426ac657bc-e9a5ca65c9.zip/node_modules/immer/",\
-          "packageDependencies": [\
-            ["immer", "npm:9.0.16"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3998,38 +3957,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["redux", [\
-        ["npm:4.2.0", {\
-          "packageLocation": "./.yarn/cache/redux-npm-4.2.0-4688cc8d65-75f3955c89.zip/node_modules/redux/",\
-          "packageDependencies": [\
-            ["redux", "npm:4.2.0"],\
-            ["@babel/runtime", "npm:7.20.7"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["redux-thunk", [\
-        ["npm:2.4.2", {\
-          "packageLocation": "./.yarn/cache/redux-thunk-npm-2.4.2-3acdaaf7b0-c7f757f6c3.zip/node_modules/redux-thunk/",\
-          "packageDependencies": [\
-            ["redux-thunk", "npm:2.4.2"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:408c49ca9c5c5247761cf2ea468846b74101d222ed9e9d637e276570e95543e3746c472e14c8f0dcb346737cd83d6322175b334349d80bc680be2282b36311e2#npm:2.4.2", {\
-          "packageLocation": "./.yarn/__virtual__/redux-thunk-virtual-188227fd92/0/cache/redux-thunk-npm-2.4.2-3acdaaf7b0-c7f757f6c3.zip/node_modules/redux-thunk/",\
-          "packageDependencies": [\
-            ["redux-thunk", "virtual:408c49ca9c5c5247761cf2ea468846b74101d222ed9e9d637e276570e95543e3746c472e14c8f0dcb346737cd83d6322175b334349d80bc680be2282b36311e2#npm:2.4.2"],\
-            ["@types/redux", null],\
-            ["redux", "npm:4.2.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/redux",\
-            "redux"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["regenerator-runtime", [\
         ["npm:0.13.11", {\
           "packageLocation": "./.yarn/cache/regenerator-runtime-npm-0.13.11-90bf536060-27481628d2.zip/node_modules/regenerator-runtime/",\
@@ -4063,15 +3990,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/regexpp-npm-3.2.0-2513f32cfc-a78dc5c715.zip/node_modules/regexpp/",\
           "packageDependencies": [\
             ["regexpp", "npm:3.2.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["reselect", [\
-        ["npm:4.1.7", {\
-          "packageLocation": "./.yarn/cache/reselect-npm-4.1.7-c37108c640-738d8e2b8f.zip/node_modules/reselect/",\
-          "packageDependencies": [\
-            ["reselect", "npm:4.1.7"]\
           ],\
           "linkType": "HARD"\
         }]\

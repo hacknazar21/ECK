@@ -184,9 +184,6 @@ export default function Create() {
                   </label>
                 </div>
                 <div className="auth__input-box">
-                  <label className="auth__input-label">
-                    Прикрепить документы
-                  </label>
                   <File name={"documents"} onChange={formChangeHandler} />
                 </div>
                 <div className="auth__input-box">

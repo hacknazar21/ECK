@@ -192,6 +192,7 @@
       font-size: rem(14);
       line-height: math.div(16,14);
       color: #959595;
+      z-index: 1;
     }
     &[required] + label:after {
         content: "*";

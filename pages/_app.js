@@ -10,8 +10,6 @@ import { useRouter } from "next/router";
 import FourOhOne from "./401";
 import useFilter from "../hooks/hooks.filter";
 import Load from "../components/Load";
-import { store } from "../store/store";
-import { Provider } from "react-redux";
 
 function MyApp({ Component, pageProps }) {
   const { token, userId, login, logout, refreshToken } = useAuth();
@@ -111,7 +109,7 @@ function MyApp({ Component, pageProps }) {
   function updateNotifications() {
     (async () => {
       try {
-        const data = await request("/api/notifications/recent", "GET", null, {
+        const data = await request("/api/notifications/recent/", "GET", null, {
           Authorization: `Bearer ${token}`,
         });
         if (data) {
@@ -178,11 +176,7 @@ function MyApp({ Component, pageProps }) {
             activities,
           }}
         >
-          {!!isPermission && !loading && (
-            <Provider store={store}>
-              <Component {...pageProps} />
-            </Provider>
-          )}
+          {!!isPermission && !loading && <Component {...pageProps} />}
           {!!!isPermission && !loading && <FourOhOne />}
           {loading && <Load />}
         </AuthContext.Provider>
