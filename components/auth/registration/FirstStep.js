@@ -39,6 +39,7 @@ export default function FirstStep() {
 
   async function onSuccessRegister(response) {
     if (isCode) {
+      login(response.access, response.refresh);
       return router.push(
         form.radio.user_type === "CUSTOMER"
           ? "/auth/registration/customer-reg"
@@ -47,7 +48,6 @@ export default function FirstStep() {
           : "/auth/registration/executor-reg-ur"
       );
     }
-    login(response.access, response.refresh);
     setIsCode(true);
   }
   return (

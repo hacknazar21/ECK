@@ -96,15 +96,13 @@ function MyApp({ Component, pageProps }) {
     setIsPermission(true);
   }, [token, router.pathname, userData]);
   useEffect(() => {
-    if (!loading && !!token) {
+    if (!!token) {
       updateNotifications();
       updateUrlCards();
     }
   }, [token]);
   useEffect(() => {
-    if (!loading) {
-      updateActivities();
-    }
+    updateActivities();
   }, []);
   function updateNotifications() {
     (async () => {
