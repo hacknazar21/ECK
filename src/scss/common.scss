@@ -176,5 +176,10 @@
   color: red;
   margin-bottom: rem(10);
 }
+.customer-solutions{
+  display: flex;
+  flex-direction: column;
+  row-gap: rem(10);
+}
 @import "message";
 @import "profile";

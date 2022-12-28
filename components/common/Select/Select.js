@@ -53,26 +53,29 @@ export default function Select({
   }
 
   return (
-    <div className={"select" + " " + selectClass} id={"select-" + name}>
-      <div ref={head} onClick={clickHandler} className="select__head">
-        <span>{title}</span>
+    <>
+      <div className={"select" + " " + selectClass} id={"select-" + name}>
+        <input type="hidden" name={name} />
+        <div ref={head} onClick={clickHandler} className="select__head">
+          <span>{title}</span>
+        </div>
+        <ul ref={wrapper} className="select__list">
+          {items?.map((selectEl, id) => {
+            return (
+              <li
+                key={id}
+                onClick={selectHandler}
+                data-valuename={selectEl.name}
+                data-name={name}
+                data-value={selectEl.value}
+                className={"select__option"}
+              >
+                {selectEl.name}
+              </li>
+            );
+          })}
+        </ul>
       </div>
-      <ul ref={wrapper} className="select__list">
-        {items?.map((selectEl, id) => {
-          return (
-            <li
-              key={id}
-              onClick={selectHandler}
-              data-valuename={selectEl.name}
-              data-name={name}
-              data-value={selectEl.value}
-              className={"select__option"}
-            >
-              {selectEl.name}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    </>
   );
 }

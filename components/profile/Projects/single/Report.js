@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import File from "../../../common/File";
 import useForm from "../../../../hooks/hooks.form";
 import { AuthContext } from "../../../../context/AuthContext";
 import ButtonWithDangerous from "../../../common/ButtonWithDangerous";
 import { useRouter } from "next/router";
+import Select from "../../../common/Select/Select";
 
 function Report({ project }) {
   const { userData } = useContext(AuthContext);
@@ -11,22 +12,33 @@ function Report({ project }) {
     onSuccess,
     {
       text: {
-        executor: userData?.id,
         project: project?.id,
       },
     }
   );
-
   const router = useRouter();
+  const [executors, setExecutors] = useState([]);
 
-  function onSuccess(e) {
-    //router.reload();
+  async function onSuccess(e) {
+    await router.reload();
   }
 
   useEffect(() => {
     dropForm();
+    if (project) {
+      setExecutors(
+        project.participating_as?.map((participate_as) => {
+          return {
+            name: participate_as.display_name,
+            value: participate_as.id,
+          };
+        })
+      );
+    }
   }, [project]);
-
+  useEffect(() => {
+    console.log(form);
+  }, [form]);
   return (
     <form
       onSubmit={formSubmitHandler}
@@ -36,12 +48,35 @@ function Report({ project }) {
     >
       <h2 className="report__title">Прикрепите решение по проекту</h2>
       {!project?.is_solution_submitted && (
-        <File
-          onChange={formChangeHandler}
-          name={"files"}
-          classNames={["report__file"]}
-          disabled={project?.is_solution_submitted}
-        />
+        <>
+          <File
+            onChange={formChangeHandler}
+            name={"files"}
+            classNames={["report__file"]}
+            disabled={project?.is_solution_submitted}
+          />
+          <Select
+            name={"executor"}
+            title={"От кого подать решение"}
+            onSelect={formChangeHandler}
+            items={executors}
+            selectClass={"auth__input-box"}
+          />
+          <div className="auth__input-box">
+            <textarea
+              id={"comment"}
+              required={true}
+              name={"comment"}
+              placeholder=" "
+              className="auth__input"
+              onChange={formChangeHandler}
+            />
+            <label htmlFor="comment" className="auth__input-label">
+              Комментарий
+            </label>
+          </div>
+          <input type="hidden" name="non_field_errors" />
+        </>
       )}
       {!project?.is_solution_submitted && (
         <ButtonWithDangerous
@@ -52,6 +87,7 @@ function Report({ project }) {
           description={"Вы уверены что хотите отправить решение на проверку?"}
         />
       )}
+
       {project?.is_solution_submitted && <p>Решение было предоставлено</p>}
     </form>
   );

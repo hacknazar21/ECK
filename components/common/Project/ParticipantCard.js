@@ -1,12 +1,21 @@
 import React from "react";
 import Link from "next/link";
 
-function ParticipantCard({ participant, isRadio = false, button }) {
+function ParticipantCard({
+  participant,
+  isRadio = false,
+  button,
+  onRadio = (e, participant, solution_id) => {},
+  solution_id,
+}) {
   return (
     <div className="project-modal-teams__team project-modal-team">
       {isRadio && (
         <div className="customer-solution__radio">
           <input
+            onChange={(e) => {
+              onRadio(e, participant, solution_id);
+            }}
             type="radio"
             id={participant.id}
             className="customer-solution__button customer-solution__button_radio"
@@ -37,7 +46,7 @@ function ParticipantCard({ participant, isRadio = false, button }) {
                 <img src={participant.team?.image} alt="" />
               </div>
               <div className="project-modal-team__name profile-card__name profile-card__name_team">
-                {participant?.display_name}
+                {participant?.team.name}
               </div>
             </div>
             <div className="project-modal-team__text">
@@ -65,7 +74,7 @@ function ParticipantCard({ participant, isRadio = false, button }) {
                 <img src={participant.user?.avatar} alt="" />
               </div>
               <div className="project-modal-team__name profile-card__name profile-card__name_team">
-                {participant.user?.display_name}
+                {participant?.display_name}
               </div>
             </div>
             {!button && (

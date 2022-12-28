@@ -3,7 +3,6 @@
     margin-bottom: rem(30);
   }
   &__box {
-    padding: rem(22) 0;
     background-color: rgba(39, 139, 232, 0.2);
     border: 1px dashed #278BE8;
     border-radius: 5px;
@@ -25,6 +24,10 @@
     font-size: rem(14);
     line-height: math.div(16,14);
     color: #278BE8;
+    padding: rem(22) 0;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
     @media(any-hover: hover){
       &:hover{
         cursor: pointer;

@@ -93,14 +93,16 @@ function Project({ project, chats }) {
                   <Solutions project={project} />
                 </TabBarItem>
               )}
-              {userData?.user_type === "EXECUTOR" && (
-                <TabBarItem
-                  className={"profile-block"}
-                  label={"Отчет об исполнении"}
-                >
-                  <Report project={project} />
-                </TabBarItem>
-              )}
+              {userData?.user_type === "EXECUTOR" &&
+                (project?.status === "IN_PROGRESS" ||
+                  project?.status === "REVIEW") && (
+                  <TabBarItem
+                    className={"profile-block"}
+                    label={"Отчет об исполнении"}
+                  >
+                    <Report project={project} />
+                  </TabBarItem>
+                )}
             </TabBar>
           </section>
         </ProfilePageLayout>

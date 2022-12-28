@@ -137,6 +137,10 @@
       padding-bottom: rem(20);
       border-bottom: 1px solid #CFDCE4;
     }
+    &_column{
+      flex-direction: column;
+      row-gap: rem(10);
+    }
     &_wrap{
       @media(max-width:$tablet){
         flex-direction: column;
