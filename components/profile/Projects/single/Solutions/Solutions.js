@@ -128,7 +128,10 @@ function Solutions({ project }) {
         {!!solution?.executor?.consortium && (
           <div className="project-modal__section project-modal__section_border project-modal__section_column">
             {solution.executor.consortium.teams.map((team) => (
-              <div className="projects-card__logo profile-card__logo">
+              <div
+                key={team.id}
+                className="projects-card__logo profile-card__logo"
+              >
                 <div className="projects-card__image profile-card__image">
                   <img src={team.image} alt="" />
                 </div>
