@@ -26,6 +26,7 @@ function FieldsOfActivities({
   }, []);
   useEffect(() => {
     if (defaultValue && formChangeHandler) {
+      console.log(defaultValue);
       formChangeHandler({
         target: {
           name: "fields_of_activity_list",

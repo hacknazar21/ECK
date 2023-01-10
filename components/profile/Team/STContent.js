@@ -23,7 +23,7 @@ function STContent(props) {
   const { request, loading } = useHttp();
   const { token } = useContext(AuthContext);
   const { link } = router.query;
-
+  const [isChange, setIsChange] = useState(false);
   const [active, setActive] = useState(false);
   const [teamInfo, setTeamInfo] = useState({});
   const [members, setMembers] = useState([]);
@@ -37,7 +37,7 @@ function STContent(props) {
     useForm(createTeamHandler);
 
   function createTeamHandler(data) {
-    router.push("/profile/team/" + link + "/#Участники");
+    setIsChange(false);
   }
   async function searchSubmitHandler(e) {
     e.preventDefault();
@@ -421,6 +421,7 @@ function STContent(props) {
                   classNames={["auth__input-box image-file"]}
                   name={"image"}
                   defaultValue={teamInfo.image}
+                  disabled={!isChange}
                 />
                 <div className="auth__input-box">
                   <input
@@ -432,6 +433,7 @@ function STContent(props) {
                     required={true}
                     placeholder=" "
                     className="auth__input"
+                    disabled={!isChange}
                   />
                   <label htmlFor="name" className="auth__input-label">
                     Название команды
@@ -447,6 +449,7 @@ function STContent(props) {
                     required={true}
                     placeholder=" "
                     className="auth__input"
+                    disabled={!isChange}
                   />
                   <label htmlFor="description" className="auth__input-label">
                     Описание
@@ -455,13 +458,15 @@ function STContent(props) {
                 <FieldsOfActivities
                   form={form}
                   formChangeHandler={formChangeHandler}
-                  defaultValue={teamInfo.fields_of_activity || []}
+                  defaultValues={teamInfo.fields_of_activity}
+                  disabled={!isChange}
                 />
                 <File
                   isInput={true}
                   name={"certificates"}
                   label={"Лицензии/Сертификаты"}
                   onChange={formChangeHandler}
+                  disabled={!isChange}
                   append={
                     <div className="files">
                       <h3 className="files__title">Загруженные документы</h3>
@@ -495,6 +500,7 @@ function STContent(props) {
                     id={"email"}
                     required={true}
                     defaultValue={teamInfo.email}
+                    disabled={!isChange}
                     onInput={formChangeHandler}
                     placeholder=" "
                     name={"email"}
@@ -507,18 +513,13 @@ function STContent(props) {
                 <div className="auth__actions">
                   <button
                     type={"submit"}
+                    onClick={(e) => {
+                      !isChange && e.preventDefault();
+                      setIsChange(true);
+                    }}
                     className="window-notification__button window-notification__button_active"
                   >
-                    Сохранить изменения
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      router.push("/profile/team/" + link + "/#Участники");
-                    }}
-                    className="window-notification__button window-notification__button_no-active"
-                  >
-                    Отменить изменения
+                    {isChange ? "Сохранить изменения" : "Редактировать"}
                   </button>
                   {loading && <Loading />}
                 </div>

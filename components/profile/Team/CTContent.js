@@ -12,8 +12,8 @@ function CTContent(props) {
   const { formSubmitHandler, formChangeHandler, form, loading } =
     useForm(createTeamHandler);
   const router = useRouter();
-  function createTeamHandler(data) {
-    router.back();
+  async function createTeamHandler(data) {
+    await router.push("/profile/team/");
   }
   return (
     <div className="my-profile__content my-profile-content">
