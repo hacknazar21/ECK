@@ -28,9 +28,14 @@ function Report({ project }) {
     if (project) {
       setExecutors(
         project.participating_as?.map((participate_as) => {
+          const submitted = project.solution_submitted_as?.filter(
+            (solution_submitted_as) =>
+              solution_submitted_as.id === participate_as.id
+          );
           return {
-            name: participate_as.display_name,
-            value: participate_as.id,
+            name:
+              participate_as.display_name + (!!submitted?.length ? " ✓" : ""),
+            value: !!submitted?.length ? "" : participate_as.id,
           };
         })
       );
@@ -87,8 +92,6 @@ function Report({ project }) {
           description={"Вы уверены что хотите отправить решение на проверку?"}
         />
       )}
-
-      {project?.is_solution_submitted && <p>Решение было предоставлено</p>}
     </form>
   );
 }

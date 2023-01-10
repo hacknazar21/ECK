@@ -134,7 +134,10 @@ function AContent({ projects, setter, url }) {
               onClick={openPopupClickHandler.bind({ project: project.id })}
               className={
                 "projects-cards__card projects-card profile-cards__card profile-card " +
-                (daysCount >= 4 ? "green-card" : "red-card")
+                (project.project_type === "CONTEST" && daysCount >= 4
+                  ? "green-card"
+                  : "red-card") +
+                (project.project_type === "CHOICE" ? " blue-card" : "")
               }
             >
               <h2 className="projects-card__title profile-card__title">
@@ -144,10 +147,12 @@ function AContent({ projects, setter, url }) {
                 <p>{project.description}</p>
                 {project.is_invited_as_user && <p>Заявка подана</p>}
               </div>
-              <div className="projects-card__days-count profile-card__days-count">
-                Осталось:
-                <span>{daysCount} дней</span>
-              </div>
+              {project.project_type === "CONTEST" && (
+                <div className="projects-card__days-count profile-card__days-count">
+                  Осталось:
+                  <span>{daysCount} дней</span>
+                </div>
+              )}
             </article>
           );
         })}

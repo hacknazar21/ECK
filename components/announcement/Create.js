@@ -46,9 +46,7 @@ export default function Create() {
         type: "text",
         name: this?.name,
         value: `${new Date(date).getFullYear()}-${
-          new Date(date).getMonth() + 1 < 10
-            ? "0" + new Date(date).getMonth() + 1
-            : new Date(date).getMonth() + 1
+          new Date(date).getMonth() + 1
         }-${new Date(date).getDate()}`,
       },
     });

@@ -50,10 +50,9 @@ function Info({ project }) {
       await request(`/api/projects/${project?.number}/`, "DELETE", null, {
         Authorization: `Bearer ${token}`,
       });
-      await router.back();
+      await router.push("/profile/projects");
     } catch (e) {
-      console.log(e);
-      await router.back();
+      await router.push("/profile/projects");
     }
   }
   return (
@@ -143,7 +142,7 @@ function Info({ project }) {
           (project.status === "DECLARED" ||
             project.status === "APPLICATION") && (
             <ButtonWithDangerous
-              className="button-delete single-team-member__button-delete"
+              className="button-delete single-team-member__button-delete mb-30"
               buttonIcon={
                 <span>
                   <svg
