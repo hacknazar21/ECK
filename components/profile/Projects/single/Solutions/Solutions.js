@@ -300,9 +300,9 @@ function Solutions({ project }) {
           solution_id={solution.id}
         />
       ))}
-      {solutions.length > 0 && project.project_type === "CONTEST" && (
+      {solutions.length > 0 && project.status !== "FINISHED" && (
         <div className="window-notification__buttons mt-20">
-          {!!winner && (
+          {project.project_type === "CONTEST" && !!winner && (
             <ButtonWithDangerous
               className="window-notification__button window-notification__button_active"
               onClick={setWinnerClickHandler}
@@ -338,20 +338,22 @@ function Solutions({ project }) {
               }
             />
           )}
+          {solutions.length > 0 &&
+            ((project.project_type === "CHOICE" &&
+              project.status === "IN_PROGRESS") ||
+              project.status === "REVIEWS") && (
+              <ButtonWithDangerous
+                className="button-delete single-team-member__button-delete"
+                onClick={closeProjectHandler}
+                description={
+                  "Вы уверены что хотите завершить работу над проектом?"
+                }
+                title={"Завершить работу"}
+                buttonText={"Завершить работу над проектом"}
+              />
+            )}
         </div>
       )}
-      {solutions.length > 0 &&
-        ((project.project_type === "CHOICE" &&
-          project.status === "IN_PROGRESS") ||
-          project.status === "REVIEWS") && (
-          <ButtonWithDangerous
-            className="button-delete single-team-member__button-delete"
-            onClick={closeProjectHandler}
-            description={"Вы уверены что хотите завершить работу над проектом?"}
-            title={"Завершить работу"}
-            buttonText={"Завершить работу над проектом"}
-          />
-        )}
       {solutions.length === 0 && !loading && (
         <p>Решения пока никто не подавал</p>
       )}

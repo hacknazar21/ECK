@@ -36,7 +36,8 @@ function STContent(props) {
   const { formSubmitHandler, formChangeHandler, form } =
     useForm(createTeamHandler);
 
-  function createTeamHandler(data) {
+  async function createTeamHandler(data) {
+    await router.reload();
     setIsChange(false);
   }
   async function searchSubmitHandler(e) {

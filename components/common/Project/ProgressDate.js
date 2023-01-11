@@ -84,7 +84,7 @@ function ProgressDate({
         </div>
       </>
     );
-  else return <>Завершен!</>;
+  else return <></>;
 }
 
 export default ProgressDate;
