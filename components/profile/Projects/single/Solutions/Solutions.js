@@ -345,7 +345,7 @@ function Solutions({ project }) {
           project.status === "IN_PROGRESS") ||
           project.status === "REVIEWS") && (
           <ButtonWithDangerous
-            className="window-notification__button window-notification__button_active"
+            className="button-delete single-team-member__button-delete"
             onClick={closeProjectHandler}
             description={"Вы уверены что хотите завершить работу над проектом?"}
             title={"Завершить работу"}
