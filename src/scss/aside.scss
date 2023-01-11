@@ -1,6 +1,6 @@
 .aside {
   flex: 0 0 rem(267);
-
+  position: relative;
   @media(max-width:$tablet){
     flex: 0 0 auto;
   }
@@ -17,8 +17,10 @@
 }
 
 .aside-menu {
-  position: sticky;
-  top: 10px;
+  @media(min-width:$tablet){
+    position: fixed;
+    min-width: rem(267);
+  }
   &__list {
     display: flex;
     flex-direction: column;
