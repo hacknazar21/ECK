@@ -338,21 +338,20 @@ function Solutions({ project }) {
               }
             />
           )}
-          {((project.project_type === "CHOICE" &&
-            project.status === "IN_PROGRESS") ||
-            project.status === "REVIEWS") && (
-            <ButtonWithDangerous
-              className="window-notification__button window-notification__button_active"
-              onClick={closeProjectHandler}
-              description={
-                "Вы уверены что хотите завершить работу над проектом?"
-              }
-              title={"Завершить работу"}
-              buttonText={"Завершить работу над проектом"}
-            />
-          )}
         </div>
       )}
+      {solutions.length > 0 &&
+        ((project.project_type === "CHOICE" &&
+          project.status === "IN_PROGRESS") ||
+          project.status === "REVIEWS") && (
+          <ButtonWithDangerous
+            className="window-notification__button window-notification__button_active"
+            onClick={closeProjectHandler}
+            description={"Вы уверены что хотите завершить работу над проектом?"}
+            title={"Завершить работу"}
+            buttonText={"Завершить работу над проектом"}
+          />
+        )}
       {solutions.length === 0 && !loading && (
         <p>Решения пока никто не подавал</p>
       )}
