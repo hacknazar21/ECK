@@ -34,8 +34,9 @@ function Report({ project }) {
           );
           return {
             name:
-              participate_as.display_name + (!!submitted?.length ? " ✓" : ""),
-            value: !!submitted?.length ? "" : participate_as.id,
+              participate_as.display_name +
+              (!!submitted?.length ? " (отправлено)" : ""),
+            value: participate_as.id,
           };
         })
       );
@@ -54,6 +55,7 @@ function Report({ project }) {
       <h2 className="report__title">Прикрепите решение по проекту</h2>
       {!project?.is_solution_submitted && (
         <>
+          <input type="hidden" name="detail" />
           <File
             onChange={formChangeHandler}
             name={"files"}
@@ -80,7 +82,6 @@ function Report({ project }) {
               Комментарий
             </label>
           </div>
-          <input type="hidden" name="non_field_errors" />
         </>
       )}
       {!project?.is_solution_submitted && (
